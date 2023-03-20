@@ -7,6 +7,6 @@ import dagger.Module;
 import dagger.hilt.InstallIn;
 
 
-public class DatabaseModule {
-    
+public class NetworkModule {
+
 }
