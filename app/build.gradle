@@ -85,4 +85,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    //Google service
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
 }

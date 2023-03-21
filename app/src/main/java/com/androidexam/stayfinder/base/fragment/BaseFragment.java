@@ -22,10 +22,18 @@ public abstract class BaseFragment<VB extends ViewBinding> extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         dataBinding = inflate.inflate(inflater, container, false);
+        initView();
+        initListeners();
         return dataBinding.getRoot();
     }
 
-    public abstract void initViews();
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initData();
+    }
+
+    public abstract void initView();
     public abstract void initListeners();
     public abstract void initData();
 
