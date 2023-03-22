@@ -1,6 +1,9 @@
 package com.finalproject.StayFinderApi.entity;
 
+import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +26,10 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Hostel")
-public class Hostel {
+public class Hostel implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -65,6 +71,7 @@ public class Hostel {
 	@OneToOne(mappedBy = "hostel")
 	private Post post;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="hostel")
 	private List<Image> images;
 

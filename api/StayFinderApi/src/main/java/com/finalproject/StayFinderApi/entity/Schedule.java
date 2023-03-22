@@ -1,5 +1,6 @@
 package com.finalproject.StayFinderApi.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -22,16 +23,19 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Schedule")
-public class Schedule {
+public class Schedule implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column(name="RenterId")
+	private long renterId;
+	
 	@Column(name="RenterName",nullable = false,columnDefinition = "text")
 	private String renterName;
-	
-	@Column(name="RenterPositionName",columnDefinition = "text")
-	private String renterPositionName;
 	
 	@Column(name="RenterPhoneNumber",columnDefinition = "varchar(10)")
 	private String renterPhoneNumber;

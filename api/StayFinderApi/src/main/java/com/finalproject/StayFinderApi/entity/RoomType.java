@@ -1,6 +1,11 @@
 package com.finalproject.StayFinderApi.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +28,10 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "RoomType")
-public class RoomType {
+public class RoomType implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -31,7 +39,21 @@ public class RoomType {
 	@Column(name="RoomTypeName",nullable = false,columnDefinition = "text")
 	private String roomTypeName;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="roomtype")
 	private List<Hostel> hostels;
+	
+	
+	public List<Hostel> getHostels(){
+		return this.hostels == null ? null : new ArrayList<Hostel>();
+	}
+	
+	public void setHostels(List<Hostel> hostels) {
+		if (hostels == null) {
+			this.hostels = null;
+		} else {
+			this.hostels = Collections.unmodifiableList(hostels);
+		}
+	}
 	
 }

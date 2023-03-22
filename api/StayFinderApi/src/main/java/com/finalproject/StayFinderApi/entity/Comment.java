@@ -1,5 +1,6 @@
 package com.finalproject.StayFinderApi.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -10,12 +11,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,14 +24,15 @@ import lombok.NonNull;
 
 @Entity
 @Table(name = "Comment")
-public class Comment {
+public class Comment implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="PostId", nullable=false)
-	private long post;
+	private Post post;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="AccountId", nullable=false)

@@ -1,9 +1,19 @@
 package com.finalproject.StayFinderApi.entity;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,16 +29,34 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Position")
-public class Position {
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Position implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@Column(name="PositionName",nullable = false,columnDefinition = "text")
-	private String positionName;
+	@Enumerated(EnumType.STRING)
+	private PositionNameEnum positionName;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="position")
 	private List<Account> accounts;
 	
+	
+	public List<Account> getAccounts(){
+		return this.accounts == null ? null : new ArrayList<Account>();
+	}
+	
+	public void setListFavouritePosts(List<Account> accounts) {
+		if (accounts == null) {
+			this.accounts = null;
+		} else {
+			this.accounts = accounts;
+		}
+	}
 	
 }
