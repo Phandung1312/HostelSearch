@@ -3,11 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/detailClientHomeFragment">
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.androidexam.stayfinder.ui.login.LoginFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login"/>
+    <fragment
+        android:id="@+id/clientHomeFragment"
+        android:name="com.androidexam.stayfinder.ui.client.ClientHomeFragment"
+        android:label="ClientHomeFragment"
+        tools:layout="@layout/fragment_home_client"/>
+    <fragment
+        android:id="@+id/detailClientHomeFragment"
+        android:name="com.androidexam.stayfinder.ui.client.DetailClientHomeFragment"
+        android:label="DetailClientHomeFragment"
+        tools:layout="@layout/fragment_home_detail_client"/>
+
 </navigation>
