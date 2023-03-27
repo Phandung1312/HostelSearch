@@ -2,27 +2,21 @@ package com.androidexam.stayfinder.ui.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.androidexam.stayfinder.base.dialogs.NotifyDialog;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
-import com.androidexam.stayfinder.base.fragment.Inflate;
+import com.androidexam.stayfinder.common.ImageConvertResult;
+import com.androidexam.stayfinder.data.models.Account;
 import com.androidexam.stayfinder.databinding.LoginClass;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
@@ -33,25 +27,26 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class LoginFragment extends BaseFragment<LoginClass> {
-
-//    GoogleSignInOptions gso =new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-//    GoogleSignInClient gsc = GoogleSignIn.getClient(getActivity().getApplicationContext(), gso);
     @Inject
     GoogleSignInClient gsc;
+    LoginViewModel loginViewModel;
     public LoginFragment() {
         super(LoginClass::inflate);
     }
     @Override
     public void initView() {
-    }
 
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+    }
     @Override
     public void initListeners() {
-        dataBinding.imgGoogle.setOnClickListener(v -> signIn());
+        dataBinding.btnSignInGoogle.setOnClickListener(v -> signIn());
+        dataBinding.btnSignInFacebook.setOnClickListener(v -> showNotify());
     }
 
     @Override
     public void initData() {
+
 
     }
     private void signIn(){
@@ -64,14 +59,55 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                 if(result.getResultCode() == Activity.RESULT_OK){
                     Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                     try {
-                        task.getResult(ApiException.class);
-                        Log.d("CheckLogin","OK");
-                        dataBinding.editPhoneNumber.setText("OK");
+                        GoogleSignInAccount googleSignInAccount = task.getResult(ApiException.class);
+                        if(googleSignInAccount != null){
+                            login(googleSignInAccount);
+                        }
                     }
                     catch (ApiException e) {
                         Toast.makeText(getActivity().getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
-                        dataBinding.editPhoneNumber.setText("Error");
+
                     }
                 }
             });
+    private void login(GoogleSignInAccount googleSignInAccount){
+        loginViewModel.firebaseSignInWithGoogle(googleSignInAccount.getEmail(),
+                googleSignInAccount.getId());
+        loginViewModel.isNewAccount().observe(getViewLifecycleOwner(), isNewAccount ->{
+            Account account = new Account();
+            account.setAccountName(googleSignInAccount.getEmail());
+            account.setPassword(googleSignInAccount.getId());
+            account.setUserName(googleSignInAccount.getDisplayName());
+            if(googleSignInAccount.getPhotoUrl() != null){
+                loginViewModel.convertUrlToByteArr(getContext(), googleSignInAccount.getPhotoUrl().toString()
+                        , new ImageConvertResult<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] result) {
+                                Log.d("Check","HERE");
+                                account.setAvatar(result);
+                                loginViewModel.setData(account);
+                            }
+                            @Override
+                            public void onError() {
+                                Toast.makeText(getContext(), "Xảy ra lỗi xử lí ảnh đăng nhập!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+            else{
+                loginViewModel.setData(account);
+            }
+            loginViewModel.loadData().observe(getViewLifecycleOwner(), resAccount ->{
+
+            });
+        });
+
+    }
+    private void showNotify(){
+        String title = "Thông báo";
+        String message = "Vì lí do bảo mật nên chức năng này tạm thời không còn được sử dụng.";
+        String textButton = "OK";
+        NotifyDialog notifyDialog = new NotifyDialog(requireContext(),
+                title, message, textButton);
+        notifyDialog.show();
+    }
 }

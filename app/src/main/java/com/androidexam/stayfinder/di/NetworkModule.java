@@ -1,30 +1,35 @@
 package com.androidexam.stayfinder.di;
 
 
-import android.content.Context;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.androidexam.stayfinder.common.Utils;
+import com.androidexam.stayfinder.data.apis.AccountAPI;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
-import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 @Module
 @InstallIn(SingletonComponent.class)
 public class NetworkModule {
+    @Singleton
     @Provides
-    public GoogleSignInOptions providesGoogleSignInOptions(){
-        return new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+    public Retrofit providesRetrofit(){
+        return new Retrofit.Builder()
+                .baseUrl(Utils.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .build();
     }
     @Provides
-    public static GoogleSignInClient providesGoogleSignInClient(@ApplicationContext Context context, GoogleSignInOptions gso){
-        return GoogleSignIn.getClient(context, gso);
+    public  AccountAPI providesAccountAPI(Retrofit retrofit){
+        return retrofit.create(AccountAPI.class);
     }
 }

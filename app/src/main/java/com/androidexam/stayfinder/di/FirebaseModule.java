@@ -1,5 +1,6 @@
 package com.androidexam.stayfinder.di;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Singleton;
@@ -18,4 +19,10 @@ public  class FirebaseModule {
     public FirebaseDatabase providesFirebaseDatabase(){
         return FirebaseDatabase.getInstance();
     }
+    @Provides
+    @Singleton
+    public FirebaseAuth providesFirebaseAuth(){
+        return FirebaseAuth.getInstance();
+    }
+
 }
