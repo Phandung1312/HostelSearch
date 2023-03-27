@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data class="LoginClass">
+
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:src="@drawable/shape"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/login_draw"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="30dp"
+            android:text="Đăng nhập"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_sign_in_google"
+           android:drawableLeft="@drawable/ic_google"
+            android:text="Đăng nhập bằng google"
+            android:textStyle="bold"
+            style="@style/ButtonStyle"
+            android:theme="@style/MyButtonTheme"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="360dp"
+            android:layout_height="50dp"/>
+        <Button
+            android:id="@+id/btn_sign_in_facebook"
+            android:drawableLeft="@drawable/ic_facebook"
+            android:text="Đăng nhập bằng Facebook"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/round_blue_bg"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="360dp"
+            android:layout_height="50dp"/>
+
+
+
+    </LinearLayout>
+</layout>
