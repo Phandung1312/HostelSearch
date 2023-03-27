@@ -1,7 +1,6 @@
-package com.androidexam.stayfinder.data.services;
+package com.androidexam.stayfinder.ui.client.data.services;
 
 
-import com.androidexam.stayfinder.data.repositories.FoodRepositories;
 import com.google.firebase.database.FirebaseDatabase;
 
 import javax.inject.Inject;

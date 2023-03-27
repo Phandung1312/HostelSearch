@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="background">#F0F4F3</color>
     <color name="blue">#455DF6</color>
+    <color name="light_blue">#4C9EEB</color>
+    <color name="white_gray">#E7ECF0</color>
+    <color name="green_blue">#B0042B41</color>
+    <color name="text_name_post">#252B5C</color>
+    <color name="text_location_post">#6A706F</color>
+    <color name="gray">#758585</color>
 </resources>

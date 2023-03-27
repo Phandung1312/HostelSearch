@@ -87,4 +87,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
     //Google service
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
+    //ImageRound
+    implementation 'com.makeramen:roundedimageview:2.3.0'
 }
