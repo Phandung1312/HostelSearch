@@ -29,7 +29,7 @@ public class NetworkModule {
                 .build();
     }
     @Provides
-    public AccountAPI providesAccountAPI(Retrofit retrofit){
+    public  AccountAPI providesAccountAPI(Retrofit retrofit){
         return retrofit.create(AccountAPI.class);
     }
 }
