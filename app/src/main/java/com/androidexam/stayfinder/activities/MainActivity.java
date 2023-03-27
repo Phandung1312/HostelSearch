@@ -10,6 +10,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.androidexam.stayfinder.R;
+import com.androidexam.stayfinder.data.models.Account;
 import com.androidexam.stayfinder.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
+    private Account hihi;
     private ActivityMainBinding binding;
     private NavController navController;
     @Override

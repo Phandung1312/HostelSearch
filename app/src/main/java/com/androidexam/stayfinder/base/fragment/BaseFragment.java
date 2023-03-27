@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+
 public abstract class BaseFragment<VB extends ViewBinding> extends Fragment {
     protected Inflate<VB> inflate;
     protected VB dataBinding = null;
