@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,12 +41,12 @@ public class RoomType implements Serializable{
 	private String roomTypeName;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="roomtype")
+	@OneToMany(mappedBy="roomtype",  cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Hostel> hostels;
 	
 	
 	public List<Hostel> getHostels(){
-		return this.hostels == null ? null : new ArrayList<Hostel>();
+		return this.hostels == null ? null : new ArrayList<Hostel>(this.hostels);
 	}
 	
 	public void setHostels(List<Hostel> hostels) {

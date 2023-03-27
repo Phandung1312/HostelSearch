@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,19 +43,19 @@ public class Position implements Serializable {
 	private PositionNameEnum positionName;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="position")
+	@OneToMany(mappedBy="position", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Account> accounts;
 	
 	
 	public List<Account> getAccounts(){
-		return this.accounts == null ? null : new ArrayList<Account>();
+		return this.accounts == null ? null : new ArrayList<Account>(this.accounts);
 	}
 	
 	public void setListFavouritePosts(List<Account> accounts) {
 		if (accounts == null) {
 			this.accounts = null;
 		} else {
-			this.accounts = accounts;
+			this.accounts =  Collections.unmodifiableList(accounts);
 		}
 	}
 	

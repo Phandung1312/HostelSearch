@@ -2,6 +2,8 @@ package com.finalproject.StayFinderApi.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,7 +31,7 @@ public class Image implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable = false)
+	@Column
 	private Byte[] source;
 	
 	@Column(columnDefinition = "text")
@@ -37,6 +39,7 @@ public class Image implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="HostelId", nullable=false)
+	@JsonIgnore
 	private Hostel hostel;
 	
 	

@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,8 +19,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +34,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Post")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Post implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -36,6 +45,7 @@ public class Post implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="AccountId", nullable=false)
+	@JsonIgnore
 	private Account account;
 	
 	@Column(nullable = false,columnDefinition = "mediumtext")
@@ -50,19 +60,24 @@ public class Post implements Serializable {
 	@Column(name="status",nullable = false,columnDefinition = "text")
 	private String status;
 	
-	@Column(name="PostTime",nullable = false,columnDefinition = "datetime")
+	@Column(name="PostTime",columnDefinition = "datetime")
 	private Date postTime;
 	
-	@OneToOne
-    @JoinColumn(name = "HostelId", referencedColumnName = "id")
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @MapsId
+    @JoinColumn(name = "HostelId")
 	private Hostel hostel;
 	
-	@OneToMany(mappedBy="post")
+	@JsonIgnore
+	@OneToMany(mappedBy="post", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Comment> comments;
 	
-	@OneToMany(mappedBy="post")
+	@JsonIgnore
+	@OneToMany(mappedBy="post", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Schedule> schedules;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "listFavouritePosts")
 	List<Account> listAccountLiked;
 

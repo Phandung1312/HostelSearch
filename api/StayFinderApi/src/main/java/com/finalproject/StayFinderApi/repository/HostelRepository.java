@@ -8,4 +8,5 @@ import com.finalproject.StayFinderApi.entity.Hostel;
 @Repository
 public interface HostelRepository extends JpaRepository<Hostel, Long> {
 
+	Hostel findByPostId(Long postId);
 }

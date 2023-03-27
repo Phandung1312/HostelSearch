@@ -7,9 +7,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.finalproject.StayFinderApi.dto.AccountLogin;
+import com.finalproject.StayFinderApi.dto.AccountReq;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.entity.AccountStatusEnum;
 import com.finalproject.StayFinderApi.entity.Position;
+import com.finalproject.StayFinderApi.entity.PositionNameEnum;
 import com.finalproject.StayFinderApi.repository.AccountRepository;
 import com.finalproject.StayFinderApi.repository.PositionRepository;
 import com.finalproject.StayFinderApi.service.IAccountService;
@@ -24,19 +27,26 @@ public class AccountServiceImpl implements IAccountService{
 	private PositionRepository positionRepo;
 
 	@Override
-	public Account addAccount(Account newAccount) {
+	public Account addAccount(AccountReq newAccount) {
 		if(accountRepo.existsByUsername(newAccount.getUsername())){
 			throw new RuntimeException("Exists username" + newAccount.getUsername());
 		}
+		
+		Account account = new Account();
+		account.setAvatar(newAccount.getAvatar());
+		account.setUsername(newAccount.getUsername());
+		account.setPassword(newAccount.getPassword());
+		account.setName(account.getName());
+		account.setStatus(AccountStatusEnum.ENABLE.getValue());
 		Position position = new Position();
-		Optional<Position> optional = positionRepo.findById((long) 2);
+		Optional<Position> optional = positionRepo.findById((long)1);
 		if(optional.isPresent())
 			position = optional.get();
 		else {
 			throw new RuntimeException("Account not set!");
 		}
-		newAccount.setPosition(position);
-		return accountRepo.save(newAccount);
+		account.setPosition(position);
+		return accountRepo.save(account);
 	}
 
 	@Override
@@ -93,13 +103,19 @@ public class AccountServiceImpl implements IAccountService{
 		}
 		return null;
 	}
-
+	
 	@Override
-	public Account checkLogin(String username, String password) {
-		Boolean isLogin = accountRepo.existsByUsernameAndPassword(username, password);
-		if (isLogin)
-			return accountRepo.getAccountByUserName(username);
-		return null;
+	public Account checkLogin(AccountLogin accountReq) {
+		Boolean isNewAccount = accountRepo.existsByUsername(accountReq.getUsername());
+		if (isNewAccount) {
+			Account account = accountRepo.getAccountByUserName(accountReq.getUsername());
+			if(account.getPassword().equals(accountReq.getPassword()))
+				return account;
+			else {
+				throw new RuntimeException("Wrong password!");
+			}
+		}
+		throw new RuntimeException("Account not available !");
 	}
 
 	@Override
@@ -143,5 +159,27 @@ public class AccountServiceImpl implements IAccountService{
 		else {
 			throw new RuntimeException("Can't find account by username: " + username);
 		}
+	}
+
+	@Override
+	public Boolean enableAccount(String username) {
+		Optional<Account> optional = accountRepo.findByUsername(username);
+		if(optional.isPresent()) {
+			Account account = optional.get();
+			account.setStatus(AccountStatusEnum.ENABLE.getValue());
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public Boolean disableAccount(String username) {
+		Optional<Account> optional = accountRepo.findByUsername(username);
+		if(optional.isPresent()) {
+			Account account = optional.get();
+			account.setStatus(AccountStatusEnum.DISTABLE.getValue());
+			return true;
+		}
+		return false;
 	}
 }

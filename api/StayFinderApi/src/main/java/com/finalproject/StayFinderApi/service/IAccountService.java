@@ -2,13 +2,15 @@ package com.finalproject.StayFinderApi.service;
 
 import java.util.List;
 
+import com.finalproject.StayFinderApi.dto.AccountLogin;
+import com.finalproject.StayFinderApi.dto.AccountReq;
 import com.finalproject.StayFinderApi.entity.Account;
 
 
 
 public interface IAccountService {
 	
-	public Account addAccount(Account account);
+	public Account addAccount(AccountReq account);
 	
 	public Account updateAccount(Account account);
 	
@@ -18,7 +20,7 @@ public interface IAccountService {
 	
 	public Account getOneAccount(Long id);
 	
-	public Account checkLogin(String username, String password);
+	public Account checkLogin(AccountLogin accountLogin);
 	
 	public Account getAccountByUsername(String username);
 	
@@ -27,5 +29,10 @@ public interface IAccountService {
 	public List<Account> getDisableAccount();
 	
 	public List<Account> getEnableAccount();
+	
+	public Boolean enableAccount(String username);
+	
+	public Boolean disableAccount(String usename);
+	
 	
 }

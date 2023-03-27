@@ -43,7 +43,7 @@ public class Schedule implements Serializable {
 	@Column(columnDefinition = "longtext")
 	private String content;
 	
-	@Column(name="MeetingTime",nullable = false,columnDefinition = "datetime")
+	@Column(name="MeetingTime",columnDefinition = "datetime")
 	private Date meetingTime;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

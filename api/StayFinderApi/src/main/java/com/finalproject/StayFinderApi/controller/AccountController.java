@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.finalproject.StayFinderApi.dto.AccountLogin;
 import com.finalproject.StayFinderApi.dto.AccountReq;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.service.IAccountService;
@@ -44,7 +45,7 @@ public class AccountController {
 	}
 	
 	@PostMapping
-	public Account addAccount(@RequestBody Account account) {
+	public Account addAccount(@RequestBody AccountReq account) {
 		return accountService.addAccount(account);
 	}
 	
@@ -59,8 +60,18 @@ public class AccountController {
 	}
 	
 	@PostMapping("/login")
-	public Account login(@RequestBody AccountReq accountReq) {
-		return accountService.checkLogin(accountReq.getUsername(), accountReq.getPassword());
+	public Account login(@RequestBody AccountLogin accountLogin) {
+		return accountService.checkLogin(accountLogin);
 	}
+	
+	@PutMapping("/enable/{username}")
+	public Boolean enableAccount(@PathVariable String username) {
+		return accountService.enableAccount(username);
+	}
+	@PutMapping("/disable/{username}")
+	public Boolean disableAccount(@PathVariable String username) {
+		return accountService.enableAccount(username);
+	}
+	
 	
 }

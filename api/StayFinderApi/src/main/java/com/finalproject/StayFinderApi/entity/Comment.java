@@ -41,7 +41,7 @@ public class Comment implements Serializable {
 	@Column(columnDefinition = "longtext")
 	private String content;
 	
-	@Column(name="CommentTime",nullable = false,columnDefinition = "datetime")
+	@Column(name="CommentTime",columnDefinition = "datetime")
 	private Date commentTime;
 	
 	@Column(columnDefinition = "varchar(50)")

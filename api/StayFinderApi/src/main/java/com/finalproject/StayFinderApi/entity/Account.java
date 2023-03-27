@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -53,8 +54,8 @@ public class Account implements Serializable {
 	@Column(nullable = false)
 	private int status;
 	
-	@Column(columnDefinition = "varchar(50)")
-	private String avatar;
+	@Column
+	private byte[] avatar;
 	
 	@Column(columnDefinition = "char(10)")
 	private String phonenumber;
@@ -64,11 +65,11 @@ public class Account implements Serializable {
 	private Position position;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="account")
+	@OneToMany(mappedBy="account", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Post> posts;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="account")
+	@OneToMany(mappedBy="account", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Comment> comments;
 	
 	@JsonIgnore
@@ -81,7 +82,7 @@ public class Account implements Serializable {
 
 	
 	public List<Post> getPosts(){
-		return this.posts == null ? null : new ArrayList<Post>();
+		return this.posts == null ? null : new ArrayList<Post>(this.posts);
 	}
 	
 	public void setPosts(List<Post> posts) {
@@ -93,7 +94,7 @@ public class Account implements Serializable {
 	}
 	
 	public List<Comment> getComments(){
-		return this.comments == null ? null : new ArrayList<Comment>();
+		return this.comments == null ? null : new ArrayList<Comment>(this.comments);
 	}
 	
 	public void setComments(List<Comment> comments) {
@@ -106,7 +107,7 @@ public class Account implements Serializable {
 	
 	
 	public List<Post> getListFavouritePosts(){
-		return this.listFavouritePosts == null ? null : new ArrayList<Post>();
+		return this.listFavouritePosts == null ? null : new ArrayList<Post>(this.listFavouritePosts);
 	}
 	
 	public void setListFavouritePosts(List<Post> listFavouritePosts) {
