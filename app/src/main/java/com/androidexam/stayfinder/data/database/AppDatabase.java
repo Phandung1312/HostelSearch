@@ -1,4 +1,4 @@
-package com.androidexam.stayfinder.ui.client.data.database;
+package com.androidexam.stayfinder.data.database;
 
 public class AppDatabase {
 }
