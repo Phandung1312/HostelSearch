@@ -2,7 +2,7 @@ package com.androidexam.stayfinder.data.models;
 
 public class Image {
     private int id;
-    private byte[] source;
+    private String source;
     private String imgName;
     private int hostelId;
 
@@ -14,11 +14,11 @@ public class Image {
         this.id = id;
     }
 
-    public byte[] getSource() {
+    public String getSource() {
         return source;
     }
 
-    public void setSource(byte[] source) {
+    public void setSource(String source) {
         this.source = source;
     }
 

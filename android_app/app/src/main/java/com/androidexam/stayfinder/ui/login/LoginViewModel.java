@@ -39,25 +39,29 @@ public class LoginViewModel extends BaseViewModel {
     public LoginViewModel(AccountRepository accountRepository){
         this.accountRepository = accountRepository;
     }
-    public void setData(Account account){
-        if(isNew.getValue()){
+    public void login(String email, String password){
+        compositeDisposable.add(accountRepository.getAccountByLogin(email,password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(acc -> {
+                            data.postValue(acc);
+                        },
+                    throwable ->{
+                    Log.d("ERROR login",throwable.getMessage());
+                    }
+                ));
+    }
+    public void signUp(Account account){
             compositeDisposable.add(accountRepository.getAccountBySignUp(account)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(acc -> {
                                 data.postValue(account);
+                            },
+                            throwable ->{
+                                Log.d("ERROR signup",throwable.getMessage());
                             }
                     ));
-        }
-        else{
-            compositeDisposable.add(accountRepository.getAccountByLogin(account.getAccountName(), account.getPassword())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(acc -> {
-                                data.postValue(account);
-                            }
-                    ));
-        }
     }
     public LiveData<Account> loadData(){
         return this.data;
@@ -67,25 +71,6 @@ public class LoginViewModel extends BaseViewModel {
     }
     public LiveData<Boolean> isNewAccount(){
         return isNew;
-    }
-    public void convertUrlToByteArr(Context context, String url, ImageConvertResult<byte[]> imageConvertResult){
-           Glide.with(context)
-                   .asBitmap()
-                   .load(url)
-                   .into(new CustomTarget<Bitmap>() {
-                       @Override
-                       public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                           ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                           resource.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                           byte[] byteArray = stream.toByteArray();
-                           imageConvertResult.onSuccess(byteArray);
-                       }
-
-                       @Override
-                       public void onLoadCleared(@Nullable Drawable placeholder) {
-                           imageConvertResult.onError();
-                       }
-                   });
     }
     @Override
     protected void onCleared() {

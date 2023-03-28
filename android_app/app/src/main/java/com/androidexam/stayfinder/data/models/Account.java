@@ -1,14 +1,28 @@
 package com.androidexam.stayfinder.data.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Account {
+    private int id;
+    @SerializedName("username")
    private  String accountName;
    private String password;
-   private String userName;
-   private String phoneNumber;
-   private byte[] avatar;
+    @SerializedName("name")
+    private String userName;
+    @SerializedName("phonenumber")
+    private String phoneNumber;
+   private String avatar;
    private Boolean gender;
    private int status;
    private Position position;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getAccountName() {
         return accountName;
@@ -40,11 +54,11 @@ public class Account {
         this.phoneNumber = phoneNumber;
     }
 
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

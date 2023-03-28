@@ -4,6 +4,8 @@ package com.androidexam.stayfinder.data.services;
 
 import com.androidexam.stayfinder.data.apis.AccountAPI;
 import com.androidexam.stayfinder.data.models.Account;
+import com.androidexam.stayfinder.data.models.request.LoginRequest;
+import com.androidexam.stayfinder.data.models.request.SignUpRequest;
 
 import javax.inject.Inject;
 
@@ -20,14 +22,15 @@ public class AccountRemoteService {
     }
     public Observable<Account> getAccountByLogin(String email, String password){
         return accountAPI.getAccountByLogin(
-                email,
-                password
+                new LoginRequest(email, password)
         );
     }
     public Observable<Account> getAccountBySignUp(Account account){
-        return accountAPI.getAccountBySignUp(account.getAccountName(),
-                account.getPassword(),
-                account.getUserName(),
-                account.getAvatar());
+        return accountAPI.getAccountBySignUp(
+                new SignUpRequest(account.getAccountName(),
+                        account.getPassword(),
+                        account.getUserName(),
+                        account.getAvatar())
+        );
     }
 }

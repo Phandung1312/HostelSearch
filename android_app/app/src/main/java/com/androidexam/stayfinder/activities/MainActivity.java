@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
-    private Account hihi;
+    public Account account = new Account();
     private ActivityMainBinding binding;
     private NavController navController;
     @Override
@@ -45,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.home:
-                    navController.navigate(R.id.adminHomeFragment);
+                    if(account.getPosition().getId() == 1) navController.navigate(R.id.clientHomeFragment);
+                    else navController.navigate(R.id.adminHomeFragment);
                     break;
                 case R.id.chat:
                     navController.navigate(R.id.listChatFragment);
                     break;
+                case R.id.profile:
+                    navController.navigate(R.id.profileFragment);
             }
             return true;
         });

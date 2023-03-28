@@ -10,12 +10,14 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.androidexam.stayfinder.R;
 import com.androidexam.stayfinder.activities.MainActivity;
 import com.androidexam.stayfinder.base.dialogs.NotifyDialog;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
 import com.androidexam.stayfinder.common.ImageConvertResult;
+import com.androidexam.stayfinder.common.Utils;
 import com.androidexam.stayfinder.data.models.Account;
 import com.androidexam.stayfinder.databinding.LoginClass;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -35,6 +37,7 @@ import io.paperdb.Paper;
 
 @AndroidEntryPoint
 public class LoginFragment extends BaseFragment<LoginClass> {
+    BottomNavigationView bottomNavigationView;
     @Inject
     GoogleSignInClient gsc;
     @Inject
@@ -54,17 +57,17 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                    Account account = new Account();
                    account.setAccountName(Paper.book().read("email"));
                    account.setPassword(Paper.book().read("password"));
-                   loginViewModel.setData(account);
+                   loginViewModel.login(account.getAccountName(), account.getPassword());
                    loginViewModel.loadData().observe(getViewLifecycleOwner(),resAccount ->{
+                       showHome(resAccount);
                    });
                 }
             }
         }
     }
-
     @Override
     public void initView() {
-        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setVisibility(View.GONE);
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
     }
@@ -90,7 +93,7 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                     try {
                         GoogleSignInAccount googleSignInAccount = task.getResult(ApiException.class);
                         if(googleSignInAccount != null){
-                            login(googleSignInAccount);
+                            loginFirebase(googleSignInAccount);
                         }
                     }
                     catch (ApiException e) {
@@ -99,41 +102,54 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                     }
                 }
             });
-    private void login(GoogleSignInAccount googleSignInAccount){
+    private void loginFirebase(GoogleSignInAccount googleSignInAccount){
         loginViewModel.firebaseSignInWithGoogle(googleSignInAccount.getEmail(),
                 googleSignInAccount.getId());
         loginViewModel.isNewAccount().observe(getViewLifecycleOwner(), isNewAccount ->{
-            Account account = new Account();
-            account.setAccountName(googleSignInAccount.getEmail());
-            account.setPassword(googleSignInAccount.getId());
-            account.setUserName(googleSignInAccount.getDisplayName());
-            if(googleSignInAccount.getPhotoUrl() != null){
-                loginViewModel.convertUrlToByteArr(getContext(), googleSignInAccount.getPhotoUrl().toString()
-                        , new ImageConvertResult<byte[]>() {
-                            @Override
-                            public void onSuccess(byte[] result) {
-                                Log.d("Check",account.getPassword());
-                                account.setAvatar(result);
-                                loginViewModel.setData(account);
-                            }
-                            @Override
-                            public void onError() {
-                                Toast.makeText(getContext(), "Xảy ra lỗi xử lí ảnh đăng nhập!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+            if(isNewAccount){
+                Account account = new Account();
+                account.setAccountName(googleSignInAccount.getEmail());
+                account.setPassword(googleSignInAccount.getId());
+                account.setUserName(googleSignInAccount.getDisplayName());
+                if(googleSignInAccount.getPhotoUrl() != null){
+                    Utils.convertUrlToByteString(getContext(), googleSignInAccount.getPhotoUrl().toString()
+                            , new ImageConvertResult<String>() {
+                                @Override
+                                public void onSuccess(String result) {
+                                   // account.setAvatar(result);
+                                    loginViewModel.signUp(account);
+                                }
+                                @Override
+                                public void onError() {
+                                    Toast.makeText(getContext(), "Xảy ra lỗi xử lí ảnh đăng nhập!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+                else{
+                    loginViewModel.signUp(account);
+                }
             }
             else{
-                loginViewModel.setData(account);
+                loginViewModel.login(googleSignInAccount.getEmail(), googleSignInAccount.getId());
             }
             loginViewModel.loadData().observe(getViewLifecycleOwner(), resAccount ->{
-                Paper.book().write("email",account.getAccountName());
-                Paper.book().write("password", account.getPassword());
+                Paper.book().write("email",resAccount.getAccountName());
+                Paper.book().write("password", resAccount.getPassword());
                 Paper.book().write("isLogin",true);
+                showHome(resAccount);
             });
-
         });
     }
-
+    private void showHome(Account account){
+        mainActivity.account = account;
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        if(mainActivity.account.getPosition().getId() == 1){
+            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
+        }
+        else{
+            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
+        }
+    }
     private void showNotify(){
         String title = "Thông báo";
         String message = "Vì lí do bảo mật nên chức năng này tạm thời không còn được sử dụng.";
