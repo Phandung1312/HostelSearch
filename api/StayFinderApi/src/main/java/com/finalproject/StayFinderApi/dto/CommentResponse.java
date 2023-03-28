@@ -21,5 +21,5 @@ public class CommentResponse {
 	
 	private Date commentTime;
 
-	private String image;
+	private byte[] image;
 }

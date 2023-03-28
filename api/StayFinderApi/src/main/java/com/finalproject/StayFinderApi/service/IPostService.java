@@ -13,7 +13,7 @@ public interface IPostService {
 	
 	Post addPost(Post post);
 	
-	
+	List<Post> findByAccountUsernameAndStatus(String username, String status);
 	
 	boolean deletePost(long id);
 	

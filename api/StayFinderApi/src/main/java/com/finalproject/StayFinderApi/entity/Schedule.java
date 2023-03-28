@@ -11,15 +11,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 
 @Entity
 @Table(name = "Schedule")
@@ -31,8 +32,8 @@ public class Schedule implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(name="RenterId")
-	private long renterId;
+	@Column(name="RenterUsername")
+	private String renterUsername;
 	
 	@Column(name="RenterName",nullable = false,columnDefinition = "text")
 	private String renterName;
@@ -46,7 +47,7 @@ public class Schedule implements Serializable {
 	@Column(name="MeetingTime",columnDefinition = "datetime")
 	private Date meetingTime;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="PostId", nullable=false)
 	private Post post;
 		

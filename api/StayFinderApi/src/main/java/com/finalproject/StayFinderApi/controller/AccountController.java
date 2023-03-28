@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalproject.StayFinderApi.dto.AccountLogin;
+import com.finalproject.StayFinderApi.dto.AccountProfile;
 import com.finalproject.StayFinderApi.dto.AccountReq;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.service.IAccountService;
@@ -50,8 +51,8 @@ public class AccountController {
 	}
 	
 	@PutMapping
-	public Account updateAccount(@RequestBody Account account) {
-		return accountService.updateAccount(account);
+	public Account updateAccount(@RequestBody AccountProfile account) {
+		return accountService.updateAccountProfile(account);
 	}
 	
 	@DeleteMapping("/{username}")
@@ -73,5 +74,9 @@ public class AccountController {
 		return accountService.enableAccount(username);
 	}
 	
+	@PutMapping("/admin/{username}")
+	public Account giveAdmin(@PathVariable String username) {
+		return accountService.giveAdmin(username);
+	}
 	
 }

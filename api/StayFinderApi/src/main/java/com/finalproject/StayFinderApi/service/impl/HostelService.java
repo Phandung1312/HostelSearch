@@ -3,10 +3,8 @@ package com.finalproject.StayFinderApi.service.impl;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,7 +67,7 @@ public class HostelService implements IHostelService {
 		post.setStatus("0");
 		post.setTitle(hostelReq.getPost().getTitle());
 		post.setHostel(hostelRepo.findById(hostel.getId()).get());
-//		post.setNumberOfFavourites(2);
+		post.setNumberOfFavourites(0);
 		post.setPostTime(new Date());
 		postRepo.save(post);
 
@@ -223,6 +221,5 @@ public class HostelService implements IHostelService {
 		} else
 			return null;
 	}
-
 
 }

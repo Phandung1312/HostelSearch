@@ -64,7 +64,7 @@ public class CommentServiceImpl implements ICommentService {
 	@Override
 	public CommentResponse addComment(CommentRequest commentRequest) {
 		Optional<Post> postOptional = postRepo.findById(commentRequest.getPostId());
-		Optional<Account> accountOptional = accountRepo.findById(commentRequest.getAccountId());
+		Optional<Account> accountOptional = accountRepo.findByUsername(commentRequest.getUsername());
 		if(postOptional.isPresent() && accountOptional.isPresent())
 		{
 			Comment comment = commentRepo.save(new Comment(0, postOptional.get(), accountOptional.get(), commentRequest.getContent(), new Date(), commentRequest.getImage()));

@@ -3,6 +3,7 @@ package com.finalproject.StayFinderApi.service;
 import java.util.List;
 
 import com.finalproject.StayFinderApi.dto.AccountLogin;
+import com.finalproject.StayFinderApi.dto.AccountProfile;
 import com.finalproject.StayFinderApi.dto.AccountReq;
 import com.finalproject.StayFinderApi.entity.Account;
 
@@ -12,7 +13,7 @@ public interface IAccountService {
 	
 	public Account addAccount(AccountReq account);
 	
-	public Account updateAccount(Account account);
+	public Account updateAccountProfile(AccountProfile account);
 	
 	public void deleteAccount(String username);
 	
@@ -34,5 +35,6 @@ public interface IAccountService {
 	
 	public Boolean disableAccount(String usename);
 	
+	public Account giveAdmin(String username);
 	
 }

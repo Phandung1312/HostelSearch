@@ -5,10 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.finalproject.StayFinderApi.entity.Account;
-import com.finalproject.StayFinderApi.entity.Comment;
-import com.finalproject.StayFinderApi.entity.Hostel;
-import com.finalproject.StayFinderApi.entity.Schedule;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.CurrentTimestampGeneration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,6 @@ import com.finalproject.StayFinderApi.entity.PositionNameEnum;
 import com.finalproject.StayFinderApi.entity.Post;
 import com.finalproject.StayFinderApi.entity.RoomType;
 import com.finalproject.StayFinderApi.entity.Schedule;
-import com.finalproject.StayFinderApi.entity.Test;
 import com.finalproject.StayFinderApi.repository.AccountRepository;
 import com.finalproject.StayFinderApi.repository.CommentRepository;
 import com.finalproject.StayFinderApi.repository.HostelRepository;
@@ -28,13 +28,9 @@ import com.finalproject.StayFinderApi.repository.PositionRepository;
 import com.finalproject.StayFinderApi.repository.PostRepository;
 import com.finalproject.StayFinderApi.repository.RoomTypeRepository;
 import com.finalproject.StayFinderApi.repository.ScheduleRepository;
-import com.finalproject.StayFinderApi.service.impl.TestService;
 
 @RestController
 public class TestMyAPI {
-
-	@Autowired
-	private TestService testService;
 
 	@Autowired
 	private AccountRepository accReq;
@@ -141,42 +137,42 @@ public class TestMyAPI {
 		imageRepository.saveAll(images);
 		
 		List<Post> posts = new ArrayList<Post>();
-		posts.add(new Post(1, accReq.getReferenceById((long) 1), "Phong Tro tai Au co", "Dep", 3, "0", null, hostelRepository.getReferenceById((long)1), null, null, null));
-		posts.add(new Post(2, accReq.getReferenceById((long) 2), "Phong Tro tai Nguyen Luong Bang1", "Dep1", 3, "1", null, hostelRepository.getReferenceById((long)2), null, null, null));
-		posts.add(new Post(3, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang2", "Dep2", 3, "0", null, hostelRepository.getReferenceById((long)3), null, null, null));
-		posts.add(new Post(4, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "Dep3", 3, "0", null,hostelRepository.getReferenceById((long)4), null, null, null));
-		posts.add(new Post(5, accReq.getReferenceById((long) 3), "Phong Tro tai Nguyen Luong Bang3", "De4p", 3, "1", null, hostelRepository.getReferenceById((long)5), null, null, null));
-		posts.add(new Post(6, accReq.getReferenceById((long) 5), "Phong Tro tai Nguyen Luong Bang", "Dep", 3, "0", null, hostelRepository.getReferenceById((long)6), null, null, null));
-		posts.add(new Post(7, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "De4p", 3, "0", null, hostelRepository.getReferenceById((long)7), null, null, null));
-		posts.add(new Post(8, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang4", "De5p", 3, "2", null,hostelRepository.getReferenceById((long)8), null, null, null));
-		posts.add(new Post(9, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang5", "Dep6", 3, "0", null, hostelRepository.getReferenceById((long)9), null, null, null));
-		posts.add(new Post(10, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang6", "Dep6", 3, "2", null, hostelRepository.getReferenceById((long)10), null, null, null));
+		posts.add(new Post(1, accReq.getReferenceById((long) 1), "Phong Tro tai Au co", "Dep", 3, "0", new Date(), hostelRepository.getReferenceById((long)1), null, null, null));
+		posts.add(new Post(2, accReq.getReferenceById((long) 2), "Phong Tro tai Nguyen Luong Bang1", "Dep1", 3, "1", new Date(), hostelRepository.getReferenceById((long)2), null, null, null));
+		posts.add(new Post(3, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang2", "Dep2", 3, "0", new Date(), hostelRepository.getReferenceById((long)3), null, null, null));
+		posts.add(new Post(4, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "Dep3", 3, "0", new Date(),hostelRepository.getReferenceById((long)4), null, null, null));
+		posts.add(new Post(5, accReq.getReferenceById((long) 3), "Phong Tro tai Nguyen Luong Bang3", "De4p", 3, "1", new Date(), hostelRepository.getReferenceById((long)5), null, null, null));
+		posts.add(new Post(6, accReq.getReferenceById((long) 5), "Phong Tro tai Nguyen Luong Bang", "Dep", 3, "0", new Date(), hostelRepository.getReferenceById((long)6), null, null, null));
+		posts.add(new Post(7, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "De4p", 3, "0", new Date(), hostelRepository.getReferenceById((long)7), null, null, null));
+		posts.add(new Post(8, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang4", "De5p", 3, "2", new Date(),hostelRepository.getReferenceById((long)8), null, null, null));
+		posts.add(new Post(9, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang5", "Dep6", 3, "0", new Date(), hostelRepository.getReferenceById((long)9), null, null, null));
+		posts.add(new Post(10, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang6", "Dep6", 3, "2", new Date(), hostelRepository.getReferenceById((long)10), null, null, null));
 		
 //		System.out.println(posts.get(0).toString());
 		postRepository.saveAll(posts);
 		
 		List<Comment> comments = new ArrayList<Comment>();
 		
-		comments.add(new Comment(0, postRepository.getReferenceById((long)1), accReq.getReferenceById((long)1), "Phong dep1", null, "anh1"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)1), accReq.getReferenceById((long)1), "Phong dep2", null, "anh3"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)1), accReq.getReferenceById((long)2), "Phong dep2", null, "anh17"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)2), accReq.getReferenceById((long)3), "Phong dep2", null, "anh1"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)3), accReq.getReferenceById((long)1), "Phong dep2", null, "anh17"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)4), accReq.getReferenceById((long)4), "Phong dep5", null, "anh18"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)4), accReq.getReferenceById((long)5), "Phong dep5", null, "anh13"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)5), accReq.getReferenceById((long)8), "Phong dep8", null, "anh17"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)6), accReq.getReferenceById((long)7), "Phong dep2", null, "anh14"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)7), accReq.getReferenceById((long)9), "Phong dep4", null, "anh12"));
-		comments.add(new Comment(0, postRepository.getReferenceById((long)8), accReq.getReferenceById((long)2), "Phong dep7", null, "anh19"));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)1), accReq.getReferenceById((long)1), "Phong dep1", new Date(), null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)1), accReq.getReferenceById((long)1), "Phong dep2", new Date(), null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)1), accReq.getReferenceById((long)2), "Phong dep2", new Date(), null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)2), accReq.getReferenceById((long)3), "Phong dep2", new Date(), null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)3), accReq.getReferenceById((long)1), "Phong dep2", new Date(), null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)4), accReq.getReferenceById((long)4), "Phong dep5", new Date(),null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)4), accReq.getReferenceById((long)5), "Phong dep5", new Date(), null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)5), accReq.getReferenceById((long)8), "Phong dep8", new Date(), null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)6), accReq.getReferenceById((long)7), "Phong dep2", new Date(), null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)7), accReq.getReferenceById((long)9), "Phong dep4", new Date(), null));
+		comments.add(new Comment(0, postRepository.getReferenceById((long)8), accReq.getReferenceById((long)2), "Phong dep7", new Date(), null));
 		
 		commentRepository.saveAll(comments);
 		
 		List<Schedule> schedules = new ArrayList<Schedule>();
-		schedules.add(new Schedule(0, 0, "hao1", "0256554654", "Hen gap1", null, postRepository.getReferenceById((long)1)));
-		schedules.add(new Schedule(0, 0, "hao1", "0256554654", "Hen gap1", null, postRepository.getReferenceById((long)1)));
-		schedules.add(new Schedule(0, accReq.getReferenceById((long)2).getId(), "hao1", "0256554654", "Hen gap1", null, postRepository.getReferenceById((long)2)));
-		schedules.add(new Schedule(0, 0, "hao1", "0256554654", "Hen gap1", null, postRepository.getReferenceById((long)4)));
-		schedules.add(new Schedule(0,  accReq.getReferenceById((long)3).getId(), "hao3", "0256554654", "Hen gap3", null, postRepository.getReferenceById((long)3)));
+		schedules.add(new Schedule(0, accounts.get(0).getUsername(), "hao1", "0256554654", "Hen gap1", new Date(), postRepository.getReferenceById((long)1)));
+		schedules.add(new Schedule(0,  accounts.get(1).getUsername(), "hao1", "0256554654", "Hen gap1", new Date(), postRepository.getReferenceById((long)1)));
+		schedules.add(new Schedule(0,  accounts.get(1).getUsername(), "hao1", "0256554654", "Hen gap1", new Date(), postRepository.getReferenceById((long)2)));
+		schedules.add(new Schedule(0,  null, "hao1", "0256554654", "Hen gap1", new Date(), postRepository.getReferenceById((long)4)));
+		schedules.add(new Schedule(0,   accounts.get(0).getUsername(), "hao3", "0256554654", "Hen gap3", new Date(), postRepository.getReferenceById((long)3)));
 		
 		scheduleRepository.saveAll(schedules);
 		return true;

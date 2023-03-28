@@ -53,6 +53,12 @@ public class PostServiceImpl implements IPostService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Post> findByAccountUsernameAndStatus(String username, String status) {
+		
+		return postRepo.findByAccountUsernameAndStatus(username, status);
+	}
 	
 	
 	

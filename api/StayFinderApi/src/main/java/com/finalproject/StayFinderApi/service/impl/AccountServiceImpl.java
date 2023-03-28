@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.StayFinderApi.dto.AccountLogin;
+import com.finalproject.StayFinderApi.dto.AccountProfile;
 import com.finalproject.StayFinderApi.dto.AccountReq;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.entity.AccountStatusEnum;
@@ -29,14 +30,14 @@ public class AccountServiceImpl implements IAccountService{
 	@Override
 	public Account addAccount(AccountReq newAccount) {
 		if(accountRepo.existsByUsername(newAccount.getUsername())){
-			throw new RuntimeException("Exists username" + newAccount.getUsername());
+			throw new RuntimeException("Exists username " + newAccount.getUsername());
 		}
 		
 		Account account = new Account();
 		account.setAvatar(newAccount.getAvatar());
 		account.setUsername(newAccount.getUsername());
 		account.setPassword(newAccount.getPassword());
-		account.setName(account.getName());
+		account.setName(newAccount.getName());
 		account.setStatus(AccountStatusEnum.ENABLE.getValue());
 		Position position = new Position();
 		Optional<Position> optional = positionRepo.findById((long)1);
@@ -50,17 +51,14 @@ public class AccountServiceImpl implements IAccountService{
 	}
 
 	@Override
-	public Account updateAccount(Account newAccount) {
-		System.out.println(newAccount.toString());
+	public Account updateAccountProfile(AccountProfile newAccount) {
 		Optional<Account> optional = accountRepo.findByUsername(newAccount.getUsername());
 		if(optional.isPresent())
 		{
 			Account account = optional.get();
-			System.out.println(account.toString());
 			account.setAvatar(newAccount.getAvatar());
 			account.setName(newAccount.getName());
 			account.setPhonenumber(newAccount.getPhonenumber());
-			account.setPassword(newAccount.getPassword());
 			account.setGender(newAccount.isGender());
 			return accountRepo.save(account);
 		}
@@ -124,7 +122,7 @@ public class AccountServiceImpl implements IAccountService{
 		if(optional.isPresent()) {
 			return optional.get();
 		}
-		return null;
+		throw new RuntimeException("Can't find account by username: " + username);
 	}
 
 	@Override
@@ -167,9 +165,10 @@ public class AccountServiceImpl implements IAccountService{
 		if(optional.isPresent()) {
 			Account account = optional.get();
 			account.setStatus(AccountStatusEnum.ENABLE.getValue());
+			accountRepo.save(account);
 			return true;
 		}
-		return false;
+		throw new RuntimeException("Can't find Account by username " + username);
 	}
 	
 	@Override
@@ -178,8 +177,20 @@ public class AccountServiceImpl implements IAccountService{
 		if(optional.isPresent()) {
 			Account account = optional.get();
 			account.setStatus(AccountStatusEnum.DISTABLE.getValue());
+			accountRepo.save(account);
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public Account giveAdmin(String username) {
+		Optional<Account> optional = accountRepo.findByUsername(username);
+		if(optional.isPresent()) {
+			Account account = optional.get();
+			account.setPosition(positionRepo.findByPositionName(PositionNameEnum.ROLE_ADMIN).get());
+			return accountRepo.save(account);
+		}
+		throw new RuntimeException("Can't find account by username: " + username);
 	}
 }

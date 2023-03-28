@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalproject.StayFinderApi.dto.PostResp;
@@ -29,11 +30,8 @@ public class PostController {
 	public Post getById(@PathVariable long id){
 		return postService.getById(id);
 	}
-	
-//	@PostMapping
-//	public 
-	
-	
-	
-	
+	@GetMapping("/account/{username}")
+	public List<Post> getByAccountUsernameAndStatus(@PathVariable String username, @RequestParam(defaultValue = "0", required = true) String status) {
+		return postService.findByAccountUsernameAndStatus(username, status);
+	}
 }

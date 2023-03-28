@@ -27,7 +27,12 @@ public class RoomtypeServiceImpl implements IRoomTypeService{
 
 	@Override
 	public void deleteRoomType(Long id) {
-		roomTypeRepo.deleteById(id);
+		try {
+			roomTypeRepo.deleteById(id);
+		} catch (Exception e) {
+			throw new RuntimeException("Have error!");
+		}
+		
 		
 	}
 
@@ -43,7 +48,7 @@ public class RoomtypeServiceImpl implements IRoomTypeService{
 		if( optional.isPresent())
 			return optional.get();
 		else 
-			return null;
+			throw new RuntimeException("Can't find Roomtype by id: "+id);
 	}
 
 }
