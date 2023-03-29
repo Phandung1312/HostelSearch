@@ -14,6 +14,9 @@ import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.entity.AccountStatusEnum;
 import com.finalproject.StayFinderApi.entity.Position;
 import com.finalproject.StayFinderApi.entity.PositionNameEnum;
+import com.finalproject.StayFinderApi.exception.AppException;
+import com.finalproject.StayFinderApi.exception.BadRequestException;
+import com.finalproject.StayFinderApi.exception.NotFoundException;
 import com.finalproject.StayFinderApi.repository.AccountRepository;
 import com.finalproject.StayFinderApi.repository.PositionRepository;
 import com.finalproject.StayFinderApi.service.IAccountService;
@@ -30,7 +33,7 @@ public class AccountServiceImpl implements IAccountService{
 	@Override
 	public Account addAccount(AccountReq newAccount) {
 		if(accountRepo.existsByUsername(newAccount.getUsername())){
-			throw new RuntimeException("Exists username " + newAccount.getUsername());
+			throw new BadRequestException("Username: "  + newAccount.getUsername()+ " đã tồn tại trong hệ thống");
 		}
 		
 		Account account = new Account();
@@ -44,7 +47,7 @@ public class AccountServiceImpl implements IAccountService{
 		if(optional.isPresent())
 			position = optional.get();
 		else {
-			throw new RuntimeException("Account not set!");
+			throw new AppException("Account not set!");
 		}
 		account.setPosition(position);
 		return accountRepo.save(account);
@@ -63,7 +66,7 @@ public class AccountServiceImpl implements IAccountService{
 			return accountRepo.save(account);
 		}
 		else {
-			throw new RuntimeException("Can't find Account by username");
+			throw new NotFoundException("Username: " + newAccount.getUsername() + " không tồn tại trong hệ thống" );
 		}
 		
 		
@@ -99,7 +102,7 @@ public class AccountServiceImpl implements IAccountService{
 		if(optional.isPresent()) {
 			return optional.get();
 		}
-		return null;
+		throw new NotFoundException("AccountId: " + id+ " không tồn tại trong hệ thống");
 	}
 	
 	@Override
@@ -110,10 +113,10 @@ public class AccountServiceImpl implements IAccountService{
 			if(account.getPassword().equals(accountReq.getPassword()))
 				return account;
 			else {
-				throw new RuntimeException("Wrong password!");
+				throw new NotFoundException("Sai mật khẩu" );
 			}
 		}
-		throw new RuntimeException("Account not available !");
+		throw new NotFoundException("User không tồn tại trong hệ thống");
 	}
 
 	@Override
@@ -122,7 +125,7 @@ public class AccountServiceImpl implements IAccountService{
 		if(optional.isPresent()) {
 			return optional.get();
 		}
-		throw new RuntimeException("Can't find account by username: " + username);
+		throw new NotFoundException("Username: " + username + " không tồn tại trong hệ thống" );
 	}
 
 	@Override
@@ -180,7 +183,7 @@ public class AccountServiceImpl implements IAccountService{
 			accountRepo.save(account);
 			return true;
 		}
-		return false;
+		throw new RuntimeException("Can't find Account by username " + username);
 	}
 
 	@Override
@@ -189,6 +192,17 @@ public class AccountServiceImpl implements IAccountService{
 		if(optional.isPresent()) {
 			Account account = optional.get();
 			account.setPosition(positionRepo.findByPositionName(PositionNameEnum.ROLE_ADMIN).get());
+			return accountRepo.save(account);
+		}
+		throw new RuntimeException("Can't find account by username: " + username);
+	}
+
+	@Override
+	public Account removeAdmin(String username) {
+		Optional<Account> optional = accountRepo.findByUsername(username);
+		if(optional.isPresent()) {
+			Account account = optional.get();
+			account.setPosition(positionRepo.findByPositionName(PositionNameEnum.ROLE_USER).get());
 			return accountRepo.save(account);
 		}
 		throw new RuntimeException("Can't find account by username: " + username);

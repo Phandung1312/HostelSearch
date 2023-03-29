@@ -5,7 +5,7 @@ import java.util.List;
 import com.finalproject.StayFinderApi.dto.AccountRespone;
 import com.finalproject.StayFinderApi.entity.Post;
 
-public interface IFavouritesAccountPost {
+public interface IFavouritesAccountPostService {
 	public boolean addFavourites (String username, long postId);
 	
 	public boolean checkAccountFavouriedPost(String username, long postId);

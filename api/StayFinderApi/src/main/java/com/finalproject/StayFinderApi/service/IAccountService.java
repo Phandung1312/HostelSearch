@@ -37,4 +37,6 @@ public interface IAccountService {
 	
 	public Account giveAdmin(String username);
 	
+	public Account removeAdmin(String username);
+	
 }

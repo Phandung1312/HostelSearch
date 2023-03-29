@@ -14,10 +14,12 @@ import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.entity.AccountStatusEnum;
 import com.finalproject.StayFinderApi.entity.Comment;
 import com.finalproject.StayFinderApi.entity.Hostel;
+import com.finalproject.StayFinderApi.entity.HostelStatusEnum;
 import com.finalproject.StayFinderApi.entity.Image;
 import com.finalproject.StayFinderApi.entity.Position;
 import com.finalproject.StayFinderApi.entity.PositionNameEnum;
 import com.finalproject.StayFinderApi.entity.Post;
+import com.finalproject.StayFinderApi.entity.PostStatusEnum;
 import com.finalproject.StayFinderApi.entity.RoomType;
 import com.finalproject.StayFinderApi.entity.Schedule;
 import com.finalproject.StayFinderApi.repository.AccountRepository;
@@ -107,16 +109,16 @@ public class TestMyAPI {
 //		postRepository.saveAll(posts);
 		
 		List<Hostel> hostels = new ArrayList<Hostel>();
-		hostels.add(new Hostel(1, "Phong1", 3, 24.0, "12 Nguyen Luong Bang", 1800000.0, 500000.0, "0", "Phong dep1",roomTypes.get(0), 3500, 8000, null, null));
-		hostels.add(new Hostel(2, "Phong2", 1, 12.0, "97 Nguyen Luong Bang", 1000000.0, 200000.0, "0", "Phong dep2",roomTypes.get(1), 3500, 8000, null, null));
-		hostels.add(new Hostel(3, "Phong3", 3, 15.0, "12 Au Co", 1200000.0, 500000.0, "0", "Phong dep3",roomTypes.get(1), 3500, 8000, null, null));
-		hostels.add(new Hostel(4, "Phong4", 2, 24.0, "12 Nguyen Van Linh", 1700000.0, 250000.0, "0", "Phong dep3",roomTypes.get(0), 3800, 8000, null, null));
-		hostels.add(new Hostel(5, "Phong5", 1, 15.0, "K12 Nguyen Chanh", 1200000.0, 200000.0, "0", "Phong dep2",roomTypes.get(0), 4000, 9000, null, null));
-		hostels.add(new Hostel(6, "Phong6", 2, 30.0, "12 Nguyen Luong Bang", 2000000.0, 500000.0, "0", "Phong dep5",roomTypes.get(2), 3500, 8000, null, null));
-		hostels.add(new Hostel(7, "Phong7", 3, 35.0, "12 Nguyen Luong Bang", 1800000.0, 500000.0, "0", "Phong dep2",roomTypes.get(0), 3500, 8000, null, null));
-		hostels.add(new Hostel(8, "Phong8", 5, 45.0, "12 Nguyen Luong Bang", 3000000.0, 1000000.0, "0", "Phong dep",roomTypes.get(2), 3200, 11000, null, null));
-		hostels.add(new Hostel(9, "Phong9", 1, 12.0, "K82/103 Nguyen Luong Bang", 1800000.0, 600000.0, "0", "Phong dep",roomTypes.get(0), 3500, 8000, null, null));
-		hostels.add(new Hostel(10, "Phong10", 2, 20.0, "12 Ton Duc Thang", 1400000.0, 500000.0, "0", "Phong dep",roomTypes.get(2), 3000, 8000, null, null));
+		hostels.add(new Hostel(1, "Phong1", 3, 24.0, "12 Nguyen Luong Bang", 1800000.0, 500000.0, HostelStatusEnum.NO.getValue(), "Phong dep1",roomTypes.get(0), 3500, 8000, null, null));
+		hostels.add(new Hostel(2, "Phong2", 1, 12.0, "97 Nguyen Luong Bang", 1000000.0, 200000.0,HostelStatusEnum.NO.getValue(), "Phong dep2",roomTypes.get(1), 3500, 8000, null, null));
+		hostels.add(new Hostel(3, "Phong3", 3, 15.0, "12 Au Co", 1200000.0, 500000.0, HostelStatusEnum.NO.getValue(), "Phong dep3",roomTypes.get(1), 3500, 8000, null, null));
+		hostels.add(new Hostel(4, "Phong4", 2, 24.0, "12 Nguyen Van Linh", 1700000.0, 250000.0, HostelStatusEnum.NO.getValue(), "Phong dep3",roomTypes.get(0), 3800, 8000, null, null));
+		hostels.add(new Hostel(5, "Phong5", 1, 15.0, "K12 Nguyen Chanh", 1200000.0, 200000.0, HostelStatusEnum.NO.getValue(), "Phong dep2",roomTypes.get(0), 4000, 9000, null, null));
+		hostels.add(new Hostel(6, "Phong6", 2, 30.0, "12 Nguyen Luong Bang", 2000000.0, 500000.0, HostelStatusEnum.NO.getValue(), "Phong dep5",roomTypes.get(2), 3500, 8000, null, null));
+		hostels.add(new Hostel(7, "Phong7", 3, 35.0, "12 Nguyen Luong Bang", 1800000.0, 500000.0, HostelStatusEnum.NO.getValue(), "Phong dep2",roomTypes.get(0), 3500, 8000, null, null));
+		hostels.add(new Hostel(8, "Phong8", 5, 45.0, "12 Nguyen Luong Bang", 3000000.0, 1000000.0, HostelStatusEnum.YES.getValue(), "Phong dep",roomTypes.get(2), 3200, 11000, null, null));
+		hostels.add(new Hostel(9, "Phong9", 1, 12.0, "K82/103 Nguyen Luong Bang", 1800000.0, 600000.0, HostelStatusEnum.YES.getValue(), "Phong dep",roomTypes.get(0), 3500, 8000, null, null));
+		hostels.add(new Hostel(10, "Phong10", 2, 20.0, "12 Ton Duc Thang", 1400000.0, 500000.0, HostelStatusEnum.YES.getValue(), "Phong dep",roomTypes.get(2), 3000, 8000, null, null));
 		
 		hostelRepository.saveAll(hostels);
 		
@@ -137,16 +139,16 @@ public class TestMyAPI {
 		imageRepository.saveAll(images);
 		
 		List<Post> posts = new ArrayList<Post>();
-		posts.add(new Post(1, accReq.getReferenceById((long) 1), "Phong Tro tai Au co", "Dep", 3, "0", new Date(), hostelRepository.getReferenceById((long)1), null, null, null));
-		posts.add(new Post(2, accReq.getReferenceById((long) 2), "Phong Tro tai Nguyen Luong Bang1", "Dep1", 3, "1", new Date(), hostelRepository.getReferenceById((long)2), null, null, null));
-		posts.add(new Post(3, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang2", "Dep2", 3, "0", new Date(), hostelRepository.getReferenceById((long)3), null, null, null));
-		posts.add(new Post(4, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "Dep3", 3, "0", new Date(),hostelRepository.getReferenceById((long)4), null, null, null));
-		posts.add(new Post(5, accReq.getReferenceById((long) 3), "Phong Tro tai Nguyen Luong Bang3", "De4p", 3, "1", new Date(), hostelRepository.getReferenceById((long)5), null, null, null));
-		posts.add(new Post(6, accReq.getReferenceById((long) 5), "Phong Tro tai Nguyen Luong Bang", "Dep", 3, "0", new Date(), hostelRepository.getReferenceById((long)6), null, null, null));
-		posts.add(new Post(7, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "De4p", 3, "0", new Date(), hostelRepository.getReferenceById((long)7), null, null, null));
-		posts.add(new Post(8, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang4", "De5p", 3, "2", new Date(),hostelRepository.getReferenceById((long)8), null, null, null));
-		posts.add(new Post(9, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang5", "Dep6", 3, "0", new Date(), hostelRepository.getReferenceById((long)9), null, null, null));
-		posts.add(new Post(10, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang6", "Dep6", 3, "2", new Date(), hostelRepository.getReferenceById((long)10), null, null, null));
+		posts.add(new Post(1, accReq.getReferenceById((long) 1), "Phong Tro tai Au co", "Dep", 0, PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)1), null, null, null));
+		posts.add(new Post(2, accReq.getReferenceById((long) 2), "Phong Tro tai Nguyen Luong Bang1", "Dep1", 0, PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)2), null, null, null));
+		posts.add(new Post(3, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang2", "Dep2", 0, PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)3), null, null, null));
+		posts.add(new Post(4, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "Dep3", 0, PostStatusEnum.APPROVED.getValue(), new Date(),hostelRepository.getReferenceById((long)4), null, null, null));
+		posts.add(new Post(5, accReq.getReferenceById((long) 3), "Phong Tro tai Nguyen Luong Bang3", "De4p", 0, PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)5), null, null, null));
+		posts.add(new Post(6, accReq.getReferenceById((long) 5), "Phong Tro tai Nguyen Luong Bang", "Dep", 0, PostStatusEnum.NOT_YET_APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)6), null, null, null));
+		posts.add(new Post(7, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "De4p", 0, PostStatusEnum.NOT_YET_APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)7), null, null, null));
+		posts.add(new Post(8, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang4", "De5p", 0, PostStatusEnum.NOT_YET_APPROVED.getValue(), new Date(),hostelRepository.getReferenceById((long)8), null, null, null));
+		posts.add(new Post(9, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang5", "Dep6", 0, PostStatusEnum.NOT_APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)9), null, null, null));
+		posts.add(new Post(10, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang6", "Dep6", 0, PostStatusEnum.NOT_APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)10), null, null, null));
 		
 //		System.out.println(posts.get(0).toString());
 		postRepository.saveAll(posts);

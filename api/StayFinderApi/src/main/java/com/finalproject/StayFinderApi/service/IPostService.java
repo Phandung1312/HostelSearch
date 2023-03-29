@@ -13,9 +13,12 @@ public interface IPostService {
 	
 	Post addPost(Post post);
 	
-	List<Post> findByAccountUsernameAndStatus(String username, String status);
+	List<Post> findByAccountUsernameAndStatus(String username, int status);
+	
+	List<Post> findByStatus(int status);
 	
 	boolean deletePost(long id);
 	
+	boolean changeStatus(long id, int status);
 	
 }

@@ -15,6 +15,10 @@ public interface PostRepository extends JpaRepository<Post, Long>{
 	
 	List<Post> findByPostTimeAfter(Date date);
 	
-	public List<Post> findByAccountUsernameAndStatus(String username, String status) ;
+	List<Post> findByAccountUsernameAndStatus(String username, int status) ;
+	
+	List<Post> findByStatus(int status) ;
+	
+	
 	
 }

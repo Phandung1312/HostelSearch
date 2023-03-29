@@ -10,12 +10,14 @@ import org.springframework.stereotype.Service;
 import com.finalproject.StayFinderApi.dto.AccountRespone;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.entity.Post;
+import com.finalproject.StayFinderApi.exception.BadRequestException;
+import com.finalproject.StayFinderApi.exception.NotFoundException;
 import com.finalproject.StayFinderApi.repository.AccountRepository;
 import com.finalproject.StayFinderApi.repository.PostRepository;
-import com.finalproject.StayFinderApi.service.IFavouritesAccountPost;
+import com.finalproject.StayFinderApi.service.IFavouritesAccountPostService;
 
 @Service
-public class FavouritesAccountPostImpl implements IFavouritesAccountPost{
+public class FavouritesAccountPostImpl implements IFavouritesAccountPostService{
 
 	@Autowired
 	private AccountRepository accountRepo;
@@ -50,9 +52,9 @@ public class FavouritesAccountPostImpl implements IFavouritesAccountPost{
 				
 				return true;
 			}
-			throw new RuntimeException("username: " + username +" alreadgy favourites Post id: " + postId);
+			throw new BadRequestException("username: " + username +" already favourites Post id: " + postId);
 		}
-		throw new RuntimeException("username: " + username +" can't favourites Post id: " + postId);
+		throw new NotFoundException("username: " + username +" can't favourites Post id: " + postId);
 	}
 
 	@Override
@@ -69,7 +71,7 @@ public class FavouritesAccountPostImpl implements IFavouritesAccountPost{
 			}
 			return false;
 		}
-		throw new RuntimeException(" can't find Post by Post id: " + postId);
+		throw new NotFoundException(" can't find Post by Post id: " + postId);
 	}
 	
 
@@ -101,7 +103,7 @@ public class FavouritesAccountPostImpl implements IFavouritesAccountPost{
 			}
 		}
 	
-		throw new RuntimeException("username: " + username +" can't Unfavourites Post id: " + postId);
+		throw new NotFoundException("username: " + username +" can't Unfavourites Post id: " + postId);
 	}
 
 	@Override
@@ -116,7 +118,7 @@ public class FavouritesAccountPostImpl implements IFavouritesAccountPost{
 				
 			}).collect(Collectors.toList());
 		}
-		throw new RuntimeException(" can't find Account favourites by Post id: " + postId);
+		throw new NotFoundException(" can't find Account favourites by Post id: " + postId);
 	}
 
 	@Override
@@ -131,7 +133,7 @@ public class FavouritesAccountPostImpl implements IFavouritesAccountPost{
 //			}).collect(Collectors.toList());
 			return accountOptional.get().getListFavouritePosts();
 		}
-		throw new RuntimeException(" can't find Post by account username: " + username);
+		throw new NotFoundException(" can't find Post by account username: " + username);
 	}
 
 }

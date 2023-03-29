@@ -58,8 +58,8 @@ public class Post implements Serializable {
 	@Column(name="NumberOfFavourites",nullable = false)
 	private long numberOfFavourites;
 	
-	@Column(name="status",nullable = false,columnDefinition = "text")
-	private String status;
+	@Column(name="status",nullable = false)
+	private int status;
 	
 	@Column(name="PostTime",columnDefinition = "datetime")
 	private Date postTime;

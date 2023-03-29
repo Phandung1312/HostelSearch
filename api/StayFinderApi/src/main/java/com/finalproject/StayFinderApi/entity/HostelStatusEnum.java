@@ -1,10 +1,9 @@
 package com.finalproject.StayFinderApi.entity;
 
-public enum PositionNameEnum {
-	ROLE_ADMIN(1),
-	ROLE_USER(2);
+public enum HostelStatusEnum {
+	YES(1),NO(0);
 	private int value;
-    private PositionNameEnum(int value) {
+    private HostelStatusEnum(int value) {
         this.value = value;
     }
     
@@ -12,5 +11,4 @@ public enum PositionNameEnum {
     {
     	return this.value;
     }
-	
 }

@@ -16,7 +16,7 @@ import com.finalproject.StayFinderApi.dto.AccountRespone;
 import com.finalproject.StayFinderApi.dto.FavouritesRequest;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.entity.Post;
-import com.finalproject.StayFinderApi.service.IFavouritesAccountPost;
+import com.finalproject.StayFinderApi.service.IFavouritesAccountPostService;
 
 
 
@@ -25,7 +25,7 @@ import com.finalproject.StayFinderApi.service.IFavouritesAccountPost;
 public class FavouritesController {
 
 	@Autowired
-	private IFavouritesAccountPost favouritesService;
+	private IFavouritesAccountPostService favouritesService;
 	
 	@PostMapping
 	public boolean addFavourites(@RequestBody FavouritesRequest favouritesRequest) {

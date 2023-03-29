@@ -16,6 +16,7 @@ import com.finalproject.StayFinderApi.dto.CommentResponse;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.entity.Comment;
 import com.finalproject.StayFinderApi.entity.Post;
+import com.finalproject.StayFinderApi.exception.AppException;
 import com.finalproject.StayFinderApi.repository.AccountRepository;
 import com.finalproject.StayFinderApi.repository.CommentRepository;
 import com.finalproject.StayFinderApi.repository.PostRepository;
@@ -36,7 +37,6 @@ public class CommentServiceImpl implements ICommentService {
 	@Override
 	public List<CommentResponse> getCommentByPostId(long postId) {
 		List<Comment> comments = commentRepo.findByPostId(postId);
-		System.out.println(comments.size());
 		Collections.sort(comments, new Comparator<Comment>() {
 			@Override
 			public int compare(Comment o1, Comment o2) {
@@ -71,8 +71,7 @@ public class CommentServiceImpl implements ICommentService {
 			
 			return new CommentResponse(comment.getId(), commentRequest.getPostId(),new AccountRespone(accountOptional.get().getUsername(), accountOptional.get().getName(), accountOptional.get().getAvatar()) , comment.getContent(), comment.getCommentTime(), comment.getImage());
 		}
-		else
-			throw new RuntimeException("Can't add comment");
+		throw new AppException("Sai postId hoặc accountId");
 	}
 
 }

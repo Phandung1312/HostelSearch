@@ -36,7 +36,7 @@ import lombok.Setter;
 public class Hostel implements Serializable {
 	
 	public Hostel(String name, int capacity, double area, String address, double rentPrice, double depositPrice,
-			String status, String description, double electricPrice, double waterPrice) {
+			int status, String description, double electricPrice, double waterPrice) {
 		this.name = name;
 		this.capacity = capacity;
 		this.area = area;
@@ -73,8 +73,8 @@ public class Hostel implements Serializable {
 	@Column(name="DepositPrice")
 	private double depositPrice;
 	
-	@Column(nullable = false,columnDefinition = "text")
-	private String status;
+	@Column(nullable = false)
+	private int status;
 	
 	@Column(columnDefinition = "longtext")
 	private String description;

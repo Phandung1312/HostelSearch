@@ -30,7 +30,7 @@ public class HostelRequest implements Serializable{
 
 	private double depositPrice;
 	
-	private String status;
+	private int status;
 	
 	private String description;
 	

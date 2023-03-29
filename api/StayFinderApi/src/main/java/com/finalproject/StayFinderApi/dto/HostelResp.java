@@ -34,7 +34,7 @@ private static final long serialVersionUID = 1L;
 
 	private double depositPrice;
 	
-	private String status;
+	private int status;
 	
 	private String description;
 	

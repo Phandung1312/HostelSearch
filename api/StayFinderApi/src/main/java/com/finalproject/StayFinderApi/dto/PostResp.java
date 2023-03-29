@@ -29,7 +29,7 @@ private static final long serialVersionUID = 1L;
 	
 	private long numberOfFavourites;
 	
-	private String status;
+	private int status;
 	
 	private Date postTime;
 	
