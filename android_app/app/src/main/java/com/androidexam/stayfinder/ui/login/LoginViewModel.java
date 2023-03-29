@@ -19,6 +19,7 @@ import com.androidexam.stayfinder.databinding.LoginClass;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.io.ByteArrayOutputStream;
 
@@ -56,7 +57,7 @@ public class LoginViewModel extends BaseViewModel {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(acc -> {
-                                data.postValue(account);
+                                data.postValue(acc);
                             },
                             throwable ->{
                                 Log.d("ERROR signup",throwable.getMessage());
@@ -66,8 +67,8 @@ public class LoginViewModel extends BaseViewModel {
     public LiveData<Account> loadData(){
         return this.data;
     }
-    public void firebaseSignInWithGoogle(String email, String password){
-        isNew = accountRepository.firebaseSignInWithGoogle(email, password);
+    public void firebaseSignInWithGoogle(GoogleSignInAccount googleSignInAccount){
+        isNew = accountRepository.firebaseSignInWithGoogle(googleSignInAccount);
     }
     public LiveData<Boolean> isNewAccount(){
         return isNew;

@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.1.0'
     implementation 'com.google.firebase:firebase-database:20.1.0'
     implementation 'com.google.firebase:firebase-firestore:24.4.4'
+    implementation 'com.google.firebase:firebase-messaging:23.1.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -91,4 +92,17 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
     //Paper
     implementation 'io.github.pilgr:paperdb:2.7.2'
+    //Cricle Image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Firebase UI
+    def firebaseUI_version = "8.0.2"
+    // FirebaseUI for Firebase Realtime Database
+    implementation "com.firebaseui:firebase-ui-database:$firebaseUI_version"
+    // FirebaseUI for Cloud Firestore
+    implementation "com.firebaseui:firebase-ui-firestore:$firebaseUI_version"
+    // FirebaseUI for Firebase Auth
+    implementation "com.firebaseui:firebase-ui-auth:$firebaseUI_version"
+    // FirebaseUI for Cloud Storage
+    implementation "com.firebaseui:firebase-ui-storage:$firebaseUI_version"
 }

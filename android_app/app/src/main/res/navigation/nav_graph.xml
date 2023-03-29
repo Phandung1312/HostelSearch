@@ -19,7 +19,11 @@
         android:id="@+id/chatDetailFragment"
         android:name="com.androidexam.stayfinder.ui.chat.ChatDetailFragment"
         android:label="fragment_chat_detail"
-        tools:layout="@layout/fragment_chat_detail" />
+        tools:layout="@layout/fragment_chat_detail" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/postDetailAdminFragment"
         android:name="com.androidexam.stayfinder.ui.admin.post.PostDetailAdminFragment"
@@ -29,7 +33,11 @@
         android:id="@+id/listChatFragment"
         android:name="com.androidexam.stayfinder.ui.chat.ListChatFragment"
         android:label="listChatFragment"
-        tools:layout="@layout/fragment_list_chat" />
+        tools:layout="@layout/fragment_list_chat" >
+        <action
+            android:id="@+id/action_listChatFragment_to_chatDetailFragment"
+            app:destination="@id/chatDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/clientHomeFragment"
         android:name="com.androidexam.stayfinder.ui.client.ClientHomeFragment"

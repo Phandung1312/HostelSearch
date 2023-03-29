@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -24,8 +25,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -59,7 +62,15 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                    account.setPassword(Paper.book().read("password"));
                    loginViewModel.login(account.getAccountName(), account.getPassword());
                    loginViewModel.loadData().observe(getViewLifecycleOwner(),resAccount ->{
-                       showHome(resAccount);
+                       auth.signInWithEmailAndPassword(account.getAccountName(),
+                               account.getPassword()).addOnCompleteListener(task -> {
+                                   if(task.isSuccessful()){
+                                       showHome(resAccount);
+                                   }
+                                   else{
+                                       Log.d("Error","Login error");
+                                   }
+                       });
                    });
                 }
             }
@@ -103,31 +114,15 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                 }
             });
     private void loginFirebase(GoogleSignInAccount googleSignInAccount){
-        loginViewModel.firebaseSignInWithGoogle(googleSignInAccount.getEmail(),
-                googleSignInAccount.getId());
+        loginViewModel.firebaseSignInWithGoogle(googleSignInAccount);
         loginViewModel.isNewAccount().observe(getViewLifecycleOwner(), isNewAccount ->{
+            Log.d("NewAccount",isNewAccount.toString());
             if(isNewAccount){
                 Account account = new Account();
                 account.setAccountName(googleSignInAccount.getEmail());
                 account.setPassword(googleSignInAccount.getId());
                 account.setUserName(googleSignInAccount.getDisplayName());
-                if(googleSignInAccount.getPhotoUrl() != null){
-                    Utils.convertUrlToByteString(getContext(), googleSignInAccount.getPhotoUrl().toString()
-                            , new ImageConvertResult<String>() {
-                                @Override
-                                public void onSuccess(String result) {
-                                   // account.setAvatar(result);
-                                    loginViewModel.signUp(account);
-                                }
-                                @Override
-                                public void onError() {
-                                    Toast.makeText(getContext(), "Xảy ra lỗi xử lí ảnh đăng nhập!", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-                else{
-                    loginViewModel.signUp(account);
-                }
+                loginViewModel.signUp(account);
             }
             else{
                 loginViewModel.login(googleSignInAccount.getEmail(), googleSignInAccount.getId());
