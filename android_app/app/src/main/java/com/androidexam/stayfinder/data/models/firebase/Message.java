@@ -5,17 +5,17 @@ public class Message {
     private String receiver;
     private String content;
     private String time;
-    private boolean isSeen;
+    private boolean seen;
 
     public Message() {
     }
 
-    public Message(String sender, String receiver, String content, String time, boolean isSeen) {
+    public Message(String sender, String receiver, String content, String time, boolean seen) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
         this.time = time;
-        this.isSeen = isSeen;
+        this.seen = seen;
     }
 
     public String getSender() {
@@ -51,10 +51,10 @@ public class Message {
     }
 
     public boolean isSeen() {
-        return isSeen;
+        return seen;
     }
 
     public void setSeen(boolean seen) {
-        isSeen = seen;
+        this.seen = seen;
     }
 }

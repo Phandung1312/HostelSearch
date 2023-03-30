@@ -12,7 +12,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -52,23 +57,79 @@ public class ChatRepository {
         return getUserById(id);
     }
     public void sendMessage(String ownerId,String participantId,Message message){
-        firebaseDatabase.getReference().child("Chats").child(ownerId).push().setValue(message);
-        final DatabaseReference reference = firebaseDatabase.getReference("ChatsList").child(ownerId).child(participantId);
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(!snapshot.exists()){
-                            reference.child("id").setValue(participantId);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+        firebaseDatabase.getReference().child("Chats")
+                .child(ownerId).child(participantId).push().setValue(message);
     }
-    public DatabaseReference getReferenceChatSender(String id){
-        return firebaseDatabase.getReference().child("Chats").child(id);
+    public DatabaseReference getReferenceChatSender(String ownerId, String participantId){
+        return firebaseDatabase.getReference().child("Chats").child(ownerId).child(participantId);
+    }
+    public MutableLiveData<List<String>> getListIdUser(String id){
+        MutableLiveData<List<String>> listId = new MutableLiveData<>();
+        DatabaseReference reference = firebaseDatabase.getReference().child("Chats").child(id);
+        ValueEventListener listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> ids = new ArrayList<>();
+                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+                    String childKey = childSnapshot.getKey();
+                    ids.add(childKey);
+                }
+                listId.postValue(ids);
+                reference.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Error","DatabaseError");
+            }
+        };
+        reference.addValueEventListener(listener);
+        return listId;
+    }
+    public void seenMessage(String sender,String receiver){
+        DatabaseReference databaseReference = firebaseDatabase.getReference().child("Chats")
+                .child(receiver).child(sender);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    Message message = ds.getValue(Message.class);
+                    if(message != null){
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("seen", true);
+                        ds.getRef().updateChildren(hashMap);
+                    }
+                    databaseReference.removeEventListener(this);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+    public MutableLiveData<Message> getLastMessage(String myId, String friendId){
+        MutableLiveData<Message> messageLiveData = new MutableLiveData<>();
+        Query query = firebaseDatabase.getReference().child("Chats")
+                .child(myId).child(friendId).orderByKey().limitToLast(1);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Message message = null;
+                for(DataSnapshot ds : snapshot.getChildren()){
+                    message = ds.getValue(Message.class);
+                }
+                if(message != null){
+                    messageLiveData.postValue(message);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return messageLiveData;
     }
 }
