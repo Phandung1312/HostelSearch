@@ -10,13 +10,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.finalproject.StayFinderApi.dto.AccountLogin;
 import com.finalproject.StayFinderApi.dto.AccountProfile;
 import com.finalproject.StayFinderApi.dto.AccountReq;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.service.IAccountService;
+import com.finalproject.StayFinderApi.service.impl.FileStorageService;
 
 @RestController
 @RequestMapping("/api/account")
@@ -24,6 +28,9 @@ public class AccountController {
 
 	@Autowired
 	private IAccountService accountService;
+	
+    @Autowired
+    private FileStorageService fileStorageService;
 	
 	@GetMapping
 	public List<Account> getAll(){
@@ -51,8 +58,17 @@ public class AccountController {
 	}
 	
 	@PutMapping
-	public Account updateAccount(@RequestBody AccountProfile account) {
-		return accountService.updateAccountProfile(account);
+	public Account updateAccountProfile(@RequestParam(required = true) String username,@RequestParam(required = false) String name,@RequestParam(required = false) boolean gender,@RequestParam(required = false) String phonenumber, @RequestParam(name = "file", required = false) MultipartFile file) {
+	    if(file != null) {
+	    	String fileName = fileStorageService.storeFile(file);
+	        String imgUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+	                .path("/downloadFile/")
+	                .path(fileName)
+	                .toUriString();
+	        return accountService.updateAccountProfile(new AccountProfile(name, username, gender, phonenumber, imgUrl));
+	    }
+	    return accountService.updateAccountProfile(new AccountProfile(name, username, gender, phonenumber, null));
+		
 	}
 	
 	@DeleteMapping("/{username}")
@@ -78,5 +94,4 @@ public class AccountController {
 	public Account giveAdmin(@PathVariable String username) {
 		return accountService.giveAdmin(username);
 	}
-	
 }

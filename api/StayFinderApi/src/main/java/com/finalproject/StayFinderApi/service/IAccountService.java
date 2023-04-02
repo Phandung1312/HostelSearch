@@ -39,4 +39,6 @@ public interface IAccountService {
 	
 	public Account removeAdmin(String username);
 	
+	public Account addAvatar(String username, String avatarUrl);
+	
 }

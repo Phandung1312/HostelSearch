@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -46,7 +47,7 @@ public class Post implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="AccountId", nullable=false)
-	@JsonIgnore
+//	@JsonIgnore
 	private Account account;
 	
 	@Column(nullable = false,columnDefinition = "mediumtext")
@@ -64,10 +65,11 @@ public class Post implements Serializable {
 	@Column(name="PostTime",columnDefinition = "datetime")
 	private Date postTime;
 	
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @MapsId
     @JoinColumn(name = "HostelId")
+//	 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Hostel hostel;
 	
 	@JsonIgnore

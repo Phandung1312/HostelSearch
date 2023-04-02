@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.StayFinderApi.entity.RoomType;
+import com.finalproject.StayFinderApi.exception.AppException;
+import com.finalproject.StayFinderApi.exception.NotFoundException;
 import com.finalproject.StayFinderApi.repository.RoomTypeRepository;
 import com.finalproject.StayFinderApi.service.IRoomTypeService;
 
@@ -30,10 +32,8 @@ public class RoomtypeServiceImpl implements IRoomTypeService{
 		try {
 			roomTypeRepo.deleteById(id);
 		} catch (Exception e) {
-			throw new RuntimeException("Have error!");
+			throw new AppException("That bai, id: " + id + " khong ton tai");
 		}
-		
-		
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class RoomtypeServiceImpl implements IRoomTypeService{
 		if( optional.isPresent())
 			return optional.get();
 		else 
-			throw new RuntimeException("Can't find Roomtype by id: "+id);
+			throw new NotFoundException("Roomtype id: "+id + " khong ton tai");
 	}
 
 }

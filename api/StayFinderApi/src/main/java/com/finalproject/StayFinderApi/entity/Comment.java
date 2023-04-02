@@ -47,7 +47,7 @@ public class Comment implements Serializable {
 	private Date commentTime;
 	
 	@Column
-	private byte[] image;
+	private String imageUrl;
 
 	
 }

@@ -45,10 +45,10 @@ public class CommentServiceImpl implements ICommentService {
 		});
 		List<CommentResponse> commentResponses = comments.stream().map(i -> {
 			AccountRespone accountRespone = new AccountRespone(i.getAccount().getUsername(), i.getAccount().getName(),
-					i.getAccount().getAvatar());
+					i.getAccount().getAvatarUrl());
 
 			CommentResponse commentResp = new CommentResponse(i.getId(), i.getPost().getId(), accountRespone,
-					i.getContent(), i.getCommentTime(), i.getImage());
+					i.getContent(), i.getCommentTime(), i.getImageUrl());
 			return commentResp;
 		}).collect(Collectors.toList());
 
@@ -67,9 +67,10 @@ public class CommentServiceImpl implements ICommentService {
 		Optional<Account> accountOptional = accountRepo.findByUsername(commentRequest.getUsername());
 		if(postOptional.isPresent() && accountOptional.isPresent())
 		{
-			Comment comment = commentRepo.save(new Comment(0, postOptional.get(), accountOptional.get(), commentRequest.getContent(), new Date(), commentRequest.getImage()));
+			String imgUrl = commentRequest.getImageUrl() == null ? null : commentRequest.getImageUrl();
+			Comment comment = commentRepo.save(new Comment(0, postOptional.get(), accountOptional.get(), commentRequest.getContent(), new Date(), imgUrl));
 			
-			return new CommentResponse(comment.getId(), commentRequest.getPostId(),new AccountRespone(accountOptional.get().getUsername(), accountOptional.get().getName(), accountOptional.get().getAvatar()) , comment.getContent(), comment.getCommentTime(), comment.getImage());
+			return new CommentResponse(comment.getId(), commentRequest.getPostId(),new AccountRespone(accountOptional.get().getUsername(), accountOptional.get().getName(), accountOptional.get().getAvatarUrl()) , comment.getContent(), comment.getCommentTime(), comment.getImageUrl());
 		}
 		throw new AppException("Sai postId hoặc accountId");
 	}

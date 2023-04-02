@@ -5,12 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class AccountRespone {
-	private String username;
-	
-	private String name;
-	
-	private String avatarUrl;
+@NoArgsConstructor
+public class ImageResponse {
+	private long id;
+	private String url;
+	private long hostelId;
 }

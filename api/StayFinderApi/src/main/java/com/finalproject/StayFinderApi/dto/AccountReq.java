@@ -16,5 +16,5 @@ public class AccountReq {
 	
 	private String name;
 	
-	private byte[] avatar;
+	private String avatarUrl;
 }

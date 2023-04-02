@@ -16,8 +16,8 @@ public class AccountProfile {
 	private String username;
 	
 	private boolean gender;
-
-	private byte[] avatar;
 	
 	private String phonenumber;
+	
+	private String avatarUrl;
 }

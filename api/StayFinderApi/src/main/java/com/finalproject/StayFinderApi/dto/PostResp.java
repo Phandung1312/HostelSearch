@@ -19,9 +19,7 @@ private static final long serialVersionUID = 1L;
 	
 	private long id;
 	
-	private String accountName;
-	 
-	private	long accountId; 
+	AccountRespone account;
 	
 	private String title;
 	
@@ -33,7 +31,5 @@ private static final long serialVersionUID = 1L;
 	
 	private Date postTime;
 	
-	@JsonIgnore
-	private HostelResp hostel;
-	
+	private long hostelId;
 }

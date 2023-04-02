@@ -4,10 +4,9 @@ package com.finalproject.StayFinderApi.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.hibernate.annotations.CurrentTimestampGeneration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalproject.StayFinderApi.entity.Account;
@@ -31,7 +30,9 @@ import com.finalproject.StayFinderApi.repository.PostRepository;
 import com.finalproject.StayFinderApi.repository.RoomTypeRepository;
 import com.finalproject.StayFinderApi.repository.ScheduleRepository;
 
+
 @RestController
+@RequestMapping("/api")
 public class TestMyAPI {
 
 	@Autowired
@@ -54,7 +55,7 @@ public class TestMyAPI {
 	
 	
 	@SuppressWarnings("deprecation")
-	@GetMapping("test")
+	@GetMapping("test/create-sample-data")
 	public boolean getAll(){
 		List<RoomType> roomTypes = new ArrayList<RoomType>();
 		roomTypes.add(new RoomType(1, "Chung cu", null));
@@ -70,12 +71,11 @@ public class TestMyAPI {
 		
 		
 		positionRepository.saveAll(positions);
-//		System.out.println(positions.toString());
 		List<Account> accounts = new ArrayList<Account>();
 		accounts.add(new Account(0, "test1", "test1@", "123456", true, AccountStatusEnum.ENABLE.getValue(), 
 				null, "0359235245", positionRepository.getReferenceById((long) 1), null, null, null));
 		accounts.add(new Account(0, "test2", "test2@", "123456", true,  AccountStatusEnum.ENABLE.getValue(), 
-				null, "0359235245", positionRepository.getReferenceById((long) 1), null, null, null));
+				null, "0359235242", positionRepository.getReferenceById((long) 1), null, null, null));
 		accounts.add(new Account(0, "test3", "test3@", "123456", true,  AccountStatusEnum.ENABLE.getValue(), 
 				null, "0359235245", positionRepository.getReferenceById((long) 1), null, null, null));
 		accounts.add(new Account(0, "test4", "test4@", "123456", true,  AccountStatusEnum.ENABLE.getValue(), 
@@ -93,20 +93,13 @@ public class TestMyAPI {
 		accounts.add(new Account(0, "test10", "test10@", "123456", true,  AccountStatusEnum.ENABLE.getValue(), 
 				null, "0359235245", positionRepository.getReferenceById((long) 2), null, null, null));
 		accReq.saveAll(accounts);
+				
+		Account account1 = accReq.findById((long)1).get();
+		Account account3 = accReq.findById((long)3).get();
+		List<Account> likeAccounts = new ArrayList<Account>();
+		likeAccounts.add(account3);
+		likeAccounts.add(account1);
 		
-//		List<Post> posts = new ArrayList<Post>();
-//		posts.add(new Post(1, accReq.getReferenceById((long) 1), "Phong Tro tai Au co", "Dep", 3, "0", null, hostelRepository.getReferenceById((long)1), null, null, null));
-//		posts.add(new Post(2, accReq.getReferenceById((long) 2), "Phong Tro tai Nguyen Luong Bang1", "Dep1", 3, "1", null, hostelRepository.getReferenceById((long)2), null, null, null));
-//		posts.add(new Post(1, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang2", "Dep2", 3, "0", null, hostelRepository.getReferenceById((long)3), null, null, null));
-//		posts.add(new Post(2, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "Dep3", 3, "0", null,hostelRepository.getReferenceById((long)4), null, null, null));
-//		posts.add(new Post(1, accReq.getReferenceById((long) 3), "Phong Tro tai Nguyen Luong Bang3", "De4p", 3, "1", null, hostelRepository.getReferenceById((long)5), null, null, null));
-//		posts.add(new Post(2, accReq.getReferenceById((long) 5), "Phong Tro tai Nguyen Luong Bang", "Dep", 3, "0", null, hostelRepository.getReferenceById((long)6), null, null, null));
-//		posts.add(new Post(1, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "De4p", 3, "0", null, hostelRepository.getReferenceById((long)7), null, null, null));
-//		posts.add(new Post(2, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang4", "De5p", 3, "2", null,hostelRepository.getReferenceById((long)8), null, null, null));
-//		posts.add(new Post(1, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang5", "Dep6", 3, "0", null, hostelRepository.getReferenceById((long)9), null, null, null));
-//		posts.add(new Post(2, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang6", "Dep6", 3, "2", null, hostelRepository.getReferenceById((long)10), null, null, null));
-//		
-//		postRepository.saveAll(posts);
 		
 		List<Hostel> hostels = new ArrayList<Hostel>();
 		hostels.add(new Hostel(1, "Phong1", 3, 24.0, "12 Nguyen Luong Bang", 1800000.0, 500000.0, HostelStatusEnum.NO.getValue(), "Phong dep1",roomTypes.get(0), 3500, 8000, null, null));
@@ -139,8 +132,8 @@ public class TestMyAPI {
 		imageRepository.saveAll(images);
 		
 		List<Post> posts = new ArrayList<Post>();
-		posts.add(new Post(1, accReq.getReferenceById((long) 1), "Phong Tro tai Au co", "Dep", 0, PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)1), null, null, null));
-		posts.add(new Post(2, accReq.getReferenceById((long) 2), "Phong Tro tai Nguyen Luong Bang1", "Dep1", 0, PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)2), null, null, null));
+		posts.add(new Post(1, accReq.getReferenceById((long) 1), "Phong Tro tai Au co", "Dep", likeAccounts.size(), PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)1), null, null, likeAccounts));
+		posts.add(new Post(2, accReq.getReferenceById((long) 2), "Phong Tro tai Nguyen Luong Bang1", "Dep1", likeAccounts.size(), PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)2), null, null, likeAccounts));
 		posts.add(new Post(3, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang2", "Dep2", 0, PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)3), null, null, null));
 		posts.add(new Post(4, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang", "Dep3", 0, PostStatusEnum.APPROVED.getValue(), new Date(),hostelRepository.getReferenceById((long)4), null, null, null));
 		posts.add(new Post(5, accReq.getReferenceById((long) 3), "Phong Tro tai Nguyen Luong Bang3", "De4p", 0, PostStatusEnum.APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)5), null, null, null));
@@ -150,7 +143,6 @@ public class TestMyAPI {
 		posts.add(new Post(9, accReq.getReferenceById((long) 4), "Phong Tro tai Nguyen Luong Bang5", "Dep6", 0, PostStatusEnum.NOT_APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)9), null, null, null));
 		posts.add(new Post(10, accReq.getReferenceById((long) 1), "Phong Tro tai Nguyen Luong Bang6", "Dep6", 0, PostStatusEnum.NOT_APPROVED.getValue(), new Date(), hostelRepository.getReferenceById((long)10), null, null, null));
 		
-//		System.out.println(posts.get(0).toString());
 		postRepository.saveAll(posts);
 		
 		List<Comment> comments = new ArrayList<Comment>();
@@ -173,7 +165,7 @@ public class TestMyAPI {
 		schedules.add(new Schedule(0, accounts.get(0).getUsername(), "hao1", "0256554654", "Hen gap1", new Date(), postRepository.getReferenceById((long)1)));
 		schedules.add(new Schedule(0,  accounts.get(1).getUsername(), "hao1", "0256554654", "Hen gap1", new Date(), postRepository.getReferenceById((long)1)));
 		schedules.add(new Schedule(0,  accounts.get(1).getUsername(), "hao1", "0256554654", "Hen gap1", new Date(), postRepository.getReferenceById((long)2)));
-		schedules.add(new Schedule(0,  null, "hao1", "0256554654", "Hen gap1", new Date(), postRepository.getReferenceById((long)4)));
+		schedules.add(new Schedule(0,  accounts.get(1).getUsername(), "hao4", "0256554654", "Hen gap1", new Date(), postRepository.getReferenceById((long)4)));
 		schedules.add(new Schedule(0,   accounts.get(0).getUsername(), "hao3", "0256554654", "Hen gap3", new Date(), postRepository.getReferenceById((long)3)));
 		
 		scheduleRepository.saveAll(schedules);

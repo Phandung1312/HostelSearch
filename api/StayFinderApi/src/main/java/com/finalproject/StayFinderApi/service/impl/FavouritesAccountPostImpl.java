@@ -8,11 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.StayFinderApi.dto.AccountRespone;
+import com.finalproject.StayFinderApi.dto.HostelResp;
+import com.finalproject.StayFinderApi.dto.PagedResponse;
+import com.finalproject.StayFinderApi.dto.PostResp;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.entity.Post;
+import com.finalproject.StayFinderApi.exception.AppException;
 import com.finalproject.StayFinderApi.exception.BadRequestException;
 import com.finalproject.StayFinderApi.exception.NotFoundException;
 import com.finalproject.StayFinderApi.repository.AccountRepository;
+import com.finalproject.StayFinderApi.repository.HostelRepository;
 import com.finalproject.StayFinderApi.repository.PostRepository;
 import com.finalproject.StayFinderApi.service.IFavouritesAccountPostService;
 
@@ -24,6 +29,7 @@ public class FavouritesAccountPostImpl implements IFavouritesAccountPostService{
 	
 	@Autowired
 	private PostRepository postRepo;
+	
 	
 	@Override
 	public boolean addFavourites(String username, long postId) {
@@ -54,7 +60,7 @@ public class FavouritesAccountPostImpl implements IFavouritesAccountPostService{
 			}
 			throw new BadRequestException("username: " + username +" already favourites Post id: " + postId);
 		}
-		throw new NotFoundException("username: " + username +" can't favourites Post id: " + postId);
+		throw new AppException("username: " + username +" can't favourites Post id: " + postId);
 	}
 
 	@Override
@@ -114,7 +120,7 @@ public class FavouritesAccountPostImpl implements IFavouritesAccountPostService{
 	
 			Post post = postOptional.get();
 			return post.getListAccountLiked().stream().map(acc -> {
-				return new AccountRespone(acc.getUsername(), acc.getName(), acc.getAvatar());
+				return new AccountRespone(acc.getUsername(), acc.getName(), acc.getAvatarUrl());
 				
 			}).collect(Collectors.toList());
 		}
@@ -122,18 +128,8 @@ public class FavouritesAccountPostImpl implements IFavouritesAccountPostService{
 	}
 
 	@Override
-	public List<Post> getListPostFavoritesByUsername(String username) {
-		Optional<Account> accountOptional = accountRepo.findByUsername(username);
-		if( accountOptional.isPresent())
-		{
-	
-
-//			return accountOptional.get().getListFavouritePosts().stream().map(post -> {
-//				return new PostResp(post.getId(), post.getAccount().getUsername(), post.getAccount().getId(), post.getTitle(), post.getContent(), post.getNumberOfFavourites(), post.getStatus(), post.getPostTime(), null);
-//			}).collect(Collectors.toList());
-			return accountOptional.get().getListFavouritePosts();
-		}
-		throw new NotFoundException(" can't find Post by account username: " + username);
+	public PagedResponse<HostelResp> getListHostelFavoritesByUsername(String username) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
 }

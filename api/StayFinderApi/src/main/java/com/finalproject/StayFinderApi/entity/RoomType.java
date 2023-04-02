@@ -39,11 +39,11 @@ public class RoomType implements Serializable{
 	@Column(name="RoomTypeName",nullable = false,columnDefinition = "text")
 	private String roomTypeName;
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy="roomtype",  cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Hostel> hostels;
 	
-	
+	@JsonIgnore
 	public List<Hostel> getHostels(){
 		return this.hostels == null ? null : new ArrayList<Hostel>(this.hostels);
 	}

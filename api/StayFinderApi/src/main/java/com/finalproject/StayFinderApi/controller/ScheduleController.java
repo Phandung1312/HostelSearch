@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.finalproject.StayFinderApi.dto.ScheduleRequest;
+import com.finalproject.StayFinderApi.dto.ScheduleResponse;
 import com.finalproject.StayFinderApi.entity.Schedule;
 import com.finalproject.StayFinderApi.service.IScheduleService;
 
@@ -22,17 +23,17 @@ public class ScheduleController {
 	private IScheduleService scheduleService;
 	
 	@GetMapping("/post/{postId}")
-	public List<Schedule> getSchedulesByPostId(@PathVariable long postId) {
+	public List<ScheduleResponse> getSchedulesByPostId(@PathVariable long postId) {
 		return scheduleService.getSchedulesByPostId(postId);
 	}
 
 	@GetMapping("/account/{username}")
-	public List<Schedule> getSchedulesByRenterId(@PathVariable String username) {
+	public List<ScheduleResponse> getSchedulesByRenterId(@PathVariable String username) {
 		return scheduleService.getSchedulesByRenterUsername(username);
 	}
 
 	@PostMapping
-	public Schedule addSchedule(@RequestBody ScheduleRequest scheduleRequest) {
+	public ScheduleResponse addSchedule(@RequestBody ScheduleRequest scheduleRequest) {
 		return scheduleService.addSchedule(scheduleRequest);
 	}
 }

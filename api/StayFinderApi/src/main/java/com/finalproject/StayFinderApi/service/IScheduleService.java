@@ -3,14 +3,15 @@ package com.finalproject.StayFinderApi.service;
 import java.util.List;
 
 import com.finalproject.StayFinderApi.dto.ScheduleRequest;
+import com.finalproject.StayFinderApi.dto.ScheduleResponse;
 import com.finalproject.StayFinderApi.entity.Schedule;
 
 public interface IScheduleService {
 	
 	
-	List<Schedule> getSchedulesByPostId(long postId);
+	List<ScheduleResponse> getSchedulesByPostId(long postId);
 	
-	List<Schedule> getSchedulesByRenterUsername(String username);
+	List<ScheduleResponse> getSchedulesByRenterUsername(String username);
 	
-	Schedule addSchedule(ScheduleRequest scheduleRequest);
+	ScheduleResponse addSchedule(ScheduleRequest scheduleRequest);
 }

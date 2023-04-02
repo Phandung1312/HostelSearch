@@ -40,4 +40,14 @@ public class RestControllerExceptionHandler {
 	
 		return new ErrorResponse(false,messages, HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ExceptionHandler(FileStorageException.class)
+	public ErrorResponse resolveException(FileStorageException ex)
+	{		
+//		String message = "Please provide Request Body in valid JSON format";
+		List<String> messages = new ArrayList<>(1);
+		messages.add(ex.getMessage());
+	
+		return new ErrorResponse(false,messages, HttpStatus.NOT_FOUND.getReasonPhrase(),HttpStatus.NOT_FOUND);
+	}
 }

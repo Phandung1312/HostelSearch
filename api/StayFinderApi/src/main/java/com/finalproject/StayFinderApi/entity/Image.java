@@ -34,7 +34,7 @@ public class Image implements Serializable {
 	private long id;
 	
 	@Column
-	private Byte[] source;
+	private String url;
 	
 	@Column(columnDefinition = "text")
 	private String name;

@@ -2,16 +2,17 @@ package com.finalproject.StayFinderApi.service;
 
 import java.util.List;
 
+import com.finalproject.StayFinderApi.dto.ImageResponse;
 import com.finalproject.StayFinderApi.entity.Image;
 
 public interface IImageService  {
 	
-	List<Image> addListImage(List<Image> images);
+	ImageResponse addImage(String url, String fileName, long hostelId);
 	
 	List<Image> getImagesByHostelId(Long id);
 	
 	Boolean deleteImageById(Long id);
 	
-	Image addImage(Image image);
+	List<ImageResponse> addImages(List<String> urls, String filename, long hostelId);
 	
 }

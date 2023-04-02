@@ -7,9 +7,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.finalproject.StayFinderApi.dto.AccountRespone;
 import com.finalproject.StayFinderApi.dto.PostResp;
 import com.finalproject.StayFinderApi.entity.Post;
 import com.finalproject.StayFinderApi.entity.PostStatusEnum;
+import com.finalproject.StayFinderApi.exception.AppException;
+import com.finalproject.StayFinderApi.exception.BadRequestException;
+import com.finalproject.StayFinderApi.exception.NotFoundException;
 import com.finalproject.StayFinderApi.repository.PostRepository;
 import com.finalproject.StayFinderApi.service.IPostService;
 
@@ -18,15 +22,12 @@ public class PostServiceImpl implements IPostService {
 
 	@Autowired
 	private PostRepository postRepo;
-	@Autowired
-	private HostelServiceImpl hostelService;
 
 	@Override
 	public List<PostResp> getAll() {
 		return postRepo.findAll().stream().map(p -> {
-			PostResp postResp = new PostResp(p.getId(), p.getAccount().getName(), p.getAccount().getId(), p.getTitle(),
-					p.getContent(), p.getNumberOfFavourites(), p.getStatus(), p.getPostTime(),
-					hostelService.getHostelRespById(p.getId()));
+			PostResp postResp = new PostResp(p.getId(), new AccountRespone(p.getAccount().getUsername(), p.getAccount().getName(), p.getAccount().getAvatarUrl()), p.getTitle(),
+					p.getContent(), p.getNumberOfFavourites(), p.getStatus(), p.getPostTime(), p.getHostel().getId());
 			return postResp;
 		}).collect(Collectors.toList());
 	}
@@ -37,7 +38,7 @@ public class PostServiceImpl implements IPostService {
 		if (optional.isPresent())
 			return optional.get();
 		else {
-			throw new RuntimeException("Find Post by id Fail!");
+			throw new NotFoundException("Post id: " + id + " khong ton tai");
 		}
 	}
 
@@ -63,7 +64,7 @@ public class PostServiceImpl implements IPostService {
 	public List<Post> findByStatus(int status) {
 		if(status == PostStatusEnum.APPROVED.getValue() || status == PostStatusEnum.NOT_APPROVED.getValue() ||status == PostStatusEnum.NOT_YET_APPROVED.getValue())
 			return  postRepo.findByStatus(status);
-		throw new RuntimeException("Can't find by status");
+		throw new BadRequestException("Status id: " + status + " khong ton tai");
 	}
 
 	@Override
@@ -71,10 +72,14 @@ public class PostServiceImpl implements IPostService {
 		Optional<Post> optional = postRepo.findById(id);
 		if (optional.isPresent()) {
 			Post p = optional.get();
-			p.setStatus(status);
-			return true;
+			if(status == PostStatusEnum.APPROVED.getValue() || status == PostStatusEnum.NOT_APPROVED.getValue() ||status == PostStatusEnum.NOT_YET_APPROVED.getValue())
+			{
+				p.setStatus(status);
+				return true;
+			}
+			throw new BadRequestException("Status id: " + status + " khong ton tai");
 		}
-		throw new RuntimeException("Find Post by id Fail!");
+		throw new AppException("That bai, id: "+ id + " khong ton tai");
 	}
 
 }

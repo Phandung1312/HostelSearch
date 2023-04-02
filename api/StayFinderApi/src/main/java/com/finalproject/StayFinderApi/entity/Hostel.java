@@ -82,7 +82,7 @@ public class Hostel implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="RoomTypeId", nullable=false)
-//	@JsonIgnore
+
 	private RoomType roomtype;
 	
 	
@@ -99,6 +99,16 @@ public class Hostel implements Serializable {
 	
 	@OneToMany(mappedBy="hostel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images;
+	
+//	@JsonIgnore
+	public RoomType getRoomtype() {
+		return this.roomtype;
+	}
+	
+//	@JsonIgnore
+	public Post getPost() {
+		return this.post;
+	}
 
 	public void setImages(List<Image> images) {
 		if (images == null)

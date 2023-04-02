@@ -39,14 +39,14 @@ private static final long serialVersionUID = 1L;
 	private String description;
 	
 //	@JsonIgnore
-	private RoomType roomtype;
+	private RoomtypeResponse roomtype;
 
 	private double electricPrice;
 
 	private double waterPrice;
 	
 //	@JsonIgnore
-	private Post post;
+	private PostResp post;
 
 	private List<Image> images;
 	

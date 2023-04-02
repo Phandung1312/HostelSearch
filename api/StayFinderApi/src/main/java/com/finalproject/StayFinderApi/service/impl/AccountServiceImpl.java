@@ -37,7 +37,7 @@ public class AccountServiceImpl implements IAccountService{
 		}
 		
 		Account account = new Account();
-		account.setAvatar(newAccount.getAvatar());
+		account.setAvatarUrl(newAccount.getAvatarUrl());
 		account.setUsername(newAccount.getUsername());
 		account.setPassword(newAccount.getPassword());
 		account.setName(newAccount.getName());
@@ -59,28 +59,19 @@ public class AccountServiceImpl implements IAccountService{
 		if(optional.isPresent())
 		{
 			Account account = optional.get();
-			account.setAvatar(newAccount.getAvatar());
-			account.setName(newAccount.getName());
-			account.setPhonenumber(newAccount.getPhonenumber());
-			account.setGender(newAccount.isGender());
+			if(newAccount.getName()!= null)
+				account.setName(newAccount.getName());
+			if(newAccount.getPhonenumber()!= null)
+				account.setPhonenumber(newAccount.getPhonenumber());
+			if(newAccount.isGender())
+				account.setGender(newAccount.isGender());
+			if(newAccount.getAvatarUrl()!= null)
+				account.setAvatarUrl(newAccount.getAvatarUrl());
 			return accountRepo.save(account);
 		}
 		else {
 			throw new NotFoundException("Username: " + newAccount.getUsername() + " không tồn tại trong hệ thống" );
 		}
-		
-		
-//		
-//		Account account = accountRepo.getAccountByUserName(newAccount.getUsername());
-//		account.setAvatar(newAccount.getAvatar());
-//		account.setName(newAccount.getName());
-//		account.setPhonenumber(newAccount.getPhonenumber());
-//		account.setPassword(newAccount.getPassword());
-//		account.setGender(newAccount.isGender());
-////		account.setPosition(newAccount.getPosition());
-		
-		
-		
 	}
 
 	@Override
@@ -203,6 +194,16 @@ public class AccountServiceImpl implements IAccountService{
 		if(optional.isPresent()) {
 			Account account = optional.get();
 			account.setPosition(positionRepo.findByPositionName(PositionNameEnum.ROLE_USER).get());
+			return accountRepo.save(account);
+		}
+		throw new RuntimeException("Can't find account by username: " + username);
+	}
+	@Override
+	public Account addAvatar(String username, String avatarUrl) {
+		Optional<Account> optional = accountRepo.findByUsername(username);
+		if(optional.isPresent()) {
+			Account account = optional.get();
+			account.setAvatarUrl(avatarUrl);
 			return accountRepo.save(account);
 		}
 		throw new RuntimeException("Can't find account by username: " + username);

@@ -1,6 +1,5 @@
 package com.finalproject.StayFinderApi.service.impl;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -8,23 +7,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.finalproject.StayFinderApi.dto.AccountRespone;
 import com.finalproject.StayFinderApi.dto.HostelRequest;
 import com.finalproject.StayFinderApi.dto.HostelResp;
 import com.finalproject.StayFinderApi.dto.PagedResponse;
+import com.finalproject.StayFinderApi.dto.PostResp;
+import com.finalproject.StayFinderApi.dto.RoomtypeResponse;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.entity.Hostel;
-import com.finalproject.StayFinderApi.entity.HostelStatusEnum;
 import com.finalproject.StayFinderApi.entity.Post;
 import com.finalproject.StayFinderApi.entity.PostStatusEnum;
 import com.finalproject.StayFinderApi.entity.RoomType;
+import com.finalproject.StayFinderApi.exception.AppException;
+import com.finalproject.StayFinderApi.exception.BadRequestException;
 import com.finalproject.StayFinderApi.exception.NotFoundException;
 import com.finalproject.StayFinderApi.repository.AccountRepository;
 import com.finalproject.StayFinderApi.repository.HostelRepository;
@@ -32,7 +34,6 @@ import com.finalproject.StayFinderApi.repository.ImageRepository;
 import com.finalproject.StayFinderApi.repository.PostRepository;
 import com.finalproject.StayFinderApi.repository.RoomTypeRepository;
 import com.finalproject.StayFinderApi.service.IHostelService;
-import com.finalproject.StayFinderApi.utils.AppConstants;
 import com.finalproject.StayFinderApi.utils.AppUtils;
 
 @Service
@@ -58,8 +59,9 @@ public class HostelServiceImpl implements IHostelService {
 		Hostel newHostel = new Hostel(hostelReq.getName(), hostelReq.getCapacity(), hostelReq.getArea(),
 				hostelReq.getAddress(), hostelReq.getRentPrice(), hostelReq.getDepositPrice(), hostelReq.getStatus(),
 				hostelReq.getDescription(), hostelReq.getElectricPrice(), hostelReq.getWaterPrice());
-		
-		RoomType roomType = roomTypeRepo.findById(hostelReq.getRoomTypeId()).orElseThrow(()->new NotFoundException("Không tồn tại roomtypeId"));
+
+		RoomType roomType = roomTypeRepo.findById(hostelReq.getRoomTypeId())
+				.orElseThrow(() -> new NotFoundException("Không tồn tại roomtypeId"));
 		newHostel.setRoomtype(roomType);
 
 		Hostel hostel = hostelRepo.save(newHostel);
@@ -86,12 +88,16 @@ public class HostelServiceImpl implements IHostelService {
 		post.setNumberOfFavourites(0);
 		post.setPostTime(new Date());
 		postRepo.save(post);
-
 		Hostel h = hostelRepo.findById(hostel.getId()).get();
-
+		PostResp postResp = new PostResp(post.getId(),
+				new AccountRespone(post.getAccount().getUsername(), post.getAccount().getName(),
+						post.getAccount().getAvatarUrl()),
+				post.getTitle(), post.getContent(), post.getNumberOfFavourites(), post.getStatus(), post.getPostTime(),
+				post.getHostel().getId());
 		return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(), h.getRentPrice(),
-				h.getDepositPrice(), h.getStatus(), h.getDescription(), h.getRoomtype(), h.getElectricPrice(),
-				h.getWaterPrice(), post, imageRepo.findByHostelId(h.getId()));
+				h.getDepositPrice(), h.getStatus(), h.getDescription(),
+				new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()), h.getElectricPrice(),
+				h.getWaterPrice(), postResp, imageRepo.findByHostelId(h.getId()));
 	}
 
 	@Override
@@ -108,8 +114,7 @@ public class HostelServiceImpl implements IHostelService {
 			newHostel.setRentPrice(hostel.getRentPrice());
 			newHostel.setWaterPrice(hostel.getWaterPrice());
 			newHostel.setRoomtype(roomTypeRepo.findById(hostel.getRoomTypeId()).get());
-			
-			
+
 			if (!hostel.getImages().isEmpty()) {
 				hostel.getImages().forEach(img -> {
 					img.setHostel(newHostel);
@@ -117,15 +122,20 @@ public class HostelServiceImpl implements IHostelService {
 				});
 			}
 			Hostel h = hostelRepo.save(newHostel);
-			
+
 			Post post = postRepo.findById(hostel.getId()).get();
 			post.setContent(hostel.getPost().getContent());
 			post.setTitle(hostel.getPost().getTitle());
 			postRepo.save(post);
-			
+			PostResp postResp = new PostResp(post.getId(),
+					new AccountRespone(post.getAccount().getUsername(), post.getAccount().getName(),
+							post.getAccount().getAvatarUrl()),
+					post.getTitle(), post.getContent(), post.getNumberOfFavourites(), post.getStatus(),
+					post.getPostTime(), post.getHostel().getId());
 			return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
-					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(), h.getRoomtype(),
-					h.getElectricPrice(), h.getWaterPrice(), h.getPost(), imageRepo.findByHostelId(h.getId()));
+					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(),
+					new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()),
+					h.getElectricPrice(), h.getWaterPrice(), postResp, imageRepo.findByHostelId(h.getId()));
 		} else {
 			throw new RuntimeException("Can't update Hostel, can't find hostel by id: " + hostel.getId());
 		}
@@ -139,34 +149,26 @@ public class HostelServiceImpl implements IHostelService {
 	}
 
 	@Override
-	public PagedResponse <Hostel> getAllHostel(int page, int size) {
+	public PagedResponse<HostelResp> getAllHostel(int page, int size) {
 		AppUtils.validatePageNumberAndSize(page, size);
 		PageRequest pageable = PageRequest.of(page, size);
-		Page<Hostel> hostels = hostelRepo.findAll(pageable);
-		
-		
-		List<Hostel> photoResponses = new ArrayList<>(hostels.getContent().size());
-		photoResponses.addAll(hostels.getContent());
-		return new PagedResponse<>(photoResponses, hostels.getNumber(), hostels.getSize(), hostels.getTotalElements(),
-				hostels.getTotalPages(), hostels.isLast());
-//				.stream().map(h -> {
-//			HostelResp hostelResp = new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
-//					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(), h.getRoomtype(),
-//					h.getElectricPrice(), h.getWaterPrice(), h.getPost(), h.getImages());
-//			return hostelResp;
-//		}).collect(Collectors.toList());
-//		Collections.sort(r, new Comparator<HostelResp>() {
-//			@Override
-//			public int compare(HostelResp o1, HostelResp o2) {
-//				return o2.getPost().getPostTime().compareTo(o1.getPost().getPostTime());
-//			}
-//		});
-//		return r;
-		
-	}
+		Page<Hostel> hostelsPage = hostelRepo.findAll(pageable);
 
-	public List<Hostel> getAll() {
-		return hostelRepo.findAll();
+		List<HostelResp> hostelResponse = new ArrayList<>(hostelsPage.getContent().size());
+
+		hostelResponse = hostelsPage.getContent().stream().map(h -> {
+			PostResp postResp = new PostResp(h.getPost().getId(),
+					new AccountRespone(h.getPost().getAccount().getUsername(), h.getPost().getAccount().getName(),
+							h.getPost().getAccount().getAvatarUrl()),
+					h.getPost().getTitle(), h.getPost().getContent(), h.getPost().getNumberOfFavourites(),
+					h.getPost().getStatus(), h.getPost().getPostTime(), h.getPost().getHostel().getId());
+			return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
+					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(),
+					new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()),
+					h.getElectricPrice(), h.getWaterPrice(), postResp, imageRepo.findByHostelId(h.getId()));
+		}).collect(Collectors.toList());
+		return new PagedResponse<>(hostelResponse, hostelsPage.getNumber(), hostelsPage.getSize(),
+				hostelsPage.getTotalElements(), hostelsPage.getTotalPages(), hostelsPage.isLast());
 	}
 
 	@Override
@@ -174,52 +176,68 @@ public class HostelServiceImpl implements IHostelService {
 		Optional<Hostel> hostel = hostelRepo.findById(id);
 		if (hostel.isPresent()) {
 			Hostel h = hostel.get();
-			HostelResp hostelResp = new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
-					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(), h.getRoomtype(),
-					h.getElectricPrice(), h.getWaterPrice(), h.getPost(), h.getImages());
-			return hostelResp;
+			Post post = postRepo.findById(h.getId()).get();
+			PostResp postResp = new PostResp(post.getId(),
+					new AccountRespone(post.getAccount().getUsername(), post.getAccount().getName(),
+							post.getAccount().getAvatarUrl()),
+					post.getTitle(), post.getContent(), post.getNumberOfFavourites(), post.getStatus(),
+					post.getPostTime(), post.getHostel().getId());
+			return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
+					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(),
+					new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()),
+					h.getElectricPrice(), h.getWaterPrice(), postResp, h.getImages());
 		} else
-			return null;
+		throw new BadRequestException("Hostel id: " + id + " khong ton tai trong he thong");
 	}
 
 	@Override
-	public Hostel getHostelByPostId(long id) {
+	public HostelResp getHostelByPostId(long id) {
+		Hostel h = hostelRepo.findByPostId(id)
+				.orElseThrow(() -> new BadRequestException("Post id: " + id + " khong ton tai trong he thong"));
+		Post post = postRepo.findById(h.getId()).get();
+		PostResp postResp = new PostResp(post.getId(),
+				new AccountRespone(post.getAccount().getUsername(), post.getAccount().getName(),
+						post.getAccount().getAvatarUrl()),
+				post.getTitle(), post.getContent(), post.getNumberOfFavourites(), post.getStatus(), post.getPostTime(),
+				post.getHostel().getId());
+		return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(), h.getRentPrice(),
+				h.getDepositPrice(), h.getStatus(), h.getDescription(),
+				new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()), h.getElectricPrice(),
+				h.getWaterPrice(), postResp, h.getImages());
 
-		return hostelRepo.findByPostId(id);
 	}
 
-
 	@Override
-	public PagedResponse<Hostel> findByManyOption(int page, int size, String address, double areaMin, double areMax, double minRent, double maxRent,
-			int capacity, long idRoomType) {
+	public PagedResponse<HostelResp> findByManyOption(int page, int size, String address, double areaMin, double areMax,
+			double minRent, double maxRent, int capacity, long idRoomType) {
+		AppUtils.validatePageNumberAndSize(page, size);
+		PageRequest pageable = PageRequest.of(page, size);
+		Page<Hostel> hostelsPage;
+		if(idRoomType == (long) 0)
+			hostelsPage = hostelRepo.findByManyOption2(address, areaMin, areMax, minRent, maxRent, capacity, pageable);
 		
-		List<Hostel> r = hostelRepo.findByStatus(HostelStatusEnum.NO.getValue()).stream()
-				.filter(item -> item.getAddress().toLowerCase().contains(address.toLowerCase())
-						&& item.getArea() >= areaMin && item.getArea() <= areMax && item.getRentPrice() >= minRent
-						&& item.getRentPrice() <= maxRent && item.getCapacity() <= capacity && item.getPost().getStatus() == PostStatusEnum.APPROVED.getValue())
-				.collect(Collectors.toList());
-		if (idRoomType == 0) {
-			Collections.sort(r, new Comparator<Hostel>() {
-				@Override
-				public int compare(Hostel o1, Hostel o2) {
-					return o2.getPost().getPostTime().compareTo(o1.getPost().getPostTime());
-				}
-			});
-			return null;
-		}
-			
 		else {
-			r=  r.stream().filter(item -> item.getRoomtype().getId() == idRoomType).collect(Collectors.toList());
-			Collections.sort(r, new Comparator<Hostel>() {
-				@Override
-				public int compare(Hostel o1, Hostel o2) {
-					return o2.getPost().getPostTime().compareTo(o1.getPost().getPostTime());
-				}
-			});
-			return null;
-			
+			hostelsPage = hostelRepo.findByManyOptionWithRoomTypeId(address, areaMin, areMax, minRent, maxRent, capacity,
+					idRoomType, pageable);
 		}
+		List<HostelResp> hostelResponse = new ArrayList<>(hostelsPage.getContent().size());
+
+		hostelResponse = hostelsPage.getContent().stream().map(h -> {
+			PostResp postResp = new PostResp(h.getPost().getId(),
+					new AccountRespone(h.getPost().getAccount().getUsername(), h.getPost().getAccount().getName(),
+							h.getPost().getAccount().getAvatarUrl()),
+					h.getPost().getTitle(), h.getPost().getContent(), h.getPost().getNumberOfFavourites(),
+					h.getPost().getStatus(), h.getPost().getPostTime(), h.getPost().getHostel().getId());
+			return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
+					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(),
+					new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()),
+					h.getElectricPrice(), h.getWaterPrice(), postResp, imageRepo.findByHostelId(h.getId()));
+		}).collect(Collectors.toList());
+		return new PagedResponse<HostelResp>(hostelResponse, hostelsPage.getNumber(), hostelsPage.getSize(),
+				hostelsPage.getTotalElements(), hostelsPage.getTotalPages(), hostelsPage.isLast());
 	}
+
+	
 
 	@Override
 	public HostelResp updateStatusHostel(long id, int status) {
@@ -228,23 +246,78 @@ public class HostelServiceImpl implements IHostelService {
 			Hostel h = hostel.get();
 			h.setStatus(status);
 			h = hostelRepo.save(h);
-			HostelResp hostelResp = new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
-					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(), h.getRoomtype(),
-					h.getElectricPrice(), h.getWaterPrice(), h.getPost(), h.getImages());
-			return hostelResp;
-		} else
-			return null;
+			Post post = postRepo.findById(h.getId()).get();
+			PostResp postResp = new PostResp(post.getId(),
+					new AccountRespone(post.getAccount().getUsername(), post.getAccount().getName(),
+							post.getAccount().getAvatarUrl()),
+					post.getTitle(), post.getContent(), post.getNumberOfFavourites(), post.getStatus(),
+					post.getPostTime(), post.getHostel().getId());
+			return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
+					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(),
+					new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()),
+					h.getElectricPrice(), h.getWaterPrice(), postResp, h.getImages());
+		}
+		throw new AppException("Không thể cập nhật, id không tồn tại");
 	}
 
 	@Override
-	public PagedResponse<Hostel> getHostelByStatus(int page, int size, int status) {
-//		return hostelRepo.findByStatus(status);
-		return null;
+	public PagedResponse<HostelResp> getHostelByStatus(int page, int size, int status) {
+		PageRequest pageable = PageRequest.of(page, size);
+		Page<Hostel> hostelPage = hostelRepo.findByStatus(status, pageable);
+		List<HostelResp> hostelResponse = new ArrayList<HostelResp>(hostelPage.getContent().size());
+		hostelResponse = hostelPage.getContent().stream().map(h -> {
+			PostResp postResp = new PostResp(h.getPost().getId(),
+					new AccountRespone(h.getPost().getAccount().getUsername(), h.getPost().getAccount().getName(),
+							h.getPost().getAccount().getAvatarUrl()),
+					h.getPost().getTitle(), h.getPost().getContent(), h.getPost().getNumberOfFavourites(),
+					h.getPost().getStatus(), h.getPost().getPostTime(), h.getPost().getHostel().getId());
+			return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
+					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(),
+					new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()),
+					h.getElectricPrice(), h.getWaterPrice(), postResp, imageRepo.findByHostelId(h.getId()));
+		}).collect(Collectors.toList());
+		return new PagedResponse<HostelResp>(hostelResponse, hostelPage.getNumber(), hostelPage.getSize(),
+				hostelPage.getTotalElements(), hostelPage.getTotalPages(), hostelPage.isLast());
 	}
 
 	@Override
-	public PagedResponse<Hostel> getAll(int page, int size) {
-		// TODO Auto-generated method stub
-		return null;
+	public PagedResponse<HostelResp> getHostelByHostelStatusAndPostStatus(int page, int size, int status,
+			int postStatus) {
+		PageRequest pageable = PageRequest.of(page, size);
+		Page<Hostel> hostelPage = hostelRepo.findByStatusAndPostStatus(status, postStatus, pageable);
+		List<HostelResp> hostelResponse = new ArrayList<HostelResp>(hostelPage.getContent().size());
+		hostelResponse = hostelPage.getContent().stream().map(h -> {
+			PostResp postResp = new PostResp(h.getPost().getId(),
+					new AccountRespone(h.getPost().getAccount().getUsername(), h.getPost().getAccount().getName(),
+							h.getPost().getAccount().getAvatarUrl()),
+					h.getPost().getTitle(), h.getPost().getContent(), h.getPost().getNumberOfFavourites(),
+					h.getPost().getStatus(), h.getPost().getPostTime(), h.getPost().getHostel().getId());
+			return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
+					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(),
+					new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()),
+					h.getElectricPrice(), h.getWaterPrice(), postResp, imageRepo.findByHostelId(h.getId()));
+		}).collect(Collectors.toList());
+		return new PagedResponse<HostelResp>(hostelResponse, hostelPage.getNumber(), hostelPage.getSize(),
+				hostelPage.getTotalElements(), hostelPage.getTotalPages(), hostelPage.isLast());
+	}
+
+	@Override
+	public PagedResponse<HostelResp> getListHostelFavouriteByUsername(int page, int size, String username) {
+		PageRequest pageable = PageRequest.of(page, size);
+		Page<Hostel> hostelPage = hostelRepo.findHostelFavouriteByUseName(username ,pageable);
+		List<HostelResp> hostelResponse = new ArrayList<HostelResp>(hostelPage.getContent().size());
+		hostelResponse = hostelPage.getContent().stream().map(h -> {
+			PostResp postResp = new PostResp(h.getPost().getId(),
+					new AccountRespone(h.getPost().getAccount().getUsername(), h.getPost().getAccount().getName(),
+							h.getPost().getAccount().getAvatarUrl()),
+					h.getPost().getTitle(), h.getPost().getContent(), h.getPost().getNumberOfFavourites(),
+					h.getPost().getStatus(), h.getPost().getPostTime(), h.getPost().getHostel().getId());
+			return new HostelResp(h.getId(), h.getName(), h.getCapacity(), h.getArea(), h.getAddress(),
+					h.getRentPrice(), h.getDepositPrice(), h.getStatus(), h.getDescription(),
+					new RoomtypeResponse(h.getRoomtype().getId(), h.getRoomtype().getRoomTypeName()),
+					h.getElectricPrice(), h.getWaterPrice(), postResp, imageRepo.findByHostelId(h.getId()));
+		}).collect(Collectors.toList());
+		return new PagedResponse<HostelResp>(hostelResponse, hostelPage.getNumber(), hostelPage.getSize(),
+				hostelPage.getTotalElements(), hostelPage.getTotalPages(), hostelPage.isLast());
 	}
 }
