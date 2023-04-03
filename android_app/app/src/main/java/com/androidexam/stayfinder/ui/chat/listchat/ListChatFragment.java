@@ -52,7 +52,10 @@ public class ListChatFragment extends BaseFragment<ListChatClass> implements Ite
         });
     }
     private void setAdapter(List<String> ids,String myId){
-        Query query = database.getReference().child("User").orderByChild("id").startAt(ids.get(0)).endAt(ids.get(ids.size() - 1));
+        Query query = database.getReference().child("User");
+        if(ids.size() != 0){
+             query = database.getReference().child("User").orderByChild("id").startAt(ids.get(0)).endAt(ids.get(ids.size() - 1));
+        }
         FirebaseRecyclerOptions<UserFirebase> options = new FirebaseRecyclerOptions.Builder<UserFirebase>()
                 .setQuery(query, UserFirebase.class)
                 .setLifecycleOwner(this)

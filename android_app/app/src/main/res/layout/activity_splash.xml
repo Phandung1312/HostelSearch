@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".activities.SplashActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_launcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/white"
+        android:src="@drawable/app_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

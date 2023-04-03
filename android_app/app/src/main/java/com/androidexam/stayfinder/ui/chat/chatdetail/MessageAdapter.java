@@ -61,7 +61,6 @@ public class MessageAdapter extends FirebaseRecyclerAdapter<Message, MessageAdap
         super.onDataChanged();
         itemChangeListener.scrollRecyclerView(getItemCount());
         this.notifyItemChanged(getItemCount() -2 );
-        //this.notifyDataSetChanged();
     }
 
     @NonNull
