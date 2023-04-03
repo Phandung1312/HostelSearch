@@ -1,7 +1,9 @@
 package com.androidexam.stayfinder.common;
 
 
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
@@ -16,5 +18,15 @@ public class BindingAdapters {
                    .load(url)
                    .into(imageView);
        }
+    }
+    @BindingAdapter("seen_text")
+    public static  void setText(TextView textView, Boolean seen){
+        if(seen != null){
+            textView.setText(seen? "Đã xem" : "Đã gửi");
+            textView.setVisibility(View.VISIBLE);
+        }
+        else{
+            textView.setVisibility(View.GONE);
+        }
     }
 }

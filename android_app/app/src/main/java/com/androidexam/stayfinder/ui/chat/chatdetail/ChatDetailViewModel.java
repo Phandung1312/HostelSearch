@@ -1,4 +1,4 @@
-package com.androidexam.stayfinder.ui.chat;
+package com.androidexam.stayfinder.ui.chat.chatdetail;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -50,7 +50,15 @@ public class ChatDetailViewModel extends BaseViewModel {
         chatRepository.sendMessage(message.getSender(),message.getReceiver(),message);
         chatRepository.sendMessage(message.getReceiver(),message.getSender(),message);
     }
-    public DatabaseReference getReferenceChatSender(String id){
-        return chatRepository.getReferenceChatSender(id);
+    public DatabaseReference getReferenceChatSender(String owner, String participantId){
+        return chatRepository.getReferenceChatSender(owner, participantId);
+    }
+    public void seenMessage(String sender, String receiver){
+        chatRepository.seenMessage(sender, receiver);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
     }
 }

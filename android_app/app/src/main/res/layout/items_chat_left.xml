@@ -35,13 +35,11 @@
                     android:layout_height="55dp"
                     android:src="@drawable/sample_avatar"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     />
                 <TextView
                     android:id="@+id/tv_content"
                     android:text="@{message.content}"
-                    android:layout_marginTop="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"

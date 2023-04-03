@@ -7,6 +7,9 @@
         <variable
             name="user"
             type="com.androidexam.stayfinder.data.models.firebase.UserFirebase" />
+        <variable
+            name="seen"
+            type="java.lang.Boolean" />
     </data>
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -38,7 +41,7 @@
                     <TextView
                         android:id="@+id/tv_content"
                         android:text="@{message.content}"
-                        android:layout_marginTop="7dp"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="Content"
@@ -46,7 +49,7 @@
                         android:background="@drawable/background_message_right"
                         android:textSize="20sp" />
                     <TextView
-                        android:text=""
+                        seen_text="@{seen}"
                         tools:text="Đã gửi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -59,7 +62,6 @@
                     android:layout_height="55dp"
                     android:src="@drawable/sample_avatar"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     />
             </LinearLayout>

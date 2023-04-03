@@ -12,6 +12,9 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.internal.operators.completable.CompletableDisposeOn;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 public class AccountRemoteService {
     AccountAPI accountAPI;
@@ -25,12 +28,26 @@ public class AccountRemoteService {
                 new LoginRequest(email, password)
         );
     }
-    public Observable<Account> getAccountBySignUp(Account account){
-        return accountAPI.getAccountBySignUp(
-                new SignUpRequest(account.getAccountName(),
-                        account.getPassword(),
-                        account.getUserName(),
-                        account.getAvatar())
-        );
+    public Observable<Account> getAccountBySignUp(SignUpRequest signUpRequest){
+        if(signUpRequest.getFile() != null){
+            RequestBody  requestFile = RequestBody.create(MediaType.parse("image/png"), signUpRequest.getFile());
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", signUpRequest.getFile().getName(), requestFile);
+            RequestBody usernameBody = RequestBody.create(MediaType.parse("text/plain"), signUpRequest.getUsername());
+            RequestBody passwordBody = RequestBody.create(MediaType.parse("text/plain"), signUpRequest.getPassword());
+            RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), signUpRequest.getName());
+            return accountAPI.getAccountBySignUp(
+                    usernameBody,
+                    passwordBody,
+                    nameBody,
+                    body
+            );
+        }
+        else{
+            return accountAPI.getAccountBySignUp(
+                    signUpRequest.getUsername(),
+                    signUpRequest.getPassword(),
+                    signUpRequest.getName()
+            );
+        }
     }
 }

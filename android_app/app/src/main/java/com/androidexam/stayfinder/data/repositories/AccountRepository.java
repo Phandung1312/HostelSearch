@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.androidexam.stayfinder.data.models.Account;
 import com.androidexam.stayfinder.data.models.firebase.UserFirebase;
+import com.androidexam.stayfinder.data.models.request.SignUpRequest;
 import com.androidexam.stayfinder.data.services.AccountRemoteService;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,8 +33,8 @@ public class AccountRepository {
     public Observable<Account> getAccountByLogin(String email, String password){
         return accountRemoteService.getAccountByLogin(email,password);
     }
-    public Observable<Account> getAccountBySignUp(Account account){
-        return accountRemoteService.getAccountBySignUp(account);
+    public Observable<Account> getAccountBySignUp(SignUpRequest signUpRequest){
+        return accountRemoteService.getAccountBySignUp(signUpRequest);
     }
     public MutableLiveData<Boolean> firebaseSignInWithGoogle(GoogleSignInAccount googleSignInAccount){
         MutableLiveData<Boolean> isNew = new MutableLiveData<>();

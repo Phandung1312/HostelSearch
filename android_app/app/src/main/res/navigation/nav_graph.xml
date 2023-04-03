@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_admin_home" />
     <fragment
         android:id="@+id/chatDetailFragment"
-        android:name="com.androidexam.stayfinder.ui.chat.ChatDetailFragment"
+        android:name="com.androidexam.stayfinder.ui.chat.chatdetail.ChatDetailFragment"
         android:label="fragment_chat_detail"
         tools:layout="@layout/fragment_chat_detail">
         <argument
@@ -31,7 +31,7 @@
         tools:layout="@layout/fragment_post_detail_admin" />
     <fragment
         android:id="@+id/listChatFragment"
-        android:name="com.androidexam.stayfinder.ui.chat.ListChatFragment"
+        android:name="com.androidexam.stayfinder.ui.chat.listchat.ListChatFragment"
         android:label="listChatFragment"
         tools:layout="@layout/fragment_list_chat">
         <action
