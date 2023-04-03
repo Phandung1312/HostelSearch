@@ -7,6 +7,7 @@ import com.androidexam.stayfinder.data.models.request.SignUpRequest;
 
 import io.reactivex.rxjava3.core.Observable;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -23,12 +24,11 @@ public interface AccountAPI {
             );
     @POST("account")
     @Multipart
-    @FormUrlEncoded
     Observable<Account> getAccountBySignUp(
-            @Field("username") String username,
-            @Field("password") String password,
-            @Field("name") String name,
-            @Part MultipartBody.Part file
+            @Part("username") RequestBody username,
+            @Part("password")  RequestBody password,
+            @Part("name")  RequestBody name,
+            @Part  MultipartBody.Part file
             );
     @POST("account")
     @FormUrlEncoded

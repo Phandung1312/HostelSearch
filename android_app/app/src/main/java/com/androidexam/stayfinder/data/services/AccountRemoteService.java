@@ -32,10 +32,13 @@ public class AccountRemoteService {
         if(signUpRequest.getFile() != null){
             RequestBody  requestFile = RequestBody.create(MediaType.parse("image/png"), signUpRequest.getFile());
             MultipartBody.Part body = MultipartBody.Part.createFormData("file", signUpRequest.getFile().getName(), requestFile);
+            RequestBody usernameBody = RequestBody.create(MediaType.parse("text/plain"), signUpRequest.getUsername());
+            RequestBody passwordBody = RequestBody.create(MediaType.parse("text/plain"), signUpRequest.getPassword());
+            RequestBody nameBody = RequestBody.create(MediaType.parse("text/plain"), signUpRequest.getName());
             return accountAPI.getAccountBySignUp(
-                    signUpRequest.getUsername(),
-                    signUpRequest.getPassword(),
-                    signUpRequest.getName(),
+                    usernameBody,
+                    passwordBody,
+                    nameBody,
                     body
             );
         }

@@ -139,11 +139,24 @@ public class LoginFragment extends BaseFragment<LoginClass> {
     private void showHome(Account account){
         mainActivity.account = account;
         bottomNavigationView.setVisibility(View.VISIBLE);
-        if(mainActivity.account.getPosition().getId() == 1){
-            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
+        try {
+            if(mainActivity.account.getPosition().getId() == 1){
+                Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
+            }
+            else{
+                Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
+            }
         }
-        else{
-            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
+        catch (Exception e){
+            new Handler().postDelayed(() ->{
+                        if(mainActivity.account.getPosition().getId() == 1){
+                            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
+                        }
+                        else{
+                            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
+                        }
+                    }
+            , 2000);
         }
     }
     private void showNotify(){
