@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "com.androidexam.stayfinder.app-mergeDebugResources-54:/layout/fragment_post_detail_admin.xml",
+        "source": "com.androidexam.stayfinder.app-main-57:/layout/fragment_post_detail_admin.xml"
+    },
+    {
+        "merged": "com.androidexam.stayfinder.app-mergeDebugResources-54:/layout/fragment_admin_home.xml",
+        "source": "com.androidexam.stayfinder.app-main-57:/layout/fragment_admin_home.xml"
+    },
+    {
+        "merged": "com.androidexam.stayfinder.app-mergeDebugResources-54:/layout/activity_main.xml",
+        "source": "com.androidexam.stayfinder.app-main-57:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.androidexam.stayfinder.app-mergeDebugResources-54:/layout/fragment_home_client.xml",
+        "source": "com.androidexam.stayfinder.app-main-57:/layout/fragment_home_client.xml"
+    },
+    {
+        "merged": "com.androidexam.stayfinder.app-mergeDebugResources-54:/layout/fragment_home_detail_client.xml",
+        "source": "com.androidexam.stayfinder.app-main-57:/layout/fragment_home_detail_client.xml"
+    },
+    {
+        "merged": "com.androidexam.stayfinder.app-mergeDebugResources-54:/layout/fragment_login.xml",
+        "source": "com.androidexam.stayfinder.app-main-57:/layout/fragment_login.xml"
+    },
+    {
+        "merged": "com.androidexam.stayfinder.app-mergeDebugResources-54:/layout/fragment_list_chat.xml",
+        "source": "com.androidexam.stayfinder.app-main-57:/layout/fragment_list_chat.xml"
+    },
+    {
+        "merged": "com.androidexam.stayfinder.app-mergeDebugResources-54:/layout/fragment_chat_detail.xml",
+        "source": "com.androidexam.stayfinder.app-main-57:/layout/fragment_chat_detail.xml"
+    }
+]
