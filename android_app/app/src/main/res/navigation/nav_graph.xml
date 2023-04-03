@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/adminHomeFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -19,7 +19,7 @@
         android:id="@+id/chatDetailFragment"
         android:name="com.androidexam.stayfinder.ui.chat.ChatDetailFragment"
         android:label="fragment_chat_detail"
-        tools:layout="@layout/fragment_chat_detail" >
+        tools:layout="@layout/fragment_chat_detail">
         <argument
             android:name="id"
             app:argType="string" />
@@ -33,7 +33,7 @@
         android:id="@+id/listChatFragment"
         android:name="com.androidexam.stayfinder.ui.chat.ListChatFragment"
         android:label="listChatFragment"
-        tools:layout="@layout/fragment_list_chat" >
+        tools:layout="@layout/fragment_list_chat">
         <action
             android:id="@+id/action_listChatFragment_to_chatDetailFragment"
             app:destination="@id/chatDetailFragment" />
@@ -42,21 +42,26 @@
         android:id="@+id/clientHomeFragment"
         android:name="com.androidexam.stayfinder.ui.client.ClientHomeFragment"
         android:label="ClientHomeFragment"
-        tools:layout="@layout/fragment_home_client"/>
+        tools:layout="@layout/fragment_home_client" />
     <fragment
         android:id="@+id/detailClientHomeFragment"
         android:name="com.androidexam.stayfinder.ui.client.DetailClientHomeFragment"
         android:label="DetailClientHomeFragment"
-        tools:layout="@layout/fragment_home_detail_client"/>
+        tools:layout="@layout/fragment_home_detail_client" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.androidexam.stayfinder.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.androidexam.stayfinder.ui.setting.SettingFragment"
         android:label="SettingFragment"
-        tools:layout="@layout/fragment_setting"/>
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/addPostClientFragment"
+        android:name="com.androidexam.stayfinder.ui.client.addpost.AddPostClientFragment"
+        android:label="fragment_add_post_client"
+        tools:layout="@layout/fragment_add_post_client" />
 
 </navigation>

@@ -12,7 +12,7 @@ public class Post {
     private boolean status;
     private Timestamp postTime;
     private List<Image> images;
-    private Hostel hostel;
+    private String hostelId;
 
     public int getId() {
         return id;
@@ -78,11 +78,4 @@ public class Post {
         this.images = images;
     }
 
-    public Hostel getHostel() {
-        return hostel;
-    }
-
-    public void setHostel(Hostel hostel) {
-        this.hostel = hostel;
-    }
 }

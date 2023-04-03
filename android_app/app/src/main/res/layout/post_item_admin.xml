@@ -1,99 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_width="match_parent"
+<layout>
+    <data class="PostItemAdminClass">
+        <variable
+            name="post"
+            type="com.androidexam.stayfinder.data.models.Post" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="15dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="55dp"
-                android:layout_height="55dp"
-                android:src="@drawable/ic_baseline_person_gray"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="31dp"
-                android:layout_marginRight="5dp"
-                />
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="29dp">
-
-                <LinearLayout
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/img_home"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Name"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black" />
-                    <TextView
-                        android:id="@+id/price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Price"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/light_blue"
-                        android:gravity="right"
-                        android:layout_marginEnd="20dp"/>
-                </LinearLayout>
-
+                    android:layout_margin="10dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_home">
+                </ImageView>
                 <TextView
-                    android:layout_marginTop="2dp"
-                    android:id="@+id/address"
+                    android:id="@+id/name_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black" />
-
+                    style="@style/name_region"
+                    android:drawableStart="@drawable/home_16"
+                    android:drawablePadding="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="@{post.hostel.name}"></TextView>
                 <TextView
-                    android:layout_marginTop="2dp"
-                    android:id="@+id/content"
+                    android:id="@+id/cost_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Content"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    style="@style/cost_home"
+                    android:layout_marginLeft="5dp"
+                    android:drawableStart="@drawable/money_home"
+                    android:drawablePadding="3dp"
+                    android:text="1.5 triệu VND/phòng"></TextView>
+                <TextView
+                    android:id="@+id/address_home"
+                    android:drawableStart="@drawable/address_home"
+                    android:drawablePadding="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/address_home"
+                    android:layout_marginLeft="5dp"
+                    android:text="@{post.hostel.address}"></TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_baseline_chat_gray"
+                    android:id="@+id/chat" />
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_baseline_check_gray"
+                    android:id="@+id/accept"
+                    android:layout_marginLeft="15dp"/>
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_baseline_delete_gray"
+                    android:id="@+id/delete"
+                    android:layout_marginLeft="15dp"/>
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginRight="60dp"
-            android:layout_marginLeft="85dp"
-            android:gravity="center">
-
-            <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_baseline_chat_gray"
-                android:id="@+id/chat" />
-            <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_baseline_check_gray"
-                android:id="@+id/accept"
-                android:layout_marginLeft="65dp"/>
-            <ImageButton
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_baseline_delete_gray"
-                android:id="@+id/delete"
-                android:layout_marginLeft="65dp"/>
-        </LinearLayout>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+</layout>

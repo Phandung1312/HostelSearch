@@ -13,7 +13,7 @@ public class Hostel {
     private RoomType roomType;
     private double electricPrice;
     private double waterPrice;
-    private int postId;
+    private Post post;
 
     public int getId() {
         return id;
@@ -25,6 +25,14 @@ public class Hostel {
 
     public String getName() {
         return name;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public void setName(String name) {
@@ -111,11 +119,4 @@ public class Hostel {
         this.waterPrice = waterPrice;
     }
 
-    public int getPostId() {
-        return postId;
-    }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
 }
