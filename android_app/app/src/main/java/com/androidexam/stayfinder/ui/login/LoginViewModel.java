@@ -14,6 +14,7 @@ import com.androidexam.stayfinder.base.viewmodel.BaseViewModel;
 import com.androidexam.stayfinder.common.ImageConvertResult;
 import com.androidexam.stayfinder.data.apis.AccountAPI;
 import com.androidexam.stayfinder.data.models.Account;
+import com.androidexam.stayfinder.data.models.request.SignUpRequest;
 import com.androidexam.stayfinder.data.repositories.AccountRepository;
 import com.androidexam.stayfinder.databinding.LoginClass;
 import com.bumptech.glide.Glide;
@@ -45,6 +46,7 @@ public class LoginViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(acc -> {
+                            Log.d("Success","Login");
                             data.postValue(acc);
                         },
                     throwable ->{
@@ -52,11 +54,12 @@ public class LoginViewModel extends BaseViewModel {
                     }
                 ));
     }
-    public void signUp(Account account){
-            compositeDisposable.add(accountRepository.getAccountBySignUp(account)
+    public void signUp(SignUpRequest signUpRequest){
+            compositeDisposable.add(accountRepository.getAccountBySignUp(signUpRequest)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(acc -> {
+                                Log.d("Success","Sign up");
                                 data.postValue(acc);
                             },
                             throwable ->{

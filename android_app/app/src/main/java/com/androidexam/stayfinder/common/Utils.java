@@ -8,20 +8,32 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.DecodeFormat;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Utils {
-    public static final String BASE_URL="http://192.168.1.6:8080/api/";
-    public static void convertUrlToByteString(Context context, String url, ImageConvertResult<String> imageConvertResult){
+    public static final String BASE_URL = "https://tricky-week-production.up.railway.app/api/";
+
+    public static void convertUrlToByteString(Context context, String url,
+            ImageConvertResult<String> imageConvertResult) {
         Glide.with(context)
                 .asBitmap()
                 .load(url)
                 .into(new CustomTarget<Bitmap>() {
                     @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                    public void onResourceReady(@NonNull Bitmap resource,
+                            @Nullable Transition<? super Bitmap> transition) {
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
                         resource.compress(Bitmap.CompressFormat.PNG, 100, stream);
                         byte[] byteArray = stream.toByteArray();
@@ -33,5 +45,35 @@ public class Utils {
                         imageConvertResult.onError();
                     }
                 });
+    }
+
+    public static void convertUrlToImageFile(Context context, String url, ImageConvertResult<File> imageResult) {
+        RequestOptions requestOptions = new RequestOptions().format(DecodeFormat.PREFER_ARGB_8888);
+        Glide.with(context)
+                .asBitmap()
+                .load(url)
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource,
+                            @Nullable Transition<? super Bitmap> transition) {
+                        File file = new File(context.getCacheDir(), "image.png");
+                        try {
+                            file.createNewFile();
+                            FileOutputStream ostream = new FileOutputStream(file);
+                            resource.compress(Bitmap.CompressFormat.PNG, 100, ostream);
+                            ostream.flush();
+                            ostream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        imageResult.onSuccess(file);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+                        imageResult.onError();
+                    }
+                });
+
     }
 }

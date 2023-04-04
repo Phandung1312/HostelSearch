@@ -20,8 +20,6 @@ import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.firebase.UserFirebase;
 import com.androidexam.stayfinder.databinding.ItemsUserBinding;
 import com.androidexam.stayfinder.databinding.ProfileClass;
-import com.androidexam.stayfinder.ui.chat.ListChatFragment;
-import com.androidexam.stayfinder.ui.chat.ListChatFragmentDirections;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 

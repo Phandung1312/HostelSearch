@@ -4,6 +4,9 @@
         <variable
             name="user"
             type="com.androidexam.stayfinder.data.models.firebase.UserFirebase" />
+        <variable
+            name="message"
+            type="com.androidexam.stayfinder.data.models.firebase.Message" />
     </data>
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -51,6 +54,7 @@
                         android:layout_weight="3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:text="@{message.time}"
                         tools:text="19-03 22:53"
                         android:textSize="16sp"
                         android:textStyle="normal"
@@ -61,7 +65,7 @@
                     android:layout_marginTop="7dp"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:text="Content"
+                    android:text="@{message.content}"
                     android:textSize="16sp" />
 
             </LinearLayout>
