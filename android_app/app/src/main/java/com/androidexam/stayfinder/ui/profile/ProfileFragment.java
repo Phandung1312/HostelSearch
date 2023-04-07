@@ -10,6 +10,8 @@ import com.androidexam.stayfinder.base.fragment.BaseFragment;
 import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.Schedule;
 import com.androidexam.stayfinder.databinding.ProfileClass;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.ArrayList;
 
@@ -24,34 +26,37 @@ public class ProfileFragment extends BaseFragment<ProfileClass> {
     public ProfileFragment() {
         super(ProfileClass::inflate);
     }
+
     @Override
     public void onStart() {
         super.onStart();
-//        if (Paper.book().read("email") != null && Paper.book().read("password") != null){
-            //check is new login???
-            profileViewModel.GetAllPostByAccountName(mainActivity.account.getAccountName());
-            profileViewModel.loadListPost().observe(getViewLifecycleOwner(),lst ->{
-                dataBinding.tvNumberPosts.setText(lst.size());
-                for(Post post : lst){
-                    waitApprovalPosts.clear();
-                    approvedPosts.clear();
-                    if(post.getStatus() == 2){
-                        waitApprovalPosts.add(post);
-                    }
-                    else if(post.getStatus() == 1){
-                        approvedPosts.add(post);
-                    }
+        // if (Paper.book().read("email") != null && Paper.book().read("password") !=
+        // null){
+        // check is new login???
+        profileViewModel.GetAllPostByAccountName(mainActivity.account.getAccountName());
+        profileViewModel.loadListPost().observe(getViewLifecycleOwner(), lst -> {
+            dataBinding.tvNumberPosts.setText(lst.size());
+            for (Post post : lst) {
+                waitApprovalPosts.clear();
+                approvedPosts.clear();
+                if (post.getStatus() == 2) {
+                    waitApprovalPosts.add(post);
+                } else if (post.getStatus() == 1) {
+                    approvedPosts.add(post);
                 }
-            });
-            profileViewModel.GetAllScheduleByAccountName(mainActivity.account.getAccountName());
-            profileViewModel.loadListSchedule().observe(getViewLifecycleOwner(),lst ->{
-                dataBinding.tvNumberSchedules.setText(lst.size());
-            });
-//        }
+            }
+        });
+        profileViewModel.GetAllScheduleByAccountName(mainActivity.account.getAccountName());
+        profileViewModel.loadListSchedule().observe(getViewLifecycleOwner(), lst -> {
+            dataBinding.tvNumberSchedules.setText(lst.size());
+        });
+        // }
     }
+
     @Override
     public void initView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
+                false);
         dataBinding.rvProfilePost.setLayoutManager(linearLayoutManager);
 
         waitApprovalPosts = new ArrayList<>();
@@ -66,13 +71,15 @@ public class ProfileFragment extends BaseFragment<ProfileClass> {
         dataBinding.imgMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(dataBinding.getRoot()).navigate(ProfileFragmentDirections.actionProfileFragmentToSettingFragment());
+                Navigation.findNavController(dataBinding.getRoot())
+                        .navigate(ProfileFragmentDirections.actionProfileFragmentToSettingFragment());
             }
         });
         dataBinding.imgSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(dataBinding.getRoot()).navigate(ProfileFragmentDirections.actionProfileFragmentToScheduleFragment());
+                Navigation.findNavController(dataBinding.getRoot())
+                        .navigate(ProfileFragmentDirections.actionProfileFragmentToScheduleFragment());
             }
         });
         dataBinding.btnWaitApprovalPost.setOnClickListener(new View.OnClickListener() {
