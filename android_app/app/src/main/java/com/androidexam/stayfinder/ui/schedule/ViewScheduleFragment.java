@@ -13,9 +13,11 @@ import com.github.sundeepk.compactcalendarview.domain.Event;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
     private ViewScheduleViewModel viewScheduleViewModel;
@@ -90,5 +92,26 @@ public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
     @Override
     public void initData() {
 
+    }
+
+    private String getRandomColor(){
+        ArrayList<String> colors = new ArrayList<>();
+        colors.add("#35ad68");
+        colors.add("#c27ba8");
+        colors.add("#baa9aa");
+        colors.add("#bfbd97");
+        colors.add("#746cc0");
+        colors.add("#666666");
+        colors.add("#ff6019");
+        colors.add("#29cdff");
+        colors.add("#929a70");
+        colors.add("#3ded97");
+        colors.add("#d21500");
+        colors.add("#e6e6fa");
+        colors.add("#ffb2d6");
+        colors.add("#faebd7");
+
+        Random random = new Random();
+        return colors.get(random.nextInt(colors.size()));
     }
 }

@@ -33,4 +33,7 @@ public class AccountRemoteService {
                         account.getAvatar())
         );
     }
+    public Observable<Account> updateUsername(String accountName, String newUserName){
+        return accountAPI.updateUsername(accountName, newUserName);
+    }
 }
