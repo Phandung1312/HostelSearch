@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="post"
+            type="com.androidexam.stayfinder.data.models.Post" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cvSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/gray">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Lịch hẹn 1"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/frame_background"
+                android:padding="5dp"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tên người thuê:"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:padding="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="15dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Phạm Khắc Luận"
+                        android:textSize="20sp"
+                        android:padding="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:paddingStart="15dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SĐT người thuê:"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:padding="10dp"
+                        android:paddingStart="15dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0123456789"
+                        android:textSize="20sp"
+                        android:padding="10dp"
+                        android:paddingStart="15dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp"
+                        android:text="Thời gian:"
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Ngày 2 tháng 4 năm 2023"
+                            android:textSize="18sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:text="Lúc 18:00"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="*Ghi chú: Gặp mặt ở quán cafe trên đường Ngô Thì Nhậm, không say thì ở lại rửa chén"
+                    android:textSize="18sp"
+                    android:textStyle="italic"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/frame_background"
+                android:padding="15dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/name_region"
+                    android:layout_marginStart="15dp"
+                    android:text="Tìm hiểu về trọ:"
+                    android:textSize="18sp"></TextView>
+                <ImageView
+                    android:id="@+id/img_home"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_home">
+                </ImageView>
+                <TextView
+                    android:id="@+id/name_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/name_region"
+                    android:drawableStart="@drawable/home_16"
+                    android:drawablePadding="3dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="Phòng cho thuê"></TextView>
+                <TextView
+                    android:id="@+id/cost_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/cost_home"
+                    android:layout_marginLeft="5dp"
+                    android:drawableStart="@drawable/money_home"
+                    android:drawablePadding="3dp"
+                    android:text="1.5 triệu VND/phòng"></TextView>
+                <TextView
+                    android:id="@+id/address_home"
+                    android:drawableStart="@drawable/address_home"
+                    android:drawablePadding="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/address_home"
+                    android:layout_marginLeft="5dp"
+                    android:text="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

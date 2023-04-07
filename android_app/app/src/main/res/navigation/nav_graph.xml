@@ -56,16 +56,15 @@
         <action
             android:id="@+id/action_profileFragment_to_settingFragment"
             app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_scheduleFragment"
+            app:destination="@id/scheduleFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.androidexam.stayfinder.ui.setting.SettingFragment"
         android:label="SettingFragment"
-        tools:layout="@layout/fragment_setting">
-        <action
-            android:id="@+id/action_settingFragment_to_scheduleFragment"
-            app:destination="@id/scheduleFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_setting"/>
 
     <fragment
         android:id="@+id/scheduleFragment"

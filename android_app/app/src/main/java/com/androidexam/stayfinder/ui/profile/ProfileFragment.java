@@ -1,39 +1,54 @@
 package com.androidexam.stayfinder.ui.profile;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.androidexam.stayfinder.R;
-import com.androidexam.stayfinder.activities.MainActivity;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
-import com.androidexam.stayfinder.base.fragment.Inflate;
-import com.androidexam.stayfinder.base.viewmodel.BaseViewModel;
-import com.androidexam.stayfinder.data.models.Account;
 import com.androidexam.stayfinder.data.models.Post;
-import com.androidexam.stayfinder.data.models.firebase.UserFirebase;
-import com.androidexam.stayfinder.databinding.ItemsUserBinding;
+import com.androidexam.stayfinder.data.models.Schedule;
 import com.androidexam.stayfinder.databinding.ProfileClass;
-import com.androidexam.stayfinder.ui.chat.ListChatFragment;
-import com.androidexam.stayfinder.ui.chat.ListChatFragmentDirections;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import java.util.ArrayList;
 
+import io.paperdb.Paper;
+
 public class ProfileFragment extends BaseFragment<ProfileClass> {
-    public ProfileFragment() {
-        super(ProfileClass::inflate);
-    }
     private ArrayList<Post> waitApprovalPosts;
     private ArrayList<Post> approvedPosts;
     private PostAdapter postAdapter;
+    private ProfileViewModel profileViewModel;
+
+    public ProfileFragment() {
+        super(ProfileClass::inflate);
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+//        if (Paper.book().read("email") != null && Paper.book().read("password") != null){
+            //check is new login???
+            profileViewModel.GetAllPostByAccountName(mainActivity.account.getAccountName());
+            profileViewModel.loadListPost().observe(getViewLifecycleOwner(),lst ->{
+                dataBinding.tvNumberPosts.setText(lst.size());
+                for(Post post : lst){
+                    waitApprovalPosts.clear();
+                    approvedPosts.clear();
+                    if(post.getStatus() == 2){
+                        waitApprovalPosts.add(post);
+                    }
+                    else if(post.getStatus() == 1){
+                        approvedPosts.add(post);
+                    }
+                }
+            });
+            profileViewModel.GetAllScheduleByAccountName(mainActivity.account.getAccountName());
+            profileViewModel.loadListSchedule().observe(getViewLifecycleOwner(),lst ->{
+                dataBinding.tvNumberSchedules.setText(lst.size());
+            });
+//        }
+    }
     @Override
     public void initView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -42,6 +57,8 @@ public class ProfileFragment extends BaseFragment<ProfileClass> {
         waitApprovalPosts = new ArrayList<>();
         postAdapter = new PostAdapter(waitApprovalPosts);
         dataBinding.rvProfilePost.setAdapter(postAdapter);
+
+        profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
     }
 
     @Override
@@ -52,17 +69,21 @@ public class ProfileFragment extends BaseFragment<ProfileClass> {
                 Navigation.findNavController(dataBinding.getRoot()).navigate(ProfileFragmentDirections.actionProfileFragmentToSettingFragment());
             }
         });
+        dataBinding.imgSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(dataBinding.getRoot()).navigate(ProfileFragmentDirections.actionProfileFragmentToScheduleFragment());
+            }
+        });
         dataBinding.btnWaitApprovalPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //load list post
                 postAdapter.updateList(waitApprovalPosts);
             }
         });
         dataBinding.btnApprovedPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //load list post
                 postAdapter.updateList(approvedPosts);
             }
         });
@@ -71,7 +92,6 @@ public class ProfileFragment extends BaseFragment<ProfileClass> {
     @Override
     public void initData() {
         dataBinding.setAccount(mainActivity.account);
-        //get list post for adapter
     }
 
 }

@@ -21,12 +21,6 @@ public class SettingFragment extends BaseFragment<SettingClass> {
 
     @Override
     public void initListeners() {
-        dataBinding.tvViewSchedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(dataBinding.getRoot()).navigate(SettingFragmentDirections.actionSettingFragmentToScheduleFragment());
-            }
-        });
     }
 
     @Override

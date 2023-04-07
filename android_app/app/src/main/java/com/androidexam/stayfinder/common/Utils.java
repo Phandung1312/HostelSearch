@@ -14,7 +14,7 @@ import com.bumptech.glide.request.transition.Transition;
 import java.io.ByteArrayOutputStream;
 
 public class Utils {
-    public static final String BASE_URL="http://192.168.1.6:8080/api/";
+    public static final String BASE_URL="https://tricky-week-production.up.railway.app/api/";
     public static void convertUrlToByteString(Context context, String url, ImageConvertResult<String> imageConvertResult){
         Glide.with(context)
                 .asBitmap()

@@ -140,21 +140,6 @@
             android:background="#d3d3d3"/>
 
         <TextView
-            android:id="@+id/tvViewSchedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Xem lịch hẹn"
-            android:textSize="20sp"
-            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-            android:padding="20dp"
-            android:paddingEnd="10dp"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#d3d3d3"/>
-
-        <TextView
             android:id="@+id/tvLinkBank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
