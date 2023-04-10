@@ -40,7 +40,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
-        holder.binding.setHostel(posts.get(position).getHostel());
+//        holder.binding.setHostel(posts.get(position).getHostel());
 //        Picasso.get().load(dogBreeds.get(position).getUrl()).into(holder.binding.ivAvatar);
     }
 
