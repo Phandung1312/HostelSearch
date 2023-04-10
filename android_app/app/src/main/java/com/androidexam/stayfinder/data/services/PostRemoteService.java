@@ -11,16 +11,18 @@ import io.reactivex.rxjava3.core.Observable;
 
 public class PostRemoteService {
     PostAPI postAPI;
+
     @Inject
     public PostRemoteService(PostAPI postAPI) {
         this.postAPI = postAPI;
     }
-    public Observable<List<Post>> getAllPost(){
+
+    public Observable<List<Post>> getAllPost() {
         return postAPI.getAllPost();
     }
-    public Observable<List<Post>> getPostByAccountName(String accountName){
+
+    public Observable<List<Post>> getPostByAccountName(String accountName) {
         return postAPI.getPostByAccountName(
-                accountName
-        );
+                accountName);
     }
 }

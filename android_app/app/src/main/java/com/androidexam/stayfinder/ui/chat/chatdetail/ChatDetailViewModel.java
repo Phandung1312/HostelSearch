@@ -40,14 +40,14 @@ public class ChatDetailViewModel extends BaseViewModel {
         return sender;
     }
     public void sendMessage(){
-        message.setSender(sender.getValue().getId());
-        message.setReceiver(receiver.getValue().getId());
-        message.setSeen(false);
-        Date currentDate = new Date();
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        String time = timeFormat.format(currentDate);
-        message.setTime(time);
-        chatRepository.sendMessage(message.getSender(),message.getReceiver(),message);
+            message.setSender(sender.getValue().getId());
+            message.setReceiver(receiver.getValue().getId());
+            message.setSeen(false);
+            Date currentDate = new Date();
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            String time = timeFormat.format(currentDate);
+            message.setTime(time);
+            chatRepository.sendMessage(message.getSender(),message.getReceiver(),message);
         chatRepository.sendMessage(message.getReceiver(),message.getSender(),message);
     }
     public DatabaseReference getReferenceChatSender(String owner, String participantId){
