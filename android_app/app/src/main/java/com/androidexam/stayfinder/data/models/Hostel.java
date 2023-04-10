@@ -8,7 +8,7 @@ public class Hostel {
     private String address;
     private double rentPrice;
     private double depositPrice;
-    private String status;
+    private int status;
     private String description;
     private RoomType roomType;
     private double electricPrice;
@@ -79,11 +79,11 @@ public class Hostel {
         this.depositPrice = depositPrice;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

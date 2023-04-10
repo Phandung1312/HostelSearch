@@ -9,7 +9,7 @@ public class Post {
     private String title;
     private String content;
     private int numOfFav;
-    private boolean status;
+    private int status;
     private Timestamp postTime;
     private List<Image> images;
     private String hostelId;
@@ -54,11 +54,11 @@ public class Post {
         this.numOfFav = numOfFav;
     }
 
-    public boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

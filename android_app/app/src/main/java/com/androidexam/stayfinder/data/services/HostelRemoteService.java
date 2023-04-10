@@ -1,7 +1,10 @@
 package com.androidexam.stayfinder.data.services;
 
+import android.util.Log;
+
 import com.androidexam.stayfinder.data.apis.HostelAPI;
 import com.androidexam.stayfinder.data.apis.PostAPI;
+import com.androidexam.stayfinder.data.models.Content;
 import com.androidexam.stayfinder.data.models.Hostel;
 import com.androidexam.stayfinder.data.models.Post;
 
@@ -17,7 +20,8 @@ public class HostelRemoteService {
     public HostelRemoteService(HostelAPI hostelAPI) {
         this.hostelAPI = hostelAPI;
     }
-    public Observable<List<Hostel>> getAllHostel(){
+    public Observable<Content> getAllHostel(){
         return hostelAPI.getAllHostel();
     }
+    public Observable<Hostel> getHostelById(String id) {return hostelAPI.getHostelById(id);}
 }
