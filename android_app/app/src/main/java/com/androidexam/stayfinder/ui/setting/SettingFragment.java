@@ -1,19 +1,26 @@
 package com.androidexam.stayfinder.ui.setting;
 
 import android.app.AlertDialog;
+import android.app.NativeActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.androidexam.stayfinder.R;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
 import com.androidexam.stayfinder.databinding.SettingClass;
 import com.androidexam.stayfinder.databinding.UpdateNameBinding;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class SettingFragment extends BaseFragment<SettingClass> {
-    private SettingViewModel settingViewModel;
+    SettingViewModel settingViewModel;
     public SettingFragment() {
         super(SettingClass::inflate);
     }
@@ -25,6 +32,12 @@ public class SettingFragment extends BaseFragment<SettingClass> {
 
     @Override
     public void initListeners() {
+        dataBinding.imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(dataBinding.getRoot()).popBackStack();
+            }
+        });
         dataBinding.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

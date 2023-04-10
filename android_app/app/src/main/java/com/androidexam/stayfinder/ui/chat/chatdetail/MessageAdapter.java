@@ -1,7 +1,6 @@
 package com.androidexam.stayfinder.ui.chat.chatdetail;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -14,7 +13,6 @@ import com.androidexam.stayfinder.data.models.firebase.Message;
 import com.androidexam.stayfinder.data.models.firebase.UserFirebase;
 import com.androidexam.stayfinder.databinding.ItemsChatLeftBinding;
 import com.androidexam.stayfinder.databinding.ItemsChatRightBinding;
-import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 

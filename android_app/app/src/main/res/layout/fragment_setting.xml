@@ -15,6 +15,35 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="5dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/image_back"
+                android:src="@drawable/ic_back_gray"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Thông tin cá nhân"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+        </RelativeLayout>
+
+        <View
+            android:background="@color/gray"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="10dp">
 
             <LinearLayout
@@ -29,7 +58,7 @@
                     android:text="@{account.userName}"
                     android:hint="Dang Hoan"
                     android:textColorHint="@color/black"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"/>
 
@@ -103,7 +132,7 @@
                 android:id="@+id/tvGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{account.gender?`Nam`:`Nữ`}"
+                android:text="@{account.gender?`Nữ`:`Nam`}"
                 android:hint="Nam"
                 android:textSize="20sp"
                 android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"

@@ -16,6 +16,9 @@ public class PostReposity {
     public PostReposity(PostRemoteService postRemoteService) {
         this.postRemoteService = postRemoteService;
     }
+    public Observable<List<Post>> getAllPost(){
+        return postRemoteService.getAllPost();
+    }
 
     public Observable<List<Post>> getPostByAccountName(String accountName){
         return postRemoteService.getPostByAccountName(accountName);

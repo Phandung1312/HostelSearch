@@ -2,15 +2,18 @@
 <layout>
     <data>
         <variable
-            name="post"
-            type="com.androidexam.stayfinder.data.models.Post" />
+            name="hostel"
+            type="com.androidexam.stayfinder.data.models.Hostel" />
+        <variable
+            name="schedule"
+            type="com.androidexam.stayfinder.data.models.request.ScheduleRequest" />
     </data>
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/cvSchedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="35dp"
         app:cardElevation="10dp"
         android:layout_margin="10dp"
         android:backgroundTint="@color/gray">
@@ -26,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="Lịch hẹn 1"
+                android:text="Hẹn với người thuê trọ"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"/>
@@ -35,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/frame_background"
+                android:background="@drawable/frame_background_black"
                 android:padding="5dp"
                 android:layout_marginBottom="10dp">
 
@@ -56,7 +59,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Phạm Khắc Luận"
+                        android:text="@{schedule.renterName}"
+                        android:hint="Phạm Khắc Luận"
                         android:textSize="20sp"
                         android:padding="10dp"
                         android:layout_marginBottom="10dp"
@@ -82,7 +86,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0123456789"
+                        android:text="@{schedule.renterPhoneNumber}"
+                        android:hint="0123456789"
                         android:textSize="20sp"
                         android:padding="10dp"
                         android:paddingStart="15dp"/>
@@ -108,17 +113,19 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvScheduleDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="Ngày 2 tháng 4 năm 2023"
+                            android:hint="Ngày 2 tháng 4 năm 2023"
                             android:textSize="18sp" />
 
                         <TextView
+                            android:id="@+id/tvScheduleTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="Lúc 18:00"
+                            android:hint="Lúc 18:00"
                             android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -126,7 +133,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="*Ghi chú: Gặp mặt ở quán cafe trên đường Ngô Thì Nhậm, không say thì ở lại rửa chén"
+                    android:text="@{`*Ghi chú: ` + schedule.content}"
+                    android:hint="*Ghi chú: Gặp mặt ở quán cafe trên đường Ngô Thì Nhậm, không say thì ở lại rửa chén"
                     android:textSize="18sp"
                     android:textStyle="italic"
                     android:padding="10dp"
@@ -138,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/frame_background"
+                android:background="@drawable/frame_background_black"
                 android:padding="15dp">
                 <TextView
                     android:layout_width="wrap_content"
@@ -163,7 +171,8 @@
                     android:drawableStart="@drawable/home_16"
                     android:drawablePadding="3dp"
                     android:layout_marginLeft="5dp"
-                    android:text="Phòng cho thuê"></TextView>
+                    android:text="@{hostel.name}"
+                    android:hint="Phòng cho thuê"></TextView>
                 <TextView
                     android:id="@+id/cost_home"
                     android:layout_width="wrap_content"
@@ -172,7 +181,8 @@
                     android:layout_marginLeft="5dp"
                     android:drawableStart="@drawable/money_home"
                     android:drawablePadding="3dp"
-                    android:text="1.5 triệu VND/phòng"></TextView>
+                    android:text="@{String.valueOf(hostel.rentPrice)}"
+                    android:hint="1.5 triệu VND/phòng"></TextView>
                 <TextView
                     android:id="@+id/address_home"
                     android:drawableStart="@drawable/address_home"
@@ -181,7 +191,8 @@
                     android:layout_height="wrap_content"
                     style="@style/address_home"
                     android:layout_marginLeft="5dp"
-                    android:text="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
+                    android:text="@{hostel.address}"
+                    android:hint="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
             </LinearLayout>
 
         </LinearLayout>

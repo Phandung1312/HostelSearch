@@ -143,12 +143,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d3d3d3"
-                android:text="Wait-approval post"
+                android:text="Wait-approval\npost"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 app:cornerRadius="18dp"
                 android:textAllCaps="false"
                 android:outlineProvider="none"
+                android:padding="0dp"
                 />
 
             <Button
@@ -156,13 +157,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d3d3d3"
-                android:text="Approved post"
+                android:text="Approved\npost"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 app:cornerRadius="18dp"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="20dp"
                 android:textAllCaps="false"
                 android:outlineProvider="none"
+                android:padding="0dp"
+
+                />
+            <Button
+                android:id="@+id/btnNotApprovedPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#d3d3d3"
+                android:text="Not approved\npost"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                app:cornerRadius="18dp"
+                android:layout_marginStart="20dp"
+                android:textAllCaps="false"
+                android:outlineProvider="none"
+                android:padding="0dp"
 
                 />
 

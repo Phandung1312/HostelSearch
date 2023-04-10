@@ -2,8 +2,8 @@
 <layout>
     <data>
         <variable
-            name="post"
-            type="com.androidexam.stayfinder.data.models.Post" />
+            name="hostel"
+            type="com.androidexam.stayfinder.data.models.Hostel" />
     </data>
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="160dp"
@@ -30,7 +30,8 @@
                 android:drawableStart="@drawable/home_16"
                 android:drawablePadding="3dp"
                 android:layout_marginLeft="5dp"
-                android:text="Phòng cho thuê"></TextView>
+                android:text="@{hostel.name}"
+                android:hint="Phòng cho thuê"></TextView>
             <TextView
                 android:id="@+id/cost_home"
                 android:layout_width="wrap_content"
@@ -39,7 +40,8 @@
                 android:layout_marginLeft="5dp"
                 android:drawableStart="@drawable/money_home"
                 android:drawablePadding="3dp"
-                android:text="1.5 triệu VND/phòng"></TextView>
+                android:text="@{String.valueOf(hostel.rentPrice)}"
+                android:hint="1.5 triệu VND/phòng"></TextView>
             <TextView
                 android:id="@+id/address_home"
                 android:drawableStart="@drawable/address_home"
@@ -48,7 +50,8 @@
                 android:layout_height="wrap_content"
                 style="@style/address_home"
                 android:layout_marginLeft="5dp"
-                android:text="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
+                android:text="@{hostel.address}"
+                android:hint="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>

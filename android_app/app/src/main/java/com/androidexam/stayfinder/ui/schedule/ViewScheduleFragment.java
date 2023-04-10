@@ -1,12 +1,23 @@
 package com.androidexam.stayfinder.ui.schedule;
 
+import android.app.AlertDialog;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.androidexam.stayfinder.R;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
-import com.androidexam.stayfinder.base.fragment.Inflate;
-import com.androidexam.stayfinder.data.models.Schedule;
+import com.androidexam.stayfinder.data.models.request.ScheduleRequest;
+import com.androidexam.stayfinder.databinding.FragmentDetailScheduleBinding;
 import com.androidexam.stayfinder.databinding.ScheduleClass;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -16,75 +27,126 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
-    private ViewScheduleViewModel viewScheduleViewModel;
+    ArrayList<ScheduleRequest> scheduleRequests = new ArrayList<>();
+    ViewScheduleViewModel viewScheduleViewModel;
 
-    private CompactCalendarView compactCalendarView;
-    public ViewScheduleFragment(Inflate<ScheduleClass> inflate) {
-        super(inflate);
+    private static final int FILL_LARGE_INDICATOR = 1;            //fill circle background for event
+    private static final int NO_FILL_LARGE_INDICATOR = 2;         //fill circle around for event
+    private static final int SMALL_INDICATOR = 3;                 //fill small circle event (default)
+
+    // Creating date format
+    private final DateFormat format = new SimpleDateFormat(
+            "'Tháng' MM 'Năm' yyyy", Locale.getDefault());
+
+    private CustomDialogFragment customDialogFragment;
+    private ArrayList<ScheduleRequest> schedules = new ArrayList<>();
+
+    public ViewScheduleFragment() {
+        super(ScheduleClass::inflate);
     }
     @Override
     public void onStart() {
         super.onStart();
 //        if (Paper.book().read("email") != null && Paper.book().read("password") != null){
         //check is new login???
-        viewScheduleViewModel.GetAllScheduleByAccountName(mainActivity.account.getAccountName());
-        viewScheduleViewModel.loadListSchedule().observe(getViewLifecycleOwner(),lst ->{
-                // compactCalendarView.setFirstDayOfWeek(Calendar.MONDAY);
+            viewScheduleViewModel.GetAllScheduleByAccountName(mainActivity.account.getAccountName());
+            viewScheduleViewModel.loadListOwnerSchedule().observe(getViewLifecycleOwner(),ownerList ->{
+                viewScheduleViewModel.loadListRenterSchedule().observe(getViewLifecycleOwner(), renterList -> {
+                        dataBinding.calendarView.setLocale(TimeZone.getDefault(),Locale.getDefault());
+                        dataBinding.calendarView.setUseThreeLetterAbbreviation(true);
+                        dataBinding.calendarView.setFirstDayOfWeek(Calendar.MONDAY);
+                        scheduleRequests.clear();
+                        scheduleRequests.addAll(ownerList);
+                        scheduleRequests.addAll(renterList);
 
-                for(Schedule schedule : lst){
-                }
-                // Add event 1 on Sun, 07 Jun 2015 18:20:51 GMT
-                Event ev1 = new Event(Color.GREEN, 1433701251000L, "Some extra data that I want to store.");
-                compactCalendarView.addEvent(ev1);
-
-                // Added event 2 GMT: Sun, 07 Jun 2015 19:10:51 GMT
-                Event ev2 = new Event(Color.GREEN, 1433704251000L);
-                compactCalendarView.addEvent(ev2);
-
-                // Query for events on Sun, 07 Jun 2015 GMT.
-                // Time is not relevant when querying for events, since events are returned by day.
-                // So you can pass in any arbitary DateTime and you will receive all events for that day.
-                List<Event> events = compactCalendarView.getEvents(1433701251000L); // can also take a Date object
-            });
+                        dataBinding.calendarView.removeAllEvents();
+                        for(ScheduleRequest schedule : scheduleRequests){
+                            Event event = new Event(Color.RED, schedule.getMeetingTime().getTime(), schedule.getContent());
+                            dataBinding.calendarView.addEvent(event);
+                        }
+                    });
+                });
 //        }
     }
     @Override
     public void initView() {
-        compactCalendarView = dataBinding.calendarView;
         viewScheduleViewModel = new ViewModelProvider(this).get(ViewScheduleViewModel.class);
+        dataBinding.calendarView.setEventIndicatorStyle(FILL_LARGE_INDICATOR);
+
+        customDialogFragment = new CustomDialogFragment(mainActivity.account.getAccountName());
     }
 
     @Override
     public void initListeners() {
+        dataBinding.imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(dataBinding.getRoot()).popBackStack();
+            }
+        });
+
+        dataBinding.imgLeft.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    dataBinding.imgLeft.setImageResource(R.drawable.solid_left);
+                    dataBinding.calendarView.scrollLeft();
+                }
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    dataBinding.imgLeft.setImageResource(R.drawable.left);
+                }
+                return true;
+            }
+
+        });
+        dataBinding.imgRight.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if((event.getAction()&event.getActionMasked()) == MotionEvent.ACTION_DOWN){
+                    dataBinding.imgRight.setImageResource(R.drawable.solid_right);
+                    dataBinding.calendarView.scrollRight();
+                }
+                if((event.getAction()&event.getActionMasked()) == MotionEvent.ACTION_UP){
+                    dataBinding.imgRight.setImageResource(R.drawable.right);
+                }
+                return true;
+            }
+
+        });
         dataBinding.calendarView.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
             public void onDayClick(Date dateClicked) {
                 //get all events of selected date
-                List<Event> events = dataBinding.calendarView.getEvents(dateClicked);
-//                Log.d(TAG, "Day was clicked: " + dateClicked + " with events " + events);
-//                for()
-                long milliSec = 3010;
+                Calendar c = Calendar.getInstance();
+                c.setTime(dateClicked);
+                c.add(Calendar.DATE, 1);        //increment 1 day
+                schedules.clear();
+                for(ScheduleRequest schedule : scheduleRequests){
+                    Date event = new Date(schedule.getMeetingTime().getTime());
+                    if(event.after(dateClicked) && event.before(c.getTime())){
+                        schedules.add(schedule);
+                    }
+                }
 
-                // Creating date format
-                DateFormat simple = new SimpleDateFormat(
-                        "dd MMM yyyy HH:mm:ss:SSS Z");
+                customDialogFragment.updateList(schedules);
+                customDialogFragment.show(getParentFragmentManager(), "Schedule list");
 
-                // Creating date from milliseconds
-                // using Date() constructor
-                Date result = new Date(milliSec);
-
-                // Formatting Date according to the
-                // given format
-                System.out.println(simple.format(result));
             }
 
             @Override
             public void onMonthScroll(Date firstDayOfNewMonth) {
-//                Log.d(TAG, "Month was scrolled to: " + firstDayOfNewMonth);
+                dataBinding.tvMonthYear.setText(format.format(firstDayOfNewMonth));
             }
         });
     }
@@ -92,26 +154,5 @@ public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
     @Override
     public void initData() {
 
-    }
-
-    private String getRandomColor(){
-        ArrayList<String> colors = new ArrayList<>();
-        colors.add("#35ad68");
-        colors.add("#c27ba8");
-        colors.add("#baa9aa");
-        colors.add("#bfbd97");
-        colors.add("#746cc0");
-        colors.add("#666666");
-        colors.add("#ff6019");
-        colors.add("#29cdff");
-        colors.add("#929a70");
-        colors.add("#3ded97");
-        colors.add("#d21500");
-        colors.add("#e6e6fa");
-        colors.add("#ffb2d6");
-        colors.add("#faebd7");
-
-        Random random = new Random();
-        return colors.get(random.nextInt(colors.size()));
     }
 }

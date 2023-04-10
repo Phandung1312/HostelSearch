@@ -4,6 +4,8 @@ package com.androidexam.stayfinder.di;
 
 import com.androidexam.stayfinder.common.Utils;
 import com.androidexam.stayfinder.data.apis.AccountAPI;
+import com.androidexam.stayfinder.data.apis.PostAPI;
+import com.androidexam.stayfinder.data.apis.ScheduleAPI;
 
 import javax.inject.Singleton;
 
@@ -31,5 +33,13 @@ public class NetworkModule {
     @Provides
     public  AccountAPI providesAccountAPI(Retrofit retrofit){
         return retrofit.create(AccountAPI.class);
+    }
+    @Provides
+    public PostAPI providesPostAPI(Retrofit retrofit){
+        return retrofit.create(PostAPI.class);
+    }
+    @Provides
+    public ScheduleAPI providesScheduleAPI(Retrofit retrofit){
+        return retrofit.create(ScheduleAPI.class);
     }
 }
