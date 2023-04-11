@@ -5,12 +5,12 @@ import java.sql.Timestamp;
 
 public class ScheduleRequest implements Serializable {
     private int id;
-    private String username;
+    private String renteUsername;
     private String renterName;
     private String renterPhoneNumber;
     private String content;
     private Timestamp meetingTime;
-    private int postId;
+    private PostRequest post;
 
     public int getId() {
         return id;
@@ -22,11 +22,11 @@ public class ScheduleRequest implements Serializable {
 
 
     public String getUsername() {
-        return username;
+        return renteUsername;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.renteUsername = username;
     }
 //
 //    public String getAccountName() {
@@ -69,11 +69,11 @@ public class ScheduleRequest implements Serializable {
         this.meetingTime = meetingTime;
     }
 
-    public int getPostId() {
-        return postId;
+    public PostRequest getPost() {
+        return post;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setPost(PostRequest post) {
+        this.post = post;
     }
 }

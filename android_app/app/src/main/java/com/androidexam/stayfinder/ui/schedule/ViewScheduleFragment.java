@@ -140,6 +140,7 @@ public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
                 }
 
                 customDialogFragment.updateList(schedules);
+//                customDialogFragment width
                 customDialogFragment.show(getParentFragmentManager(), "Schedule list");
 
             }
