@@ -2,6 +2,7 @@ package com.androidexam.stayfinder.ui.schedule;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,7 +46,35 @@ public class CustomDialogFragment extends DialogFragment {
         scheduleAdapter = new ScheduleAdapter(this.getActivity(), listSchedules, accountName);
         binding.rvSchedule.setAdapter(scheduleAdapter);
 
+        binding.tvTitle.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getX() <= (binding.tvTitle.getPaddingStart() + binding.tvTitle.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())) {
+                        CustomDialogFragment.this.dismiss();
+                        return true;
+                    }
+                }
+                return true;
+            }
+        });
+
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
     }
 
     public void updateList(ArrayList<ScheduleRequest> schedules){

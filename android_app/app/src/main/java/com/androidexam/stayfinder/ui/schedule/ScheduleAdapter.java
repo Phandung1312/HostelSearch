@@ -44,8 +44,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        System.out.println(schedules.get(position).getUsername() + ", " + accountName);
-        return (schedules.get(position).getUsername() == accountName)? 1 : 0;
+        System.out.println(schedules.get(position).getUsername() + ", " + accountName + ", " + (schedules.get(position).getUsername().equals(accountName)));
+        return schedules.get(position).getUsername().equals(accountName)? 0 : 1;
     }
 
     @NonNull
@@ -76,7 +76,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(holder.getItemViewType() == 0){
             ViewHolderRenter viewHolder = (ViewHolderRenter) holder;
             viewHolder.binding.setSchedule(schedules.get(position));
-//            viewHolder.binding.setHostel(schedules.get(position).get);
+            viewHolder.binding.setHostel(schedules.get(position).getPost().getHostel());
 
             long milliSec = schedules.get(position).getMeetingTime().getTime();
             Date dateEvent = new Date(milliSec);
@@ -88,7 +88,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         else{
             ViewHolder viewHolder = (ViewHolder) holder;
             viewHolder.binding.setSchedule(schedules.get(position));
-//            viewHolder.binding.setHostel(schedules.get(position).get);
+            viewHolder.binding.setHostel(schedules.get(position).getPost().getHostel());
 
             long milliSec = schedules.get(position).getMeetingTime().getTime();
             Date dateEvent = new Date(milliSec);
