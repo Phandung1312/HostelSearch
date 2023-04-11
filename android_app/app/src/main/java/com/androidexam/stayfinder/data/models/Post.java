@@ -11,7 +11,6 @@ public class Post {
     private int numOfFav;
     private int status;
     private Timestamp postTime;
-    private List<Image> images;
     private String hostelId;
 
     public int getId() {
@@ -70,12 +69,11 @@ public class Post {
         this.postTime = postTime;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public String getHostelId() {
+        return hostelId;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setHostelId(String hostelId) {
+        this.hostelId = hostelId;
     }
-
 }

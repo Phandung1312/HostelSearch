@@ -10,6 +10,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/layout_empty"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +21,7 @@
             app:layout_constraintTop_toTopOf="@+id/linearLayout">
             <ImageView
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_emoticon_empty_favorite"
+                android:src="@drawable/ic_emoticon_empty_favourite"
                 android:layout_width="100dp"
                 android:layout_height="100dp"/>
             <TextView
@@ -52,9 +53,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_favorites"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_margin="10dp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            tools:layout_editor_absoluteX="10dp" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

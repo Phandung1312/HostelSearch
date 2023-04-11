@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout >
     <data>
-        <import type="com.androidexam.stayfinder.data.models.Post"/>
-        <import type="com.androidexam.stayfinder.data.models.Image"/>
         <variable
             name="hostel"
             type="com.androidexam.stayfinder.data.models.Hostel" />
@@ -29,7 +27,7 @@
                 <ImageView
                     android:id="@+id/img_home"
                     android:layout_width="match_parent"
-                    imageUrl="@{hostel.post.images.get(0).source}"
+                    imageUrl="@{hostel.images.get(0).source}"
                     android:layout_margin="10dp"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"

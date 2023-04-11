@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/adminHomeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -67,5 +67,10 @@
         android:name="com.androidexam.stayfinder.ui.client.addpost.AddPostClientFragment"
         android:label="fragment_add_post_client"
         tools:layout="@layout/fragment_add_post_client" />
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.androidexam.stayfinder.ui.favourite.FavouriteFragment"
+        android:label="FavouriteFragment"
+        tools:layout="@layout/fragment_favourite"/>
 
 </navigation>
