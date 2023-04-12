@@ -17,8 +17,8 @@ import retrofit2.http.Query;
 
 public interface HostelAPI {
     @GET("hostel")
-    Observable<Content> getAllHostel(
-    );
+    Observable<Content> getAllHostel();
+
     @GET("hostel")
     Observable<Hostel> getHostelById(
             @Field("id") String id

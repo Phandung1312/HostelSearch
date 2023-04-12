@@ -1,9 +1,13 @@
-package com.androidexam.stayfinder.data.models;
+package com.androidexam.stayfinder.data.models.request;
+
+import com.androidexam.stayfinder.data.models.Account;
+import com.androidexam.stayfinder.data.models.Hostel;
+import com.androidexam.stayfinder.data.models.Image;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-public class Post {
+public class PostRequest {
     private int id;
     private Account account;
     private String title;
@@ -12,9 +16,7 @@ public class Post {
     private int status;
     private Timestamp postTime;
     private List<Image> images;
-
-    private String hostelId;
-//    private Hostel hostel;
+    private Hostel hostel;
 
     public int getId() {
         return id;
@@ -72,11 +74,21 @@ public class Post {
         this.postTime = postTime;
     }
 
-    public String getHostelId() {
-        return hostelId;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setHostelId(String hostelId) {
-        this.hostelId = hostelId;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
+
+
+    public Hostel getHostel() {
+        return hostel;
+    }
+
+    public void setHostel(Hostel hostel) {
+        this.hostel = hostel;
+    }
+
 }

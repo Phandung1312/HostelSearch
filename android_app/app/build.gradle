@@ -7,6 +7,7 @@ plugins {
 
 android {
     buildFeatures{
+        viewBinding = true
         dataBinding = true
     }
     namespace 'com.androidexam.stayfinder'
@@ -32,10 +33,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    lintOptions {
+        disable 'LongLogTag'
+    }
 }
 
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -106,4 +109,11 @@ dependencies {
     implementation "com.firebaseui:firebase-ui-auth:$firebaseUI_version"
     // FirebaseUI for Cloud Storage
     implementation "com.firebaseui:firebase-ui-storage:$firebaseUI_version"
+
+    // Calendar highlight
+    implementation 'com.github.sundeepk:compact-calendar-view:3.0.0'
+
+    // Load image from url
+//    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }

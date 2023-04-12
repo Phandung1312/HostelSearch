@@ -55,4 +55,5 @@ public abstract class BaseFragment<VB extends ViewBinding> extends Fragment {
         super.onDestroy();
         dataBinding = null;
     }
+
 }

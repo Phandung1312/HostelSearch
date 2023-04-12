@@ -56,12 +56,25 @@
         android:id="@+id/profileFragment"
         android:name="com.androidexam.stayfinder.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_scheduleFragment"
+            app:destination="@id/scheduleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.androidexam.stayfinder.ui.setting.SettingFragment"
         android:label="SettingFragment"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_setting"/>
+
+    <fragment
+        android:id="@+id/scheduleFragment"
+        android:name="com.androidexam.stayfinder.ui.schedule.ViewScheduleFragment"
+        android:label="ScheduleFragment"
+        tools:layout="@layout/fragment_shedule"/>
     <fragment
         android:id="@+id/addPostClientFragment"
         android:name="com.androidexam.stayfinder.ui.client.addpost.AddPostClientFragment"
