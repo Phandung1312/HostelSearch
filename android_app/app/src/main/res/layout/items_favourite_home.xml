@@ -31,8 +31,8 @@
                     android:id="@+id/img_favourite"
                     android:layout_gravity="top|right"
                     android:src="@drawable/ic_favourite_border_white"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"/>
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
             </FrameLayout>
             <TextView
                 android:id="@+id/name_home"
@@ -42,10 +42,10 @@
                 android:textColor="@color/black"
                 android:textSize="25sp"
                 android:drawableStart="@drawable/baseline_home_24"
-                android:drawablePadding="3dp"
+                android:drawablePadding="5dp"
                 android:layout_marginLeft="5dp"
                 android:text="@{hostel.name}"
-                tools:text="Nhà tù hình trái tim"></TextView>
+                tools:text="Nhà tù hình trái tim "></TextView>
             <TextView
                 android:id="@+id/cost_home"
                 android:layout_marginTop="10dp"
@@ -53,16 +53,17 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/red"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_marginLeft="5dp"
                 android:drawableStart="@drawable/ic_attach_money_red"
-                android:drawablePadding="3dp"
+                android:drawablePadding="5dp"
                 android:text="@{String.valueOf(hostel.rentPrice) + ` VND/phòng`}"
                 tools:text="1.5 triệu VND/phòng"></TextView>
             <TextView
                 android:id="@+id/address_home"
                 android:layout_marginTop="10dp"
                 android:drawableStart="@drawable/address_home"
-                android:drawablePadding="3dp"
+                android:drawablePadding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
