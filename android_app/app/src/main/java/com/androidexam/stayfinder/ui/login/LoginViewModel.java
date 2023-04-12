@@ -14,11 +14,13 @@ import com.androidexam.stayfinder.base.viewmodel.BaseViewModel;
 import com.androidexam.stayfinder.common.ImageConvertResult;
 import com.androidexam.stayfinder.data.apis.AccountAPI;
 import com.androidexam.stayfinder.data.models.Account;
+import com.androidexam.stayfinder.data.models.request.SignUpRequest;
 import com.androidexam.stayfinder.data.repositories.AccountRepository;
 import com.androidexam.stayfinder.databinding.LoginClass;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.io.ByteArrayOutputStream;
 
@@ -44,6 +46,7 @@ public class LoginViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(acc -> {
+                            Log.d("Success","Login");
                             data.postValue(acc);
                         },
                     throwable ->{
@@ -51,12 +54,13 @@ public class LoginViewModel extends BaseViewModel {
                     }
                 ));
     }
-    public void signUp(Account account){
-            compositeDisposable.add(accountRepository.getAccountBySignUp(account)
+    public void signUp(SignUpRequest signUpRequest){
+            compositeDisposable.add(accountRepository.getAccountBySignUp(signUpRequest)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(acc -> {
-                                data.postValue(account);
+                                Log.d("Success","Sign up");
+                                data.postValue(acc);
                             },
                             throwable ->{
                                 Log.d("ERROR signup",throwable.getMessage());
@@ -66,8 +70,8 @@ public class LoginViewModel extends BaseViewModel {
     public LiveData<Account> loadData(){
         return this.data;
     }
-    public void firebaseSignInWithGoogle(String email, String password){
-        isNew = accountRepository.firebaseSignInWithGoogle(email, password);
+    public void firebaseSignInWithGoogle(GoogleSignInAccount googleSignInAccount){
+        isNew = accountRepository.firebaseSignInWithGoogle(googleSignInAccount);
     }
     public LiveData<Boolean> isNewAccount(){
         return isNew;

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="message"
+            type="com.androidexam.stayfinder.data.models.firebase.Message" />
+        <variable
+            name="user"
+            type="com.androidexam.stayfinder.data.models.firebase.UserFirebase" />
+        <variable
+            name="seen"
+            type="java.lang.Boolean" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:background="@color/background"
+            android:gravity="right"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_time"
+                android:text="@{message.time}"
+                tools:text="19:30"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:gravity="right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:gravity="right"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:text="@{message.content}"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Content"
+                        android:textColor="@color/white"
+                        android:background="@drawable/background_message_right"
+                        android:textSize="20sp" />
+                    <TextView
+                        seen_text="@{seen}"
+                        tools:text="Đã gửi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_avatar"
+                    imageUrl="@{user.imageUrl}"
+                    android:layout_gravity="top"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:src="@drawable/sample_avatar"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

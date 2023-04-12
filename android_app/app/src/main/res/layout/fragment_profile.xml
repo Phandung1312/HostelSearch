@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data class="ProfileClass">
-
+        <variable
+            name="account"
+            type="com.androidexam.stayfinder.data.models.Account" />
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -19,6 +21,14 @@
             android:orientation="horizontal"
             >
 
+            <ImageView
+                android:id="@+id/imgMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/frame_solid_oval"
+                android:src="@drawable/ic_baseline_menu_24" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -27,11 +37,12 @@
                 android:textSize="20sp" />
 
             <ImageView
+                android:id="@+id/imgSchedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/frame_solid_oval"
-                android:src="@drawable/ic_baseline_settings_24" />
+                android:src="@drawable/ic_baseline_calendar_month_24" />
 
 
         </RelativeLayout>
@@ -51,7 +62,9 @@
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dang hoan"
+            android:text="@{account.userName}"
+            android:hint="Dang Hoan"
+            android:textColorHint="@color/black"
             android:textSize="30sp"/>
 
 
@@ -59,8 +72,10 @@
             android:id="@+id/tvContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0852556258"
-            android:textSize="20sp"/>
+            android:text="@{(account.getPhoneNumber() != ``) ? account.phoneNumber : account.accountName}"
+            android:textSize="20sp"
+            android:textColor="#d3d3d3"
+            android:hint="nguyenthedanghoan@gmail.com"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,7 +92,7 @@
                 android:background="@drawable/frame_background">
 
                 <TextView
-                    android:id="@+id/tvNumberView"
+                    android:id="@+id/tvNumberSchedules"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="20"
@@ -87,7 +102,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View profile"
+                    android:text="Appointments"
                     android:textSize="15sp"/>
             </LinearLayout>
 
@@ -124,72 +139,56 @@
             android:background="@drawable/frame_gray_background">
 
             <Button
+                android:id="@+id/btnWaitApprovalPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d3d3d3"
-                android:text="Favourite post"
+                android:text="Wait-approval\npost"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 app:cornerRadius="18dp"
                 android:textAllCaps="false"
                 android:outlineProvider="none"
+                android:padding="0dp"
                 />
 
             <Button
+                android:id="@+id/btnApprovedPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d3d3d3"
-                android:text="My post"
+                android:text="Approved\npost"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 app:cornerRadius="18dp"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="20dp"
                 android:textAllCaps="false"
                 android:outlineProvider="none"
+                android:padding="0dp"
+
+                />
+            <Button
+                android:id="@+id/btnNotApprovedPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#d3d3d3"
+                android:text="Not approved\npost"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                app:cornerRadius="18dp"
+                android:layout_marginStart="20dp"
+                android:textAllCaps="false"
+                android:outlineProvider="none"
+                android:padding="0dp"
 
                 />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_gravity="left">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/frame_gray_background">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#d3d3d3"
-                    android:src="@drawable/house"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Wings Tower"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    />
-
-                <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:text="K54/32..."
-                    android:textSize="18sp"
-                    />
-            </LinearLayout>
-        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_profile_post"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </layout>

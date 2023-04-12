@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -19,15 +20,20 @@ import com.androidexam.stayfinder.base.fragment.BaseFragment;
 import com.androidexam.stayfinder.common.ImageConvertResult;
 import com.androidexam.stayfinder.common.Utils;
 import com.androidexam.stayfinder.data.models.Account;
+import com.androidexam.stayfinder.data.models.request.SignUpRequest;
 import com.androidexam.stayfinder.databinding.LoginClass;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -49,21 +55,7 @@ public class LoginFragment extends BaseFragment<LoginClass> {
     @Override
     public void onStart() {
         super.onStart();
-        if (Paper.book().read("email") != null && Paper.book().read("password") != null){
-            if(Paper.book().read("isLogin") != null){
-                boolean flag = Paper.book().read("isLogin");
-                if(flag){
-                   loginViewModel.isNew.setValue(true);
-                   Account account = new Account();
-                   account.setAccountName(Paper.book().read("email"));
-                   account.setPassword(Paper.book().read("password"));
-                   loginViewModel.login(account.getAccountName(), account.getPassword());
-                   loginViewModel.loadData().observe(getViewLifecycleOwner(),resAccount ->{
-                       showHome(resAccount);
-                   });
-                }
-            }
-        }
+        autoLogin();
     }
     @Override
     public void initView() {
@@ -103,30 +95,34 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                 }
             });
     private void loginFirebase(GoogleSignInAccount googleSignInAccount){
-        loginViewModel.firebaseSignInWithGoogle(googleSignInAccount.getEmail(),
-                googleSignInAccount.getId());
+        loginViewModel.firebaseSignInWithGoogle(googleSignInAccount);
         loginViewModel.isNewAccount().observe(getViewLifecycleOwner(), isNewAccount ->{
+            Log.d("NewAccount",isNewAccount.toString());
             if(isNewAccount){
-                Account account = new Account();
-                account.setAccountName(googleSignInAccount.getEmail());
-                account.setPassword(googleSignInAccount.getId());
-                account.setUserName(googleSignInAccount.getDisplayName());
+                SignUpRequest signUpRequest = new SignUpRequest(
+                        googleSignInAccount.getEmail(),
+                        googleSignInAccount.getId(),
+                        googleSignInAccount.getDisplayName(),
+                        null
+                );
                 if(googleSignInAccount.getPhotoUrl() != null){
-                    Utils.convertUrlToByteString(getContext(), googleSignInAccount.getPhotoUrl().toString()
-                            , new ImageConvertResult<String>() {
+                    Utils.convertUrlToImageFile(getActivity().getApplicationContext(),
+                            googleSignInAccount.getPhotoUrl().toString(),
+                            new ImageConvertResult<File>() {
                                 @Override
-                                public void onSuccess(String result) {
-                                   // account.setAvatar(result);
-                                    loginViewModel.signUp(account);
+                                public void onSuccess(File result) {
+                                    signUpRequest.setFile(result);
+                                    loginViewModel.signUp(signUpRequest);
                                 }
+
                                 @Override
                                 public void onError() {
-                                    Toast.makeText(getContext(), "Xảy ra lỗi xử lí ảnh đăng nhập!", Toast.LENGTH_SHORT).show();
+                                    Log.d("Error","Convert image failed");
                                 }
                             });
                 }
                 else{
-                    loginViewModel.signUp(account);
+                    loginViewModel.signUp(signUpRequest);
                 }
             }
             else{
@@ -134,7 +130,7 @@ public class LoginFragment extends BaseFragment<LoginClass> {
             }
             loginViewModel.loadData().observe(getViewLifecycleOwner(), resAccount ->{
                 Paper.book().write("email",resAccount.getAccountName());
-                Paper.book().write("password", resAccount.getPassword());
+                Paper.book().write("password", googleSignInAccount.getId());
                 Paper.book().write("isLogin",true);
                 showHome(resAccount);
             });
@@ -143,11 +139,25 @@ public class LoginFragment extends BaseFragment<LoginClass> {
     private void showHome(Account account){
         mainActivity.account = account;
         bottomNavigationView.setVisibility(View.VISIBLE);
-        if(mainActivity.account.getPosition().getId() == 1){
-            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
+        try {
+            if(mainActivity.account.getPosition().getId() == Utils.CLIENT_ROLE){
+                Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
+            }
+            else{
+                mainActivity.binding.bottomNavigationView.getMenu().removeItem(R.id.favourite);
+                Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
+            }
         }
-        else{
-            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
+        catch (Exception e){
+            new Handler().postDelayed(() ->{
+                        if(mainActivity.account.getPosition().getId() == 1){
+                            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
+                        }
+                        else{
+                            Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
+                        }
+                    }
+            , 2000);
         }
     }
     private void showNotify(){
@@ -157,5 +167,30 @@ public class LoginFragment extends BaseFragment<LoginClass> {
         NotifyDialog notifyDialog = new NotifyDialog(requireContext(),
                 title, message, textButton);
         notifyDialog.show();
+    }
+    private void autoLogin(){
+        if (Paper.book().read("email") != null && Paper.book().read("password") != null){
+            if(Paper.book().read("isLogin") != null){
+                boolean flag = Paper.book().read("isLogin");
+                if(flag){
+                    loginViewModel.isNew.setValue(true);
+                    Account account = new Account();
+                    account.setAccountName(Paper.book().read("email"));
+                    account.setPassword(Paper.book().read("password"));
+                    loginViewModel.login(account.getAccountName(), account.getPassword());
+                    loginViewModel.loadData().observe(getViewLifecycleOwner(),resAccount ->{
+                        auth.signInWithEmailAndPassword(account.getAccountName(),
+                                account.getPassword()).addOnCompleteListener(task -> {
+                            if(task.isSuccessful()){
+                                showHome(resAccount);
+                            }
+                            else{
+                                Log.d("Error","Login error");
+                            }
+                        });
+                    });
+                }
+            }
+        }
     }
 }

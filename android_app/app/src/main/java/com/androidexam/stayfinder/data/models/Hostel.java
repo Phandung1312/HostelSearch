@@ -1,5 +1,7 @@
 package com.androidexam.stayfinder.data.models;
 
+import java.util.List;
+
 public class Hostel {
     private int id;
     private String name;
@@ -8,12 +10,13 @@ public class Hostel {
     private String address;
     private double rentPrice;
     private double depositPrice;
-    private String status;
+    private int status;
     private String description;
     private RoomType roomType;
     private double electricPrice;
     private double waterPrice;
-    private int postId;
+    private List<Image> images;
+    private Post post;
 
     public int getId() {
         return id;
@@ -25,6 +28,14 @@ public class Hostel {
 
     public String getName() {
         return name;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public void setName(String name) {
@@ -71,11 +82,11 @@ public class Hostel {
         this.depositPrice = depositPrice;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -111,11 +122,11 @@ public class Hostel {
         this.waterPrice = waterPrice;
     }
 
-    public int getPostId() {
-        return postId;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }

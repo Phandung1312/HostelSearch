@@ -3,22 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data class="ChatDetailClass">
-
+        <variable
+            name="message"
+            type="com.androidexam.stayfinder.data.models.firebase.Message" />
+        <variable
+            name="user"
+            type="com.androidexam.stayfinder.data.models.firebase.UserFirebase" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.chat.ChatDetailFragment"
+        tools:context=".ui.chat.chatdetail.ChatDetailFragment"
         android:animateLayoutChanges="true"
         android:background="@color/light_blue">
+
         <View
             android:id="@+id/view_background"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/background_content_top"
+            android:background="@color/white"
             app:layout_constraintBottom_toTopOf="@id/et_input_message"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -31,54 +40,42 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_info"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="16dp"
-            android:padding="5dp"
-            android:src="@drawable/ic_baseline_info_gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
         <TextView
+
+            android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
+            android:text="@{user.username}"
             android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@id/image_back"
-            app:layout_constraintEnd_toStartOf="@id/image_info"
             app:layout_constraintStart_toEndOf="@id/image_back"
             app:layout_constraintTop_toTopOf="@id/image_back"
-            android:id="@+id/tv_name"
-            android:text="Name"/>
+            tools:text="Name" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_chat_detail"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:orientation="vertical"
-            android:overScrollMode="never"
-            android:padding="20sp"
-            android:visibility="gone"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="@id/view_background"
-            app:layout_constraintTop_toBottomOf="@id/image_back"/>
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            app:layout_constraintBottom_toBottomOf="@id/view_background"
-            app:layout_constraintEnd_toEndOf="@id/view_background"
-            app:layout_constraintTop_toTopOf="@id/view_background"
-            app:layout_constraintStart_toStartOf="@id/view_background"/>
+            android:layout_marginTop="5dp"
+            android:background="@color/background"
+            app:layout_constraintBottom_toBottomOf="@+id/view_background"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_chat_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="2dp"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <FrameLayout
             android:id="@+id/layout_send"
             android:layout_width="40dp"
@@ -88,12 +85,13 @@
             android:background="@drawable/background_chat_input"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="4dp"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:src="@drawable/ic_baseline_send_gray"
+                android:drawableRight="@drawable/ic_send_white"
+                android:background="@drawable/background_button_send"
                 android:tint="@color/white"/>
         </FrameLayout>
         <EditText
@@ -106,9 +104,8 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/background_chat_input"
-            android:hint="Type a message"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
+            android:hint="Nhấn vào đây để chat"
+            android:textCursorDrawable="@drawable/white_cursor"
             android:inputType="text"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"

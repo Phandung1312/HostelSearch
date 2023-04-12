@@ -17,4 +17,5 @@
     <color name="gray">#758585</color>
     <color name="orange">#D33C0D</color>
     <color name="text_color">#333333</color>
+    <color name="red">#FF3838</color>
 </resources>

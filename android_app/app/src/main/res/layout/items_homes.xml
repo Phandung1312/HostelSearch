@@ -1,47 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="15dp">
-    <LinearLayout
-        android:layout_width="match_parent"
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="hostel"
+            type="com.androidexam.stayfinder.data.models.Hostel" />
+    </data>
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_item"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:id="@+id/img_home"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="15dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_home">
-        </ImageView>
-        <TextView
-            android:id="@+id/name_home"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/name_region"
-            android:drawableStart="@drawable/home_16"
-            android:drawablePadding="3dp"
-            android:layout_marginLeft="5dp"
-            android:text="Phòng cho thuê"></TextView>
-        <TextView
-            android:id="@+id/cost_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/cost_home"
-            android:layout_marginLeft="5dp"
-            android:drawableStart="@drawable/money_home"
-            android:drawablePadding="3dp"
-            android:text="1.5 triệu VND/phòng"></TextView>
-        <TextView
-            android:id="@+id/address_home"
-            android:drawableStart="@drawable/address_home"
-            android:drawablePadding="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/address_home"
-            android:layout_marginLeft="5dp"
-            android:text="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/img_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    imageUrl="@{hostel.images.get(0).source}"
+                    android:src="@drawable/img_home">
+                </ImageView>
+                <ImageView
+                    android:id="@+id/img_favourite"
+                    android:layout_gravity="top|right"
+                    android:src="@drawable/ic_favourite_border_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </FrameLayout>
+            <TextView
+                android:id="@+id/name_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/name_region"
+                android:drawableStart="@drawable/home_16"
+                android:drawablePadding="3dp"
+                android:layout_marginLeft="5dp"
+                android:text="@{String.valueOf(hostel.rentPrice) + ` VND/phòng`}"
+                tools:text="1.5 triệu VND/phòng"></TextView>
+            <TextView
+                android:id="@+id/cost_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/cost_home"
+                android:layout_marginLeft="5dp"
+                android:drawableStart="@drawable/money_home"
+                android:drawablePadding="3dp"
+                android:text="1.5 triệu VND/phòng"></TextView>
+            <TextView
+                android:id="@+id/address_home"
+                android:drawableStart="@drawable/address_home"
+                android:drawablePadding="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/address_home"
+                android:layout_marginLeft="5dp"
+                android:text="@{hostel.address}"
+                tools:text="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
