@@ -1,6 +1,7 @@
 package com.androidexam.stayfinder.ui.admin.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.ViewHolder> implements Filterable {
-    private  ArrayList<Hostel> hostelList;
+    private ArrayList<Hostel> hostelList;
+    private ArrayList<Hostel> hostelListCopy;
 
     public PostAdminAdapter( ArrayList<Hostel> hostelList){
         this.hostelList = hostelList;
+        this.hostelListCopy = hostelList;
     }
 
     @NonNull
@@ -44,7 +47,7 @@ public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.View
         holder.binding.cardViewPostAdmin.setOnClickListener(view ->{
             Hostel hostel =hostelList.get(position);
             Bundle bundle = new Bundle();
-            bundle.putSerializable("hostel", (Serializable) hostel);
+            bundle.putSerializable("hostel", hostel);
             Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
         });
         holder.binding.executePendingBindings();
@@ -63,17 +66,17 @@ public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.View
                 String input = constraint.toString().toLowerCase();
                 List<Hostel> filteredHostel = new ArrayList<>();
                 if(input.isEmpty()){
-                    filteredHostel.addAll(hostelList);
+                    filteredHostel.addAll(hostelListCopy);
                 }else {
-                    for(Hostel hostel: hostelList){
-                        if(hostel.getName().toLowerCase().contains(input))
+                    for(Hostel hostel: hostelListCopy){
+                        if(hostel.getPost().getTitle().toLowerCase().contains(input))
                         {
                             filteredHostel.add(hostel);
                         }
                     }
                 }
                 FilterResults filterResults = new FilterResults();
-                filterResults.values = hostelList;
+                filterResults.values = filteredHostel;
                 return filterResults;
             }
 

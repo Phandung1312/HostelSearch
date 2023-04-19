@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/img_home"
                     android:layout_width="match_parent"
-                    imageUrl="@{hostel.images.get(0).source}"
+                    imageUrl="@{hostel.images.size() > 0 ? hostel.images.get(0).source : null}"
                     android:layout_margin="10dp"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
@@ -36,13 +36,15 @@
                 </ImageView>
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/name_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/name_region"
+                    tools:text="phòng 1"
                     android:drawablePadding="3dp"
                     android:layout_marginStart="5dp"
-                    android:text="@{hostel.name}"
+                    android:text="@{hostel.post.title}"
                     app:drawableStartCompat="@drawable/home_16"
                     android:layout_marginBottom="5dp"/>
 
@@ -50,15 +52,17 @@
                     android:id="@+id/cost_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/cost_home"
                     android:layout_marginStart="5dp"
                     android:drawablePadding="3dp"
                     android:text="@{String.valueOf(hostel.rentPrice) + ` VND/phòng`}"
                     tools:text="1.5 triệu VND/phòng"
-                    app:drawableStartCompat="@drawable/money_home" />
+                    app:drawableStartCompat="@drawable/money_home"
+                    android:textColor="@color/red"/>
 
                 <TextView
                     android:id="@+id/address_home"
+                    android:textStyle="bold"
+                    tools:text="139 âu cơ"
                     android:drawableStart="@drawable/address_home"
                     android:drawablePadding="3dp"
                     android:layout_width="wrap_content"

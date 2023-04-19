@@ -1,8 +1,9 @@
 package com.androidexam.stayfinder.data.models;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Hostel {
+public class Hostel implements Serializable {
     private int id;
     private String name;
     private String capacity;
