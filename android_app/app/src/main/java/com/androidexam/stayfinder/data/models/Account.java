@@ -11,6 +11,7 @@ public class Account {
     private String userName;
     @SerializedName("phonenumber")
     private String phoneNumber;
+    @SerializedName("avatarUrl")
    private String avatar;
    private Boolean gender;
    private int status;

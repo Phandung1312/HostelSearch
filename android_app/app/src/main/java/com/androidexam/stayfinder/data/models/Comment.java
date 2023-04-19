@@ -9,6 +9,15 @@ public class Comment {
     private String content;
     private Timestamp time;
     private byte image;
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public int getId() {
         return id;
