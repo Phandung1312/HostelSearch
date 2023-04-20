@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{phone}"
-                android:hint="0852556258"
+                tools:hint="0852556258"
                 android:layout_marginStart="5dp"/>
 
         </LinearLayout>

@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{account.userName}"
-            android:hint="Dang Hoan"
+            tools:hint="Dang Hoan"
             android:textColorHint="@color/black"
             android:textSize="30sp"/>
 
@@ -72,10 +72,10 @@
             android:id="@+id/tvContact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{(account.getPhoneNumber() != ``) ? account.phoneNumber : account.accountName}"
+            android:text="@{account.accountName}"
             android:textSize="20sp"
-            android:textColor="#d3d3d3"
-            android:hint="nguyenthedanghoan@gmail.com"/>
+            android:textColor="#a9a9a9"
+            tools:hint="nguyenthedanghoan@gmail.com"/>
 
         <LinearLayout
             android:layout_width="match_parent"

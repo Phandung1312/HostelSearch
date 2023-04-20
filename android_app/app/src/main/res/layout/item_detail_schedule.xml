@@ -60,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{schedule.renterName}"
-                        android:hint="Phạm Khắc Luận"
+                        tools:hint="Phạm Khắc Luận"
                         android:textSize="20sp"
                         android:padding="10dp"
                         android:layout_marginBottom="10dp"
@@ -87,7 +87,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{schedule.renterPhoneNumber}"
-                        android:hint="0123456789"
+                        tools:hint="0123456789"
                         android:textSize="20sp"
                         android:padding="10dp"
                         android:paddingStart="15dp"/>
@@ -117,7 +117,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:hint="Ngày 2 tháng 4 năm 2023"
+                            tools:hint="Ngày 2 tháng 4 năm 2023"
                             android:textSize="18sp" />
 
                         <TextView
@@ -125,7 +125,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:hint="Lúc 18:00"
+                            tools:hint="Lúc 18:00"
                             android:textSize="18sp" />
                     </LinearLayout>
                 </LinearLayout>
@@ -134,7 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{`*Ghi chú: ` + schedule.content}"
-                    android:hint="*Ghi chú: Gặp mặt ở quán cafe trên đường Ngô Thì Nhậm, không say thì ở lại rửa chén"
+                    tools:hint="*Ghi chú: Gặp mặt ở quán cafe trên đường Ngô Thì Nhậm, không say thì ở lại rửa chén"
                     android:textSize="18sp"
                     android:textStyle="italic"
                     android:padding="10dp"
@@ -161,7 +161,7 @@
                     android:layout_margin="10dp"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_home">
+                    tools:src="@drawable/img_home">
                 </ImageView>
                 <TextView
                     android:id="@+id/name_home"
@@ -172,7 +172,7 @@
                     android:drawablePadding="3dp"
                     android:layout_marginLeft="5dp"
                     android:text="@{hostel.name}"
-                    android:hint="Phòng cho thuê"></TextView>
+                    tools:hint="Phòng cho thuê"></TextView>
                 <TextView
                     android:id="@+id/cost_home"
                     android:layout_width="wrap_content"
@@ -182,7 +182,7 @@
                     android:drawableStart="@drawable/money_home"
                     android:drawablePadding="3dp"
                     android:text="@{String.valueOf(hostel.rentPrice)}"
-                    android:hint="1.5 triệu VND/phòng"></TextView>
+                    tools:hint="1.5 triệu VND/phòng"></TextView>
                 <TextView
                     android:id="@+id/address_home"
                     android:drawableStart="@drawable/address_home"
@@ -192,7 +192,7 @@
                     style="@style/address_home"
                     android:layout_marginLeft="5dp"
                     android:text="@{hostel.address}"
-                    android:hint="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
+                    tools:hint="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
             </LinearLayout>
 
         </LinearLayout>

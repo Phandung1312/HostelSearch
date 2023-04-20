@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{name}"
-                android:hint="Nguyễn Thế Đăng Hoan"
+                tools:hint="Nguyễn Thế Đăng Hoan"
                 android:layout_marginStart="5dp"/>
 
         </LinearLayout>
