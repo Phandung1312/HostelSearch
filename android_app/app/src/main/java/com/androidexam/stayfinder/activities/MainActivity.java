@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
     public Account account = new Account();
-    private ActivityMainBinding binding;
+    public ActivityMainBinding binding;
     private NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +51,12 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.chat:
                     navController.navigate(R.id.listChatFragment);
                     break;
+                case R.id.favourite:
+                    navController.navigate(R.id.favouriteFragment);
+                    break;
                 case R.id.profile:
                     navController.navigate(R.id.profileFragment);
+                    break;
             }
             return true;
         });

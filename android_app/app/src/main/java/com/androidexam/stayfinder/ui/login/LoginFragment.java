@@ -140,10 +140,11 @@ public class LoginFragment extends BaseFragment<LoginClass> {
         mainActivity.account = account;
         bottomNavigationView.setVisibility(View.VISIBLE);
         try {
-            if(mainActivity.account.getPosition().getId() == 1){
+            if(mainActivity.account.getPosition().getId() == Utils.CLIENT_ROLE){
                 Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
             }
             else{
+                mainActivity.binding.bottomNavigationView.getMenu().removeItem(R.id.favourite);
                 Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
             }
         }

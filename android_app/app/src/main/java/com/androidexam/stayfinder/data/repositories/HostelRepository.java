@@ -22,8 +22,17 @@ public class HostelRepository {
     public Observable<Content> getAllHostel() {
         return hostelRemoteService.getAllHostel();
     }
-
-    public Observable<Hostel> getHostelById(String id) {
-        return hostelRemoteService.getHostelById(id);
+    public Observable<Hostel> getHostelById(String id) {return hostelRemoteService.getHostelById(id);}
+    public Observable<List<Hostel>> getFavouriteHostels(String username){
+        return hostelRemoteService.getFavouriteHostels(username);
+    }
+    public Observable<Boolean> unFavouriteHostel(String username, int postId){
+        return hostelRemoteService.unFavouriteHostel(username, postId);
+    }
+    public Observable<Boolean> addFavouriteHostel(String username, int postId){
+        return hostelRemoteService.addFavouriteHostel(username, postId);
+    }
+    public Observable<Boolean> checkFavourite(String username, int postId){
+        return hostelRemoteService.checkFavourite(username, postId);
     }
 }

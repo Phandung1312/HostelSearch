@@ -1,6 +1,9 @@
 package com.androidexam.stayfinder.data.models;
 
-public class Hostel {
+import java.io.Serializable;
+import java.util.List;
+
+public class Hostel implements Serializable {
     private int id;
     private String name;
     private String capacity;
@@ -13,6 +16,7 @@ public class Hostel {
     private RoomType roomType;
     private double electricPrice;
     private double waterPrice;
+    private List<Image> images;
     private Post post;
 
     public int getId() {
@@ -119,4 +123,11 @@ public class Hostel {
         this.waterPrice = waterPrice;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 }

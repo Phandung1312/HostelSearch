@@ -115,5 +115,6 @@ dependencies {
 
     // Load image from url
 //    implementation 'com.squareup.picasso:picasso:2.71828'
-
+    implementation 'com.github.Drjacky:ImagePicker:2.3.22'
+    implementation 'com.github.yalantis:ucrop:2.2.8'
 }

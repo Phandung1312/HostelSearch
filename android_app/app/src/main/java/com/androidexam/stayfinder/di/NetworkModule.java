@@ -2,6 +2,7 @@ package com.androidexam.stayfinder.di;
 
 import com.androidexam.stayfinder.common.Utils;
 import com.androidexam.stayfinder.data.apis.AccountAPI;
+import com.androidexam.stayfinder.data.apis.CommentAPI;
 import com.androidexam.stayfinder.data.apis.PostAPI;
 import com.androidexam.stayfinder.data.apis.ScheduleAPI;
 import com.androidexam.stayfinder.data.apis.HostelAPI;
@@ -47,5 +48,9 @@ public class NetworkModule {
     @Provides
     public HostelAPI providesHostelAPI(Retrofit retrofit) {
         return retrofit.create(HostelAPI.class);
+    }
+    @Provides
+    public CommentAPI providesCommentAPI(Retrofit retrofit){
+        return retrofit.create(CommentAPI.class);
     }
 }

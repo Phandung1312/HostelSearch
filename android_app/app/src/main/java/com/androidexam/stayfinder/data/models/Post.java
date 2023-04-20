@@ -72,23 +72,6 @@ public class Post {
         this.postTime = postTime;
     }
 
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
-    }
-
-
-//    public Hostel getHostel() {
-//        return hostel;
-//    }
-//
-//    public void setHostel(Hostel hostel) {
-//        this.hostel = hostel;
-//    }
-
     public String getHostelId() {
         return hostelId;
     }

@@ -19,8 +19,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class Utils {
-    public static final String BASE_URL = "https://tricky-week-production.up.railway.app/api/";
-
+    public static final String BASE_URL="https://tricky-week-production.up.railway.app/api/";
+    public static final  int ADMIN_ROLE = 2;
+    public static final int CLIENT_ROLE = 1;
     public static void convertUrlToByteString(Context context, String url,
             ImageConvertResult<String> imageConvertResult) {
         Glide.with(context)
