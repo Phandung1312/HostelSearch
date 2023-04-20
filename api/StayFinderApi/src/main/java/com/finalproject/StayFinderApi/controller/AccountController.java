@@ -53,8 +53,17 @@ public class AccountController {
 	}
 	
 	@PostMapping
-	public Account addAccount(@RequestBody AccountReq account) {
-		return accountService.addAccount(account);
+	public Account addAccount(@RequestParam(required = true) String username, @RequestParam(required = false) String password,@RequestParam(required = false) String name, @RequestParam(name = "file", required = false) MultipartFile file) {
+		  if(file != null) {
+				String fileName = fileStorageService.storeFile(file);
+		        String imgUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+		        		.path("api")
+		                .path("/downloadFile/")
+		                .path(fileName)
+		                .toUriString();
+		        return accountService.addAccount(new AccountReq(username, password, name, imgUrl));
+		    }
+		  return accountService.addAccount(new AccountReq(username, password, name, null));
 	}
 	
 	@PutMapping
@@ -62,6 +71,7 @@ public class AccountController {
 	    if(file != null) {
 	    	String fileName = fileStorageService.storeFile(file);
 	        String imgUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+	        		.path("api")
 	                .path("/downloadFile/")
 	                .path(fileName)
 	                .toUriString();
