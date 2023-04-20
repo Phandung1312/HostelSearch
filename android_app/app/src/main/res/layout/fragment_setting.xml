@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{account.userName}"
-                    tools:hint="Dang Hoan"
+                    tools:text="Dang Hoan"
                     android:textColorHint="@color/black"
                     android:textSize="25sp"
                     android:textStyle="bold"
@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{account.accountName}"
-                    tools:hint="nguyenthedanghoan@gmail.com"
+                    tools:text="nguyenthedanghoan@gmail.com"
                     android:textSize="20sp"
                     android:textColor="#a9a9a9"
                     android:textStyle="italic"/>
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{account.userName}"
-                tools:hint="Nguyễn Thế Đăng Hoan"
+                tools:text="Nguyễn Thế Đăng Hoan"
                 android:textSize="20sp"
                 android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
             />
@@ -133,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{account.gender?`Nữ`:`Nam`}"
-                tools:hint="Nam"
+                tools:text="Nam"
                 android:textSize="20sp"
                 android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                 />
@@ -160,7 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{account.phoneNumber}"
-                tools:hint="0852556258"
+                tools:text="0852556258"
                 android:textSize="20sp"
                 android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                 />
