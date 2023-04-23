@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{account.userName}"
-                    android:hint="Dang Hoan"
+                    tools:text="Dang Hoan"
                     android:textColorHint="@color/black"
                     android:textSize="25sp"
                     android:textStyle="bold"
@@ -65,10 +65,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{(account.getPhoneNumber() != ``) ? account.phoneNumber : account.accountName}"
-                    android:hint="nguyenthedanghoan@gmail.com"
+                    android:text="@{account.accountName}"
+                    tools:text="nguyenthedanghoan@gmail.com"
                     android:textSize="20sp"
-                    android:textColor="#d3d3d3"
+                    android:textColor="#a9a9a9"
                     android:textStyle="italic"/>
             </LinearLayout>
 
@@ -77,7 +77,7 @@
                 imageUrl="@{account.avatar}"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:src="@drawable/avatar"
+                tools:src="@drawable/avatar"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="5dp"
                 />
@@ -104,8 +104,8 @@
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{account.avatar}"
-                android:hint="Nguyễn Thế Đăng Hoan"
+                android:text="@{account.userName}"
+                tools:text="Nguyễn Thế Đăng Hoan"
                 android:textSize="20sp"
                 android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
             />
@@ -133,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{account.gender?`Nữ`:`Nam`}"
-                android:hint="Nam"
+                tools:text="Nam"
                 android:textSize="20sp"
                 android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                 />
@@ -160,7 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{account.phoneNumber}"
-                android:hint="0852556258"
+                tools:text="0852556258"
                 android:textSize="20sp"
                 android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                 />
@@ -172,10 +172,10 @@
             android:background="#d3d3d3"/>
 
         <TextView
-            android:id="@+id/tvLinkBank"
+            android:id="@+id/tvLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Liên kết ngân hàng"
+            android:text="Đăng xuất"
             android:textSize="20sp"
             android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
             android:padding="20dp"

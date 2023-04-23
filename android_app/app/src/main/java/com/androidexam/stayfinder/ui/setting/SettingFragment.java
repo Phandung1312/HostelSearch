@@ -12,7 +12,9 @@ import androidx.navigation.Navigation;
 import com.androidexam.stayfinder.R;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
 import com.androidexam.stayfinder.databinding.SettingClass;
+import com.androidexam.stayfinder.databinding.UpdateGenderBinding;
 import com.androidexam.stayfinder.databinding.UpdateNameBinding;
+import com.androidexam.stayfinder.databinding.UpdatePhoneBinding;
 
 import javax.inject.Inject;
 
@@ -51,6 +53,7 @@ public class SettingFragment extends BaseFragment<SettingClass> {
                 dialog.show();
 
                 UpdateNameBinding binding = UpdateNameBinding.inflate(getLayoutInflater());
+                binding.setName(dataBinding.tvName.getText().toString());
                 binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -80,7 +83,8 @@ public class SettingFragment extends BaseFragment<SettingClass> {
                 dialog.setCancelable(true);
                 dialog.show();
 
-                UpdateNameBinding binding = UpdateNameBinding.inflate(getLayoutInflater());
+                UpdateGenderBinding binding = UpdateGenderBinding.inflate(getLayoutInflater());
+                binding.setGender(dataBinding.tvGender.getText()=="Nam");
                 binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -108,7 +112,8 @@ public class SettingFragment extends BaseFragment<SettingClass> {
                 dialog.setCancelable(true);
                 dialog.show();
 
-                UpdateNameBinding binding = UpdateNameBinding.inflate(getLayoutInflater());
+                UpdatePhoneBinding binding = UpdatePhoneBinding.inflate(getLayoutInflater());
+                binding.setPhone(dataBinding.tvPhone.getText().toString());
                 binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -123,10 +128,10 @@ public class SettingFragment extends BaseFragment<SettingClass> {
                 });
             }
         });
-        dataBinding.tvLinkBank.setOnClickListener(new View.OnClickListener() {
+        dataBinding.tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "Nếu bạn dùng chức năng này, bạn sẽ bị hack tài khoản ngân hàng!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Đăng xuất", Toast.LENGTH_SHORT).show();
             }
         });
     }
