@@ -45,121 +45,67 @@
                     style="@style/title_cat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <RadioGroup
-                    android:id="@+id/RoomRadioGroup"
+                <EditText
+                    android:id="@+id/et_money_room_min"
                     android:layout_width="match_parent"
-                    android:checkedButton="@id/money_option_1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/money_option_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Dưới 1 Triệu" />
-
-                    <RadioButton
-                        android:id="@+id/money_option_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="1 Triệu - 3 Triệu" />
-                    <RadioButton
-                        android:id="@+id/money_option_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Trên 3 Triệu" />
-
-                </RadioGroup>
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_image"
+                    android:hint="Nhập số tiền thấp nhất bạn mong muốn!"
+                    android:inputType="number"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/text_name_post"
+                    android:textColorHint="@color/text_name_post"
+                    android:textCursorDrawable="@drawable/white_cursor" />
+                <EditText
+                    android:id="@+id/et_money_room_max"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_image"
+                    android:hint="Nhập số tiền cao nhất bạn mong muốn!"
+                    android:inputType="number"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/text_name_post"
+                    android:textColorHint="@color/text_name_post"
+                    android:textCursorDrawable="@drawable/white_cursor" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/menu_search_money_electron"
+                android:id="@+id/menu_search_money_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/title_choice_electron"
-                    android:text="Giá điện"
+                    android:id="@+id/title_choice_area"
+                    android:text="Diện tích"
                     style="@style/title_cat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <RadioGroup
-                    android:id="@+id/ElectronRadioGroup"
+                <EditText
+                    android:id="@+id/et_money_area_min"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checkedButton="@id/Electron_option_1"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/Electron_option_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="2500 VND/KWh" />
-
-                    <RadioButton
-                        android:id="@+id/Electron_option_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="3000VND/KWh" />
-                    <RadioButton
-                        android:id="@+id/Electron_option_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="3500 VND/KWh" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/menu_search_money_water"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/title_choice_water"
-                    android:text="Giá nước"
-                    style="@style/title_cat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <RadioGroup
-                    android:id="@+id/WaterRadioGroup"
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_image"
+                    android:hint="Nhập diện tích thấp nhất bạn mong muốn!"
+                    android:inputType="number"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/text_name_post"
+                    android:textColorHint="@color/text_name_post"
+                    android:textCursorDrawable="@drawable/white_cursor" />
+                <EditText
+                    android:id="@+id/et_money_area_max"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:checkedButton="@id/Water_option_1"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/Water_option_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="7000 VND / Khối" />
-
-                    <RadioButton
-                        android:id="@+id/Water_option_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="8000 VND / Khối" />
-                    <RadioButton
-                        android:id="@+id/Water_option_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="10000 VND / Khối" />
-                </RadioGroup>
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_image"
+                    android:hint="Nhập diện tích cao nhất bạn mong muốn!"
+                    android:inputType="number"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/text_name_post"
+                    android:textColorHint="@color/text_name_post"
+                    android:textCursorDrawable="@drawable/white_cursor" />
             </LinearLayout>
 
 
