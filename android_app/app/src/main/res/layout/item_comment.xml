@@ -29,13 +29,12 @@
                 <androidx.cardview.widget.CardView
                     android:layout_marginStart="10dp"
                     android:id="@+id/card_view_image_avatar"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     app:cardCornerRadius="100dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="@id/card_view_image_post_main"
-                    android:layout_marginRight="24dp"
-                    android:layout_marginBottom="154dp">
+                    android:layout_marginRight="24dp">
                     <ImageView
                         imageUrl="@{comment.account.avatar}"
                         tools:src="@color/black"

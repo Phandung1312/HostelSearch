@@ -46,13 +46,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
         holder.binding.setComment(commentList.get(position));
-//        if(account.getAccountName() != commentList.get(position).getAccount().getAccountName())
-//        {
-//            holder.binding.btnRemove.setVisibility(View.GONE);
-//
-//        }
+        if(account.getAccountName() != commentList.get(position).getAccount().getAccountName())
+        {
+            holder.binding.btnRemove.setVisibility(View.GONE);
+
+        }
         int id = commentList.get(position).getId();
         Log.d("KiemTraID", String.valueOf(commentList.get(position).getId()));
+        int positionDel = position;
         holder.binding.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +61,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
                         .observe(lifecycleOwner, response ->{
                             if(response){
                                 Toast.makeText(v.getContext().getApplicationContext(), "Delete comment success", Toast.LENGTH_SHORT).show();
+                                commentList.remove(positionDel);
+                                notifyDataSetChanged();
                             }else{
                                 Toast.makeText(v.getContext().getApplicationContext(), "Delete comment failure", Toast.LENGTH_SHORT).show();
                             }
