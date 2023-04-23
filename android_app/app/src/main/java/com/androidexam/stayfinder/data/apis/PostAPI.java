@@ -12,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface PostAPI {
@@ -30,4 +31,9 @@ public interface PostAPI {
         Observable<List<Post>> getPostByAccountNameAndStatus(
                         @Path("accountName") String accountName,
                         @Body int status);
+        @PUT("post/{postId}/status/{status}")
+        Observable<Boolean> changeStatusPost(
+                @Path("postId") int postId,
+                @Path("status") int status
+        );
 }

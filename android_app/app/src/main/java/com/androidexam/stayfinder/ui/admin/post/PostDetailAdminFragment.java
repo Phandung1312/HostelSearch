@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -45,6 +46,7 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
     private final String[] Options = {"Take photo", "Choose photo"};
     private Bitmap bitmapAvatar;
     private AlertDialog.Builder window;
+    private boolean checkFavourite;
 
     public PostDetailAdminFragment() {
         super(PostDetailAdminClass::inflate);
@@ -79,7 +81,7 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
             public void onClick(View v) {
                 CommentRequest commentRequest = new CommentRequest();
                 commentRequest.setPostId(hostel.getPost().getId());
-                commentRequest.setUsername(hostel.getPost().getAccount().getAccountName());
+                commentRequest.setUsername(mainActivity.account.getAccountName());
                 commentRequest.setContent(dataBinding.etComment.getText().toString());
                 if(bitmapAvatar != null){
                     try {
@@ -91,9 +93,47 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
                         e.printStackTrace();
                     }
                 }
-                postDetailAdminViewModel.sendComment(commentRequest);
+                postDetailAdminViewModel.sendComment(commentRequest)
+                        .observe(getViewLifecycleOwner(),comment->{
+                            if(comment == null){
+                                Toast.makeText(v.getContext().getApplicationContext(), "Add comment failure", Toast.LENGTH_SHORT).show();
+                            }else{
+                                comments.add(comment);
+                                adapter.notifyDataSetChanged();
+                            }
+                        } );
                 dataBinding.etComment.setText("");
             }
+        });
+        dataBinding.btnRemove.setOnClickListener(v->{
+            postDetailAdminViewModel.changeStatusPost(hostel.getPost().getId(),0)
+                    .observe(getViewLifecycleOwner(), check ->{
+                        if(check == true){
+                            Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(v.getContext().getApplicationContext(), "Change status post failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        });
+        dataBinding.btnAccept.setOnClickListener(v->{
+            postDetailAdminViewModel.changeStatusPost(hostel.getPost().getId(),1)
+                    .observe(getViewLifecycleOwner(), check ->{
+                        if(check == true){
+                            Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(v.getContext().getApplicationContext(), "Change status post failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        });
+        dataBinding.btnFavorite.setOnClickListener(v->{
+            postDetailAdminViewModel.changeStatusFavourite(mainActivity.account.getAccountName(),hostel.getPost().getId(),!checkFavourite)
+                    .observe(getViewLifecycleOwner(), check ->{
+                        if(check == true){
+                            Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(v.getContext().getApplicationContext(), "Change status post failure", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         });
     }
     @Override
@@ -101,6 +141,16 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
         dataBinding.setHostel(hostel);
         dataBinding.executePendingBindings();
         setAdapter();
+        postDetailAdminViewModel.checkFavourite(mainActivity.account.getAccountName(),hostel.getPost().getId())
+                .observe(getViewLifecycleOwner(), check->{
+                    if(check == true){
+                        dataBinding.btnFavorite.setImageResource(R.drawable.ic_favourite_red);
+                        checkFavourite = true;
+                    }else {
+                        dataBinding.btnFavorite.setImageResource(R.drawable.ic_favourite_gray);
+                        checkFavourite = false;
+                    }
+                });
     }
     private void setAdapter(){
         comments = new ArrayList<>();
@@ -120,7 +170,6 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
                 if (result.getResultCode() == RESULT_OK) {
                     Uri uri = result.getData().getData();
                     // Use the uri to load the image
-//                    binding.ivAvatar.setImageURI(uri);
                     try {
                         bitmapAvatar = MediaStore.Images.Media.getBitmap(this.getContext().getContentResolver(), uri);
                         dataBinding.ivComment.setImageBitmap(bitmapAvatar);

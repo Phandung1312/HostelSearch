@@ -42,9 +42,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
-    private ArrayList<Hostel> hostels;
+    private ArrayList<Hostel> hostelApprovals;
+    private ArrayList<Hostel> hostelNotApprovals;
     AdminHomeViewModel adminHomeViewModel;
-    PostAdminAdapter adapter;
+    PostAdminAdapter adapterApproval;
+    PostAdminAdapter adapterNotApproval;
     public AdminHomeFragment() {
         super(AdminHomeClass::inflate);
     }
@@ -52,7 +54,8 @@ public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
     public void initView() {
         adminHomeViewModel = new ViewModelProvider(this).get(AdminHomeViewModel.class);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-//        dataBinding.rvPost.setLayoutManager(new GridLayoutManager(getContext(),2));
+        dataBinding.rvPostNotApproval.setLayoutManager(new GridLayoutManager(getContext(),2));
+        dataBinding.rvPostApproval.setLayoutManager(new GridLayoutManager(getContext(), 2));
     }
 
     @Override
@@ -83,22 +86,6 @@ public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
                 dialog.show();
             }
         });
-//        dataBinding.editSearch.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                adapter.getFilter().filter(s);
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -106,15 +93,24 @@ public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
         setAdapter();
     }
     private void setAdapter(){
-        hostels = new ArrayList<>();
-        adapter = new PostAdminAdapter(hostels);
-//        dataBinding.rvPost.setAdapter(adapter);
+        hostelApprovals = new ArrayList<>();
+        hostelNotApprovals = new ArrayList<>();
+        adapterApproval = new PostAdminAdapter(hostelApprovals);
+        adapterNotApproval = new PostAdminAdapter(hostelNotApprovals);
+        dataBinding.rvPostApproval.setAdapter(adapterApproval);
+        dataBinding.rvPostNotApproval.setAdapter(adapterNotApproval);
         adminHomeViewModel.setPostData();
         adminHomeViewModel.loadData().observe(getViewLifecycleOwner(),postList -> {
-            hostels.addAll(postList);
-            adapter.notifyDataSetChanged();
+            for(Hostel hostel : postList){
+                if(hostel.getPost().getStatus() == 1){
+                    hostelApprovals.add(hostel);
+                }else if(hostel.getPost().getStatus() == 2){
+                    hostelNotApprovals.add(hostel);
+                }
+            }
+            adapterApproval.notifyDataSetChanged();
+            adapterNotApproval.notifyDataSetChanged();
         });
-        Log.d("KiemTra",String.valueOf(adapter.getItemCount()));
     }
 
 }
