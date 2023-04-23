@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/menu_search_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:text="Tìm kiếm theo giá thành"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <View
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/menu_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/menu_search_room_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/title_choice_room"
+                    android:text="Giá Phòng"
+                    style="@style/title_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <RadioGroup
+                    android:id="@+id/RoomRadioGroup"
+                    android:layout_width="match_parent"
+                    android:checkedButton="@id/money_option_1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/money_option_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Dưới 1 Triệu" />
+
+                    <RadioButton
+                        android:id="@+id/money_option_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1 Triệu - 3 Triệu" />
+                    <RadioButton
+                        android:id="@+id/money_option_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Trên 3 Triệu" />
+
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/menu_search_money_electron"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/title_choice_electron"
+                    android:text="Giá điện"
+                    style="@style/title_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <RadioGroup
+                    android:id="@+id/ElectronRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@id/Electron_option_1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/Electron_option_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2500 VND/KWh" />
+
+                    <RadioButton
+                        android:id="@+id/Electron_option_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="3000VND/KWh" />
+                    <RadioButton
+                        android:id="@+id/Electron_option_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="3500 VND/KWh" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/menu_search_money_water"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/title_choice_water"
+                    android:text="Giá nước"
+                    style="@style/title_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <RadioGroup
+                    android:id="@+id/WaterRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checkedButton="@id/Water_option_1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/Water_option_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="7000 VND / Khối" />
+
+                    <RadioButton
+                        android:id="@+id/Water_option_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="8000 VND / Khối" />
+                    <RadioButton
+                        android:id="@+id/Water_option_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="10000 VND / Khối" />
+                </RadioGroup>
+            </LinearLayout>
+
+
+
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+            <Button
+                style="@style/btn_rental"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:background="@drawable/rental_btn"
+                android:text="TÌM PHÒNG"
+                android:textColor="#FFFFFF"></Button>
+            <Button
+                style="@style/btn_rental"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="63dp"
+                android:background="@drawable/cancel_btn"
+                android:text="HỦY"
+                android:textColor="#FFFFFF"></Button>
+        </LinearLayout>
+        </LinearLayout>
+</layout>

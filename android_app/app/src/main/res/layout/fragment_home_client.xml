@@ -24,19 +24,20 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/shape_eclipse_24dp"
             >
+
             <Button
                 android:id="@+id/btn_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:background="@drawable/baseline_notifications_none_24"></Button>
+                android:background="@drawable/baseline_notifications_none_24" />
             <View
                 android:id="@+id/group"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="30dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/shape_vector"
@@ -50,10 +51,8 @@
             android:layout_width="232dp"
             android:layout_height="80dp"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="27dp"
-            android:layout_marginLeft="27dp"
             android:layout_marginTop="70dp"
             android:gravity="top"
             android:lineSpacingExtra="11sp"
@@ -65,31 +64,29 @@
             style="@style/text"
             android:drawableStart="@drawable/baseline_search_24"
             android:layout_width="327dp"
-            android:paddingLeft="20dp"
+            android:paddingStart="20dp"
             android:hint="Tìm kiếm khu vực, trọ bạn muốn"
             android:drawablePadding="10dp"
             android:layout_height="70dp"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
             android:layout_marginTop="185dp"
             android:layout_marginEnd="44dp"
             android:background="@drawable/shape_search">
         </EditText>
+
         <TextView
             android:id="@+id/title_cat"
             android:layout_width="wrap_content"
             style="@style/title_cat"
             android:layout_height="wrap_content"
             android:layout_below="@+id/form_search"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
-            android:text="Xu Hướng Tìm Kiếm"
-            ></TextView>
+            android:text="Xu Hướng Tìm Kiếm" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_rental"
             android:layout_width="wrap_content"
@@ -99,17 +96,17 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="40dp"
             />
+
         <TextView
             android:id="@+id/title_rental"
             android:layout_width="wrap_content"
             style="@style/title_cat"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rcv_rental"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
-            android:text="Đề Xuất Cho Bạn"
-            ></TextView>
+            android:text="Đề Xuất Cho Bạn" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_home"
             android:layout_width="wrap_content"
