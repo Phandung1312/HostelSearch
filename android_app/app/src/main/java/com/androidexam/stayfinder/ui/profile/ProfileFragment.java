@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
 import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.Schedule;
+import com.androidexam.stayfinder.data.models.request.PostRequest;
+import com.androidexam.stayfinder.data.repositories.PostReposity;
 import com.androidexam.stayfinder.databinding.ProfileClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -23,9 +25,9 @@ import io.paperdb.Paper;
 
 @AndroidEntryPoint
 public class ProfileFragment extends BaseFragment<ProfileClass> {
-    private ArrayList<Post> waitApprovalPosts;
-    private ArrayList<Post> approvedPosts;
-    private ArrayList<Post> notApprovedPosts;
+    private ArrayList<PostRequest> waitApprovalPosts;
+    private ArrayList<PostRequest> approvedPosts;
+    private ArrayList<PostRequest> notApprovedPosts;
     private PostAdapter postAdapter;
     ProfileViewModel profileViewModel;
 
@@ -34,46 +36,8 @@ public class ProfileFragment extends BaseFragment<ProfileClass> {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        // if (Paper.book().read("email") != null && Paper.book().read("password") !=
-        // null){
-        // check is new login???
-        profileViewModel.GetAllPostByAccountName(mainActivity.account.getAccountName());
-        profileViewModel.loadListPost().observe(getViewLifecycleOwner(), lst -> {
-            waitApprovalPosts.clear();
-            approvedPosts.clear();
-            notApprovedPosts.clear();
-            for (Post post : lst) {
-                if (post.getStatus() == 2) {
-                    waitApprovalPosts.add(post);
-
-                } else if (post.getStatus() == 1) {
-                    approvedPosts.add(post);
-
-                } else{
-                    notApprovedPosts.add(post);
-
-                }
-            }
-            dataBinding.tvNumberPosts.setText(String.valueOf(approvedPosts.size()));
-            dataBinding.btnWaitApprovalPost.setText(String.format("Wait-approval\npost (%d)",waitApprovalPosts.size()));
-            dataBinding.btnApprovedPost.setText(String.format("Approved\npost (%d)",approvedPosts.size()));
-            dataBinding.btnNotApprovedPost.setText(String.format("Not approved\npost (%d)",notApprovedPosts.size()));
-            postAdapter.notifyDataSetChanged();
-        });
-        profileViewModel.GetAllScheduleByAccountName(mainActivity.account.getAccountName());
-        profileViewModel.loadListOwnerSchedule().observe(getViewLifecycleOwner(), ownerList -> {
-            profileViewModel.loadListRenterSchedule().observe(getViewLifecycleOwner(), renterList ->{
-                dataBinding.tvNumberSchedules.setText(String.valueOf(ownerList.size() + renterList.size()));
-            });
-        });
-        // }
-    }
-
-    @Override
     public void initView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,
                 false);
         dataBinding.rvProfilePost.setLayoutManager(linearLayoutManager);
 
@@ -89,6 +53,36 @@ public class ProfileFragment extends BaseFragment<ProfileClass> {
 
     @Override
     public void initListeners() {
+        // if (Paper.book().read("email") != null && Paper.book().read("password") !=
+        // null){
+        // check is new login???
+        profileViewModel.GetWaitApprovalPost(mainActivity.account.getAccountName()).observe(getViewLifecycleOwner(), waitLst -> {
+            dataBinding.btnWaitApprovalPost.setText(String.format("Bài chờ\nphê duyệt (%d)",waitLst.size()));
+            waitApprovalPosts.clear();
+            waitApprovalPosts.addAll(waitLst);
+            postAdapter.notifyDataSetChanged();
+        });
+        profileViewModel.GetApprovedPost(mainActivity.account.getAccountName()).observe(getViewLifecycleOwner(), approvedLst -> {
+            dataBinding.tvNumberPosts.setText(String.valueOf(approvedLst.size()));
+            dataBinding.btnApprovedPost.setText(String.format("Bài được\nchấp nhận (%d)",approvedLst.size()));
+            approvedPosts.clear();
+            approvedPosts.addAll(approvedLst);
+            postAdapter.notifyDataSetChanged();
+        });
+        profileViewModel.GetNotApprovedPost(mainActivity.account.getAccountName()).observe(getViewLifecycleOwner(), notApprovedLst -> {
+            dataBinding.btnNotApprovedPost.setText(String.format("Bài không\nchấp nhận (%d)",notApprovedLst.size()));
+            notApprovedPosts.clear();
+            notApprovedPosts.addAll(notApprovedLst);
+            postAdapter.notifyDataSetChanged();
+        });
+
+        profileViewModel.GetAllScheduleByAccountName(mainActivity.account.getAccountName());
+        profileViewModel.loadListOwnerSchedule().observe(getViewLifecycleOwner(), ownerList -> {
+            profileViewModel.loadListRenterSchedule().observe(getViewLifecycleOwner(), renterList ->{
+                dataBinding.tvNumberSchedules.setText(String.valueOf(ownerList.size() + renterList.size()));
+            });
+        });
+        // }
         dataBinding.imgMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

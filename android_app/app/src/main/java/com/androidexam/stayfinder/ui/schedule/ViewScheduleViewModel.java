@@ -35,7 +35,7 @@ public class ViewScheduleViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(lst -> {
-                            listOwnerSchedule.postValue(lst);
+                            listRenterSchedule.postValue(lst);
                         },
                         throwable ->{
                             Log.d("ERROR get all owner schedules of user (ViewSCheduleViewModel class)",throwable.getMessage());
@@ -45,7 +45,7 @@ public class ViewScheduleViewModel extends BaseViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(lst -> {
-                            listRenterSchedule.postValue(lst);
+                            listOwnerSchedule.postValue(lst);
                         },
                         throwable ->{
                             Log.d("ERROR get all renter schedules of user (ViewSCheduleViewModel class)",throwable.getMessage());

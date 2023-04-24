@@ -21,12 +21,16 @@ import com.androidexam.stayfinder.databinding.FragmentDetailScheduleBinding;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class CustomDialogFragment extends DialogFragment {
     private FragmentDetailScheduleBinding binding;
     private ScheduleAdapter scheduleAdapter;
     private String accountName;
-    private ArrayList<ScheduleRequest> listSchedules;
+
+    private ArrayList<ScheduleRequest> ownerSchedules;
+    private ArrayList<ScheduleRequest> renterSchedules;
 
     public CustomDialogFragment(String accountName){
         this.accountName = accountName;
@@ -38,12 +42,26 @@ public class CustomDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         binding = FragmentDetailScheduleBinding.inflate(getLayoutInflater());
 
-        binding.tvTitle.setText(String.format("Lịch hẹn (%d)", listSchedules.size()));
+        binding.tvTitle.setText("Lịch hẹn");
+        binding.btnAllSchedules.setText(String.format("Tất cả\nlịch hẹn (%d)",  ownerSchedules.size() + renterSchedules.size()));
+        binding.btnOwnerSchedule.setText(String.format("Hẹn với\nchủ trọ (%d)",  ownerSchedules.size()));
+        binding.btnRenterSchedule.setText(String.format("Hẹn với\nngười thuê (%d)",  renterSchedules.size()));
+        binding.lnMain.setClipToOutline(true);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager.VERTICAL,
                 false);
         binding.rvSchedule.setLayoutManager(linearLayoutManager);
 
-        scheduleAdapter = new ScheduleAdapter(this.getActivity(), listSchedules, accountName);
+        ArrayList<ScheduleRequest> schedules = new ArrayList<>(ownerSchedules);
+        schedules.addAll(renterSchedules);
+        // sort by time
+        Collections.sort(schedules, new Comparator<ScheduleRequest>() {
+            public int compare(ScheduleRequest o1, ScheduleRequest o2) {
+                return o1.getMeetingTime().after(o2.getMeetingTime())? 1 : -1;
+            }
+        });
+
+        scheduleAdapter = new ScheduleAdapter(this.getActivity(), schedules, accountName);
         binding.rvSchedule.setAdapter(scheduleAdapter);
 
         binding.tvTitle.setOnTouchListener(new View.OnTouchListener() {
@@ -64,6 +82,25 @@ public class CustomDialogFragment extends DialogFragment {
             }
         });
 
+        binding.btnAllSchedules.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scheduleAdapter.updateList(schedules);
+            }
+        });
+        binding.btnOwnerSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scheduleAdapter.updateList(ownerSchedules);
+            }
+        });
+        binding.btnRenterSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scheduleAdapter.updateList(renterSchedules);
+            }
+        });
+
 
         return binding.getRoot();
     }
@@ -77,7 +114,20 @@ public class CustomDialogFragment extends DialogFragment {
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
     }
 
-    public void updateList(ArrayList<ScheduleRequest> schedules){
-        listSchedules = new ArrayList<>(schedules);
+    public void updateList(ArrayList<ScheduleRequest> ownerLst, ArrayList<ScheduleRequest> renterLst){
+        // sort by time
+        Collections.sort(ownerLst, new Comparator<ScheduleRequest>() {
+            public int compare(ScheduleRequest o1, ScheduleRequest o2) {
+                return o1.getMeetingTime().after(o2.getMeetingTime())? 1 : -1;
+            }
+        });
+        // sort by time
+        Collections.sort(renterLst, new Comparator<ScheduleRequest>() {
+            public int compare(ScheduleRequest o1, ScheduleRequest o2) {
+                return o1.getMeetingTime().after(o2.getMeetingTime())? 1 : -1;
+            }
+        });
+        ownerSchedules = new ArrayList<>(ownerLst);
+        renterSchedules = new ArrayList<>(renterLst);
     }
 }

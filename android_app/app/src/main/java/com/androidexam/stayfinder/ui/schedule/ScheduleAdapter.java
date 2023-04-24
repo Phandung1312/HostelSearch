@@ -26,25 +26,21 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private Context context;
     private ArrayList<ScheduleRequest> schedules;
     private String accountName;
-//    private ArrayList<DogBreed> dogBreedsCopy; //C1
-
 
     // Creating date format
     private final DateFormat dateFormat = new SimpleDateFormat(
             "'Ngày' dd 'Tháng' MM 'Năm' yyyy", Locale.getDefault());
     private final DateFormat timeFormat = new SimpleDateFormat(
-            "'Lúc' HH:mm:ss:SSS Z", Locale.getDefault());
+            "'Lúc' HH:mm Z", Locale.getDefault());
 
     public ScheduleAdapter(Context context, ArrayList<ScheduleRequest> schedules, String accountName){
         this.context = context;
         this.schedules = schedules;
         this.accountName = accountName;
-//        this.dogBreedsCopy = dogBreeds; //C1
     }
 
     @Override
     public int getItemViewType(int position) {
-        System.out.println(schedules.get(position).getUsername() + ", " + accountName + ", " + (schedules.get(position).getUsername().equals(accountName)));
         return schedules.get(position).getUsername().equals(accountName)? 0 : 1;
     }
 
@@ -75,29 +71,48 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(holder.getItemViewType() == 0){
             ViewHolderRenter viewHolder = (ViewHolderRenter) holder;
-            viewHolder.binding.setSchedule(schedules.get(position));
-            viewHolder.binding.setHostel(schedules.get(position).getPost().getHostel());
+            ScheduleRequest schedule = schedules.get(position);
 
-            long milliSec = schedules.get(position).getMeetingTime().getTime();
+            viewHolder.binding.tvTitle.setText((position+1)+". Hẹn với chủ trọ");
+            viewHolder.binding.setSchedule(schedule);
+            viewHolder.binding.setHostel(schedule.getPost().getHostel());
+
+            long milliSec = schedule.getMeetingTime().getTime();
             Date dateEvent = new Date(milliSec);
             viewHolder.binding.tvScheduleDate.setText(dateFormat.format(dateEvent));
             viewHolder.binding.tvScheduleTime.setText(timeFormat.format(dateEvent));
-            viewHolder.binding.cvSchedule.getBackground().setTint(Color.parseColor(getRandomColor()));
+            if(schedule.getColor() == ""){
+                String randomColor = getRandomColor();
+                viewHolder.binding.cvSchedule.getBackground().setTint(Color.parseColor(randomColor));
+                schedule.setColor(randomColor);
+            }
+            else{
+                viewHolder.binding.cvSchedule.getBackground().setTint(Color.parseColor(schedule.getColor()));
+            }
         }
 
         else{
             ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.binding.setSchedule(schedules.get(position));
-            viewHolder.binding.setHostel(schedules.get(position).getPost().getHostel());
+            ScheduleRequest schedule = schedules.get(position);
 
-            long milliSec = schedules.get(position).getMeetingTime().getTime();
+            viewHolder.binding.tvTitle.setText((position+1)+". Hẹn với người thuê trọ");
+            viewHolder.binding.setSchedule(schedule);
+            viewHolder.binding.setHostel(schedule.getPost().getHostel());
+
+            long milliSec = schedule.getMeetingTime().getTime();
             Date dateEvent = new Date(milliSec);
             viewHolder.binding.tvScheduleDate.setText(dateFormat.format(dateEvent));
             viewHolder.binding.tvScheduleTime.setText(timeFormat.format(dateEvent));
-            viewHolder.binding.cvSchedule.getBackground().setTint(Color.parseColor(getRandomColor()));
+            if(schedule.getColor() == ""){
+                String randomColor = getRandomColor();
+                viewHolder.binding.cvSchedule.getBackground().setTint(Color.parseColor(randomColor));
+                schedule.setColor(randomColor);
+            }
+            else{
+                viewHolder.binding.cvSchedule.getBackground().setTint(Color.parseColor(schedule.getColor()));
+            }
         }
 
-//        Picasso.get().load(dogBreeds.get(position).getUrl()).into(holder.binding.ivAvatar);
     }
 
     @Override
@@ -166,6 +181,22 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private String getRandomColor(){
         ArrayList<String> colors = new ArrayList<>();
+        colors.add("#d7e7d8");
+        colors.add("#3fb59e");
+        colors.add("#facade");
+        colors.add("#bcc499");
+        colors.add("#c39797");
+        colors.add("#eea990");
+        colors.add("#f7cac9");
+        colors.add("#ffc3a0");
+        colors.add("#61aef4");
+        colors.add("#e1d09c");
+        colors.add("#f9b5b5");
+        colors.add("#d8cff4");
+        colors.add("#e9a9cf");
+        colors.add("#ffcccc");
+        colors.add("#ffc299");
+        colors.add("#ffffe6");
         colors.add("#35ad68");
         colors.add("#c27ba8");
         colors.add("#baa9aa");
@@ -176,7 +207,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         colors.add("#29cdff");
         colors.add("#929a70");
         colors.add("#3ded97");
-        colors.add("#d21500");
         colors.add("#e6e6fa");
         colors.add("#ffb2d6");
         colors.add("#faebd7");

@@ -13,15 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidexam.stayfinder.R;
 import com.androidexam.stayfinder.data.models.Post;
+import com.androidexam.stayfinder.data.models.request.PostRequest;
 import com.androidexam.stayfinder.databinding.ItemsHomesBinding;
 
 import java.util.ArrayList;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
-    private ArrayList<Post> posts;
+    private ArrayList<PostRequest> posts;
 //    private ArrayList<DogBreed> dogBreedsCopy; //C1
 
-    public PostAdapter(ArrayList<Post> posts){
+    public PostAdapter(ArrayList<PostRequest> posts){
         this.posts = posts;
 //        this.dogBreedsCopy = dogBreeds; //C1
     }
@@ -84,7 +85,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 //    }
 
     //C2
-    public void updateList(ArrayList<Post> newList) {
+    public void updateList(ArrayList<PostRequest> newList) {
         posts = newList;
         notifyDataSetChanged();
     }
@@ -99,7 +100,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Post dog = posts.get(getAdapterPosition());
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("post", posts);
                     Navigation.findNavController(view).navigate(R.id.detailClientHomeFragment, bundle);

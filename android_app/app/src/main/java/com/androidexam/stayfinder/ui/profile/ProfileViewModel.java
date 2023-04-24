@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.androidexam.stayfinder.base.viewmodel.BaseViewModel;
 import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.Schedule;
+import com.androidexam.stayfinder.data.models.request.PostRequest;
 import com.androidexam.stayfinder.data.models.request.ScheduleRequest;
 import com.androidexam.stayfinder.data.repositories.PostReposity;
 import com.androidexam.stayfinder.data.repositories.ScheduleReposity;
@@ -26,7 +27,12 @@ public class ProfileViewModel extends BaseViewModel {
     PostReposity postReposity;
     ScheduleReposity scheduleReposity;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     MutableLiveData<List<Post>> listPost = new MutableLiveData<>();
+    MutableLiveData<List<PostRequest>> listWaitApprovalPost = new MutableLiveData<>();
+    MutableLiveData<List<PostRequest>> listApprovedPost = new MutableLiveData<>();
+    MutableLiveData<List<PostRequest>> listNotApprovedPost = new MutableLiveData<>();
+
     MutableLiveData<List<ScheduleRequest>> listOwnerSchedule = new MutableLiveData<>();
     MutableLiveData<List<ScheduleRequest>> listRenterSchedule = new MutableLiveData<>();
 
@@ -74,6 +80,47 @@ public class ProfileViewModel extends BaseViewModel {
                             Log.d("ERROR get all posts of user (ProfileViewModel class)",throwable.getMessage());
                         }
                 ));
+    }
+    public LiveData<List<PostRequest>> GetWaitApprovalPost(String accountName){
+        compositeDisposable.add(postReposity.getPostByAccountNameAndStatus(accountName, 2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(lst -> {
+                            listWaitApprovalPost.postValue(lst);
+                        },
+                        throwable ->{
+                            Log.d("ERROR get wait approval post of user (ProfileViewModel class)",throwable.getMessage());
+                        }
+                ));
+        return this.listWaitApprovalPost;
+    }
+
+    public LiveData<List<PostRequest>> GetApprovedPost(String accountName){
+        compositeDisposable.add(postReposity.getPostByAccountNameAndStatus(accountName, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(lst -> {
+                            listApprovedPost.postValue(lst);
+                        },
+                        throwable ->{
+                            Log.d("ERROR get approved post by accountName and status of user (ProfileViewModel class)",throwable.getMessage());
+                        }
+                ));
+        return this.listApprovedPost;
+    }
+
+    public LiveData<List<PostRequest>> GetNotApprovedPost(String accountName){
+        compositeDisposable.add(postReposity.getPostByAccountNameAndStatus(accountName, 0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(lst -> {
+                            listNotApprovedPost.postValue(lst);
+                        },
+                        throwable ->{
+                            Log.d("ERROR get not approved post by accountName and status of user (ProfileViewModel class)",throwable.getMessage());
+                        }
+                ));
+        return this.listNotApprovedPost;
     }
 
     public LiveData<List<Post>> loadListPost(){

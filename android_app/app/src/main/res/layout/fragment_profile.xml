@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Profile"
+                android:text="Hồ sơ"
                 android:textSize="20sp" />
 
             <ImageView
@@ -103,7 +103,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Appointments"
+                    android:text="Lịch hẹn"
                     android:textSize="15sp"/>
             </LinearLayout>
 
@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Posts"
+                    android:text="Bài đăng"
                     android:textSize="15sp"/>
             </LinearLayout>
         </LinearLayout>
@@ -144,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d3d3d3"
-                android:text="Wait-approval\npost"
+                android:text="Bài chờ\nphê duyệt"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 app:cornerRadius="18dp"
@@ -158,7 +158,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d3d3d3"
-                android:text="Approved\npost"
+                android:text="Bài được\nchấp nhận"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 app:cornerRadius="18dp"
@@ -173,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#d3d3d3"
-                android:text="Not approved\npost"
+                android:text="Bài không\nchấp nhận"
                 android:textSize="18sp"
                 android:textColor="@color/black"
                 app:cornerRadius="18dp"
@@ -189,7 +189,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_profile_post"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </layout>
