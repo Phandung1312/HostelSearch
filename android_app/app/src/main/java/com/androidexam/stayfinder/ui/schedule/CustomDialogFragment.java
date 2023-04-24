@@ -46,7 +46,7 @@ public class CustomDialogFragment extends DialogFragment {
         binding.btnAllSchedules.setText(String.format("Tất cả\nlịch hẹn (%d)",  ownerSchedules.size() + renterSchedules.size()));
         binding.btnOwnerSchedule.setText(String.format("Hẹn với\nchủ trọ (%d)",  ownerSchedules.size()));
         binding.btnRenterSchedule.setText(String.format("Hẹn với\nngười thuê (%d)",  renterSchedules.size()));
-        binding.lnMain.setClipToOutline(true);
+//        binding.lnMain.setClipToOutline(true);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity(), LinearLayoutManager.VERTICAL,
                 false);

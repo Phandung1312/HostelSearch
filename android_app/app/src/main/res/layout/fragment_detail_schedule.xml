@@ -50,6 +50,8 @@
                 android:textAllCaps="false"
                 android:outlineProvider="none"
                 android:padding="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 />
 
             <Button
@@ -65,6 +67,8 @@
                 android:textAllCaps="false"
                 android:outlineProvider="none"
                 android:padding="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
 
                 />
             <Button
@@ -80,6 +84,8 @@
                 android:textAllCaps="false"
                 android:outlineProvider="none"
                 android:padding="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
 
                 />
 
