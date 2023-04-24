@@ -26,7 +26,12 @@ public class PostRemoteService {
         return postAPI.getPostByAccountName(
                 accountName);
     }
-    public Observable<List<PostRequest>> getPostByAccountNameAndStatus(String accountName, int status){
+
+    public Observable<List<PostRequest>> getPostByAccountNameAndStatus(String accountName, int status) {
         return postAPI.getPostByAccountNameAndStatus(accountName, status);
+    }
+
+    public Observable<Boolean> changeStatusPost(int postId, int status) {
+        return postAPI.changeStatusPost(postId, status);
     }
 }

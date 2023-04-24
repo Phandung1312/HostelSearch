@@ -21,4 +21,7 @@ public class PostRepository {
     public Observable<List<Post>> getAllPost(){
         return postRemoteService.getAllPost();
     }
+    public Observable<Boolean> changeStatusPost(int postId, int status){
+        return  postRemoteService.changeStatusPost(postId,status);
+    }
 }

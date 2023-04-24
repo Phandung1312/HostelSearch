@@ -155,16 +155,16 @@
             android:layout_alignParentRight="true"
             style="@style/address_home_detail"
             android:text="Diện tích 15m^2"></TextView>
+
         <Button
+            style="@style/btn_rental"
             android:layout_width="278dp"
             android:layout_height="63dp"
-            style="@style/btn_rental"
-            android:background="@drawable/rental_btn"
             android:layout_below="@+id/img_house"
             android:layout_centerInParent="true"
             android:layout_marginTop="200dp"
+            android:background="@drawable/rental_btn"
             android:text="Thuê NGAY"
-            android:textColor="#FFFFFF"
-            ></Button>
+            android:textColor="#FFFFFF"></Button>
     </RelativeLayout>
 </layout>
