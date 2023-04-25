@@ -40,7 +40,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
         PostRequest postRequest = posts.get(position);
         postRequest.getHostel().setPost(new Post(postRequest));
-        holder.binding.setHostel(postRequest.getHostel());
+        holder.binding.setPost(new Post(postRequest));
 
         holder.binding.cardViewPostAdmin.setOnClickListener(view ->{
             Hostel hostel = posts.get(position).getHostel();
