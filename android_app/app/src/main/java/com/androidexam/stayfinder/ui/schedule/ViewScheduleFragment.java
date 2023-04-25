@@ -21,11 +21,15 @@ import com.androidexam.stayfinder.databinding.FragmentDetailScheduleBinding;
 import com.androidexam.stayfinder.databinding.ScheduleClass;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
+import com.google.type.DateTime;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
@@ -36,7 +40,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
-    ArrayList<ScheduleRequest> scheduleRequests = new ArrayList<>();
     ViewScheduleViewModel viewScheduleViewModel;
 
     private static final int FILL_LARGE_INDICATOR = 1;            //fill circle background for event
@@ -48,34 +51,11 @@ public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
             "'Tháng' MM 'Năm' yyyy", Locale.getDefault());
 
     private CustomDialogFragment customDialogFragment;
-    private ArrayList<ScheduleRequest> schedules = new ArrayList<>();
+    private ArrayList<ScheduleRequest> ownerSchedule = new ArrayList<>();
+    private ArrayList<ScheduleRequest> renterSchedule = new ArrayList<>();
 
     public ViewScheduleFragment() {
         super(ScheduleClass::inflate);
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-//        if (Paper.book().read("email") != null && Paper.book().read("password") != null){
-        //check is new login???
-            viewScheduleViewModel.GetAllScheduleByAccountName(mainActivity.account.getAccountName());
-            viewScheduleViewModel.loadListOwnerSchedule().observe(getViewLifecycleOwner(),ownerList ->{
-                viewScheduleViewModel.loadListRenterSchedule().observe(getViewLifecycleOwner(), renterList -> {
-                        dataBinding.calendarView.setLocale(TimeZone.getDefault(),Locale.getDefault());
-                        dataBinding.calendarView.setUseThreeLetterAbbreviation(true);
-                        dataBinding.calendarView.setFirstDayOfWeek(Calendar.MONDAY);
-                        scheduleRequests.clear();
-                        scheduleRequests.addAll(ownerList);
-                        scheduleRequests.addAll(renterList);
-
-                        dataBinding.calendarView.removeAllEvents();
-                        for(ScheduleRequest schedule : scheduleRequests){
-                            Event event = new Event(Color.RED, schedule.getMeetingTime().getTime(), schedule.getContent());
-                            dataBinding.calendarView.addEvent(event);
-                        }
-                    });
-                });
-//        }
     }
     @Override
     public void initView() {
@@ -87,6 +67,31 @@ public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
 
     @Override
     public void initListeners() {
+        //        if (Paper.book().read("email") != null && Paper.book().read("password") != null){
+        //check is new login???
+        viewScheduleViewModel.GetAllScheduleByAccountName(mainActivity.account.getAccountName());
+        viewScheduleViewModel.loadListOwnerSchedule().observe(getViewLifecycleOwner(),ownerList ->{
+            viewScheduleViewModel.loadListRenterSchedule().observe(getViewLifecycleOwner(), renterList -> {
+                dataBinding.calendarView.setLocale(TimeZone.getDefault(),Locale.getDefault());
+                dataBinding.calendarView.setUseThreeLetterAbbreviation(true);
+                dataBinding.calendarView.setFirstDayOfWeek(Calendar.MONDAY);
+                ownerSchedule.clear();
+                renterSchedule.clear();
+                ownerSchedule.addAll(ownerList);
+                renterSchedule.addAll(renterList);
+
+                dataBinding.calendarView.removeAllEvents();
+                for(ScheduleRequest schedule : ownerSchedule){
+                    Event event = new Event(Color.RED, schedule.getMeetingTime().getTime(), schedule.getContent());
+                    dataBinding.calendarView.addEvent(event);
+                }
+                for(ScheduleRequest schedule : renterSchedule){
+                    Event event = new Event(Color.RED, schedule.getMeetingTime().getTime(), schedule.getContent());
+                    dataBinding.calendarView.addEvent(event);
+                }
+            });
+        });
+//        }
         dataBinding.imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,19 +133,27 @@ public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
             @Override
             public void onDayClick(Date dateClicked) {
                 //get all events of selected date
+                ArrayList<ScheduleRequest> ownerLst = new ArrayList<>();
+                ArrayList<ScheduleRequest> renterLst = new ArrayList<>();
+
                 Calendar c = Calendar.getInstance();
                 c.setTime(dateClicked);
                 c.add(Calendar.DATE, 1);        //increment 1 day
-                schedules.clear();
-                for(ScheduleRequest schedule : scheduleRequests){
+
+                for(ScheduleRequest schedule : ownerSchedule){
                     Date event = new Date(schedule.getMeetingTime().getTime());
                     if(event.after(dateClicked) && event.before(c.getTime())){
-                        schedules.add(schedule);
+                        ownerLst.add(schedule);
+                    }
+                }
+                for(ScheduleRequest schedule : renterSchedule){
+                    Date event = new Date(schedule.getMeetingTime().getTime());
+                    if(event.after(dateClicked) && event.before(c.getTime())){
+                        renterLst.add(schedule);
                     }
                 }
 
-                customDialogFragment.updateList(schedules);
-//                customDialogFragment width
+                customDialogFragment.updateList(ownerLst, renterLst);
                 customDialogFragment.show(getParentFragmentManager(), "Schedule list");
 
             }
@@ -154,6 +167,6 @@ public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
 
     @Override
     public void initData() {
-
+        dataBinding.tvMonthYear.setText(format.format(System.currentTimeMillis()));
     }
 }

@@ -97,7 +97,6 @@ public class LoginFragment extends BaseFragment<LoginClass> {
     private void loginFirebase(GoogleSignInAccount googleSignInAccount){
         loginViewModel.firebaseSignInWithGoogle(googleSignInAccount);
         loginViewModel.isNewAccount().observe(getViewLifecycleOwner(), isNewAccount ->{
-            Log.d("NewAccount",isNewAccount.toString());
             if(isNewAccount){
                 SignUpRequest signUpRequest = new SignUpRequest(
                         googleSignInAccount.getEmail(),
@@ -114,7 +113,6 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                                     signUpRequest.setFile(result);
                                     loginViewModel.signUp(signUpRequest);
                                 }
-
                                 @Override
                                 public void onError() {
                                     Log.d("Error","Convert image failed");
@@ -133,18 +131,22 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                 Paper.book().write("password", googleSignInAccount.getId());
                 Paper.book().write("isLogin",true);
                 showHome(resAccount);
+
             });
         });
     }
     private void showHome(Account account){
         mainActivity.account = account;
         bottomNavigationView.setVisibility(View.VISIBLE);
+        System.out.println("debug account " + account.getAccountName() + "!");
         try {
             if(mainActivity.account.getPosition().getId() == Utils.CLIENT_ROLE){
+                mainActivity.binding.bottomNavigationView.setSelectedItemId(R.id.home);
                 Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
             }
             else{
                 mainActivity.binding.bottomNavigationView.getMenu().removeItem(R.id.favourite);
+                mainActivity.binding.bottomNavigationView.setSelectedItemId(R.id.home);
                 Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
             }
         }
@@ -169,8 +171,9 @@ public class LoginFragment extends BaseFragment<LoginClass> {
         notifyDialog.show();
     }
     private void autoLogin(){
-        if (Paper.book().read("email") != null && Paper.book().read("password") != null){
-            if(Paper.book().read("isLogin") != null){
+        if (Paper.book().read("email") != null && Paper.book().read("password") != null &&
+                Paper.book().read("isLogin") != null){
+            if(Paper.book().read("isLogin")){
                 boolean flag = Paper.book().read("isLogin");
                 if(flag){
                     loginViewModel.isNew.setValue(true);

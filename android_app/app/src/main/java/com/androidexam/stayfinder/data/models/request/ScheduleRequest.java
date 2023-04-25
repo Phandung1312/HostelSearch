@@ -1,5 +1,7 @@
 package com.androidexam.stayfinder.data.models.request;
 
+import com.google.type.Color;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -11,6 +13,7 @@ public class ScheduleRequest implements Serializable {
     private String content;
     private Timestamp meetingTime;
     private PostRequest post;
+    private String color = "";
 
     public int getId() {
         return id;
@@ -28,14 +31,6 @@ public class ScheduleRequest implements Serializable {
     public void setUsername(String username) {
         this.renteUsername = username;
     }
-//
-//    public String getAccountName() {
-//        return accountName;
-//    }
-//
-//    public void setAccountName(String accountName) {
-//        this.accountName = accountName;
-//    }
 
     public String getRenterName() {
         return renterName;
@@ -75,5 +70,13 @@ public class ScheduleRequest implements Serializable {
 
     public void setPost(PostRequest post) {
         this.post = post;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="35dp"
         app:cardElevation="10dp"
         android:layout_margin="10dp"
         android:backgroundTint="@color/gray">
@@ -26,11 +26,12 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="Hẹn với chủ trọ"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"/>
 
@@ -38,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/frame_background"
+                android:background="@drawable/frame_background_black"
                 android:padding="5dp"
                 android:layout_marginBottom="10dp">
 
@@ -78,7 +79,7 @@
                     <TextView
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:text="Thông tin liên lạc chủ trọ:"
+                        android:text="Email liên hệ:"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:padding="5dp"
@@ -142,62 +143,63 @@
                     android:textSize="18sp"
                     android:textStyle="italic"
                     android:padding="10dp"
-                    android:paddingStart="15dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:paddingStart="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/frame_background_gray"
+                    android:padding="15dp"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/name_region"
+                        android:layout_marginStart="15dp"
+                        android:text="Tìm hiểu về trọ:"
+                        android:textSize="18sp"></TextView>
+                    <ImageView
+                        android:id="@+id/img_home"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_home">
+                    </ImageView>
+                    <TextView
+                        android:id="@+id/name_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/name_region"
+                        android:drawableStart="@drawable/home_16"
+                        android:drawablePadding="3dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="@{hostel.name}"
+                        tools:text="Phòng cho thuê"></TextView>
+                    <TextView
+                        android:id="@+id/cost_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/cost_home"
+                        android:layout_marginLeft="5dp"
+                        android:drawableStart="@drawable/money_home"
+                        android:drawablePadding="3dp"
+                        android:text="@{String.valueOf(hostel.rentPrice)}"
+                        tools:text="1.5 triệu VND/phòng"></TextView>
+                    <TextView
+                        android:id="@+id/address_home"
+                        android:drawableStart="@drawable/address_home"
+                        android:drawablePadding="3dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/address_home"
+                        android:layout_marginLeft="5dp"
+                        android:text="@{hostel.address}"
+                        tools:text="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/frame_background"
-                android:padding="15dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/name_region"
-                    android:layout_marginStart="15dp"
-                    android:text="Tìm hiểu về trọ:"
-                    android:textSize="18sp"></TextView>
-                <ImageView
-                    android:id="@+id/img_home"
-                    android:layout_width="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_home">
-                </ImageView>
-                <TextView
-                    android:id="@+id/name_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/name_region"
-                    android:drawableStart="@drawable/home_16"
-                    android:drawablePadding="3dp"
-                    android:layout_marginLeft="5dp"
-                    android:text="@{hostel.name}"
-                    tools:text="Phòng cho thuê"></TextView>
-                <TextView
-                    android:id="@+id/cost_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/cost_home"
-                    android:layout_marginLeft="5dp"
-                    android:drawableStart="@drawable/money_home"
-                    android:drawablePadding="3dp"
-                    android:text="@{String.valueOf(hostel.rentPrice)}"
-                    tools:text="1.5 triệu VND/phòng"></TextView>
-                <TextView
-                    android:id="@+id/address_home"
-                    android:drawableStart="@drawable/address_home"
-                    android:drawablePadding="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/address_home"
-                    android:layout_marginLeft="5dp"
-                    android:text="@{hostel.address}"
-                    tools:text="193 Tôn Đức Thắng, Liên Chiểu"></TextView>
-            </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -9,7 +9,14 @@
         android:id="@+id/loginFragment"
         android:name="com.androidexam.stayfinder.ui.login.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_clientHomeFragment"
+            app:destination="@id/clientHomeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/adminHomeFragment"
         android:name="com.androidexam.stayfinder.ui.admin.home.AdminHomeFragment"

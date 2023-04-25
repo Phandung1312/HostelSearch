@@ -20,6 +20,17 @@ public class Post implements Serializable {
     private int hostelId;
     private Hostel hostel;
 
+    public Post(PostRequest postRequest){
+        this.id = postRequest.getId();
+        this.account = postRequest.getAccount();
+        this.title = postRequest.getTitle();
+        this.content = postRequest.getContent();
+        this.numOfFav = postRequest.getNumOfFav();
+        this.status = postRequest.getStatus();
+        this.postTime = postRequest.getPostTime();
+        this.images = postRequest.getImages();
+    }
+
     public int getId() {
         return id;
     }

@@ -1,10 +1,12 @@
 package com.androidexam.stayfinder.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -12,7 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.androidexam.stayfinder.R;
 import com.androidexam.stayfinder.data.models.Account;
 import com.androidexam.stayfinder.databinding.ActivityMainBinding;
-import com.google.android.material.navigation.NavigationBarView;
+import com.androidexam.stayfinder.ui.login.LoginFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public Account account = new Account();
     public ActivityMainBinding binding;
     private NavController navController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,5 +63,10 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

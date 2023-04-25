@@ -2,6 +2,7 @@ package com.androidexam.stayfinder.data.services;
 
 import com.androidexam.stayfinder.data.apis.PostAPI;
 import com.androidexam.stayfinder.data.models.Post;
+import com.androidexam.stayfinder.data.models.request.PostRequest;
 
 import java.util.List;
 
@@ -25,7 +26,12 @@ public class PostRemoteService {
         return postAPI.getPostByAccountName(
                 accountName);
     }
-    public Observable<Boolean> changeStatusPost(int postId, int status){
-        return postAPI.changeStatusPost(postId,status);
+
+    public Observable<List<PostRequest>> getPostByAccountNameAndStatus(String accountName, int status) {
+        return postAPI.getPostByAccountNameAndStatus(accountName, status);
+    }
+
+    public Observable<Boolean> changeStatusPost(int postId, int status) {
+        return postAPI.changeStatusPost(postId, status);
     }
 }
