@@ -19,6 +19,7 @@ import com.androidexam.stayfinder.databinding.ItemCommentBinding;
 import com.androidexam.stayfinder.databinding.ItemsAdminPostBinding;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -46,10 +47,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
         holder.binding.setComment(commentList.get(position));
-        if(account.getAccountName() != commentList.get(position).getAccount().getAccountName())
+        Log.d("check account main",account.getAccountName());
+        Log.d("check account ",commentList.get(position).getAccount().getAccountName());
+        if(Objects.equals(account.getAccountName(), commentList.get(position).getAccount().getAccountName()))
         {
+            holder.binding.btnRemove.setVisibility(View.VISIBLE);
+        }else{
             holder.binding.btnRemove.setVisibility(View.GONE);
-
         }
         int id = commentList.get(position).getId();
         Log.d("KiemTraID", String.valueOf(commentList.get(position).getId()));

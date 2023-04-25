@@ -51,7 +51,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_marginStart="10dp"
                         android:id="@+id/card_view_image_post_1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="20dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -59,12 +59,13 @@
                         android:layout_marginRight="24dp"
                         android:backgroundTint="@color/white_gray">
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
+                                android:textStyle="bold"
                                 android:padding="10dp"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="16dp"
                                 android:id="@+id/tv_name_comment"
@@ -73,7 +74,7 @@
                             <TextView
                                 android:visibility="@{comment.content != null ? View.VISIBLE : View.GONE}"
                                 android:padding="10dp"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="16dp"
                                 android:id="@+id/tv_commnet"
@@ -84,7 +85,7 @@
                     </androidx.cardview.widget.CardView>
                     <androidx.cardview.widget.CardView
                         android:visibility="@{comment.imageUrl != null ? View.VISIBLE : View.GONE}"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginStart="10dp"
                         android:id="@+id/card_view_image_comment"
                         android:layout_width="250dp"

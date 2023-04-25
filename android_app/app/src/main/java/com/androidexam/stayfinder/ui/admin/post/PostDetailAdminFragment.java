@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.androidexam.stayfinder.R;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
 import com.androidexam.stayfinder.data.models.Comment;
 import com.androidexam.stayfinder.data.models.Hostel;
+import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.request.CommentRequest;
 import com.androidexam.stayfinder.databinding.PostDetailAdminClass;
 import com.github.drjacky.imagepicker.ImagePicker;
@@ -39,7 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> {
-    private Hostel hostel;
+    private Post post;
     PostDetailAdminViewModel postDetailAdminViewModel;
     private ArrayList<Comment> comments;
     CommentAdapter adapter;
@@ -56,8 +58,12 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
         postDetailAdminViewModel = new ViewModelProvider(this).get(PostDetailAdminViewModel.class);
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation_view);
         navBar.setVisibility(View.GONE);
-        hostel =(Hostel)getArguments().getSerializable("hostel");
+        post =(Post)getArguments().getSerializable("post");
         dataBinding.rvComment.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        if(mainActivity.account.getPosition().getId() == 1){
+            dataBinding.btnAccept.setVisibility(View.GONE);
+            dataBinding.btnRemove.setVisibility(View.GONE);
+        }
     }
     @Override
     public void initListeners() {
@@ -71,6 +77,8 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
             public void onClick(View view) {
                 try{
                     popupDialog();
+                    dataBinding.cardViewImageComment.setVisibility(View.VISIBLE);
+                    Log.d("check get image","Success");
                 } catch(Exception e){
                     Log.e(TAG,e.getMessage());
                 }
@@ -79,19 +87,21 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
         dataBinding.btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                File file = new File(Environment.getExternalStorageDirectory(), "image.jpg");
                 CommentRequest commentRequest = new CommentRequest();
-                commentRequest.setPostId(hostel.getPost().getId());
+                commentRequest.setPostId(post.getId());
                 commentRequest.setUsername(mainActivity.account.getAccountName());
                 commentRequest.setContent(dataBinding.etComment.getText().toString());
                 if(bitmapAvatar != null){
                     try {
-                        FileOutputStream out = new FileOutputStream(commentRequest.getFile());
+                        FileOutputStream out = new FileOutputStream(file);
                         bitmapAvatar.compress(Bitmap.CompressFormat.JPEG, 100, out); // Chọn định dạng ảnh và độ nén
                         out.flush();
                         out.close();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    commentRequest.setFile(file);
                 }
                 postDetailAdminViewModel.sendComment(commentRequest)
                         .observe(getViewLifecycleOwner(),comment->{
@@ -100,13 +110,15 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
                             }else{
                                 comments.add(comment);
                                 adapter.notifyDataSetChanged();
+                                Toast.makeText(v.getContext().getApplicationContext(), "Add comment success", Toast.LENGTH_SHORT).show();
+                                dataBinding.cardViewImageComment.setVisibility(View.GONE);
+                                dataBinding.etComment.setText("");
                             }
                         } );
-                dataBinding.etComment.setText("");
             }
         });
         dataBinding.btnRemove.setOnClickListener(v->{
-            postDetailAdminViewModel.changeStatusPost(hostel.getPost().getId(),0)
+            postDetailAdminViewModel.changeStatusPost(post.getId(),0)
                     .observe(getViewLifecycleOwner(), check ->{
                         if(check == true){
                             Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
@@ -116,7 +128,7 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
                     });
         });
         dataBinding.btnAccept.setOnClickListener(v->{
-            postDetailAdminViewModel.changeStatusPost(hostel.getPost().getId(),1)
+            postDetailAdminViewModel.changeStatusPost(post.getId(),1)
                     .observe(getViewLifecycleOwner(), check ->{
                         if(check == true){
                             Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
@@ -126,24 +138,31 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
                     });
         });
         dataBinding.btnFavorite.setOnClickListener(v->{
-            postDetailAdminViewModel.changeStatusFavourite(mainActivity.account.getAccountName(),hostel.getPost().getId(),!checkFavourite)
+            postDetailAdminViewModel.changeStatusFavourite(mainActivity.account.getAccountName(),post.getId(),!checkFavourite)
                     .observe(getViewLifecycleOwner(), check ->{
-                        if(check == true){
-                            Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
+                        if(check){
+                            if(checkFavourite){
+                                dataBinding.btnFavorite.setImageResource(R.drawable.ic_favourite_gray);
+                                checkFavourite = false;
+                            }else {
+                                dataBinding.btnFavorite.setImageResource(R.drawable.ic_favourite_red);
+                                checkFavourite = true;
+                            }
+                            Toast.makeText(v.getContext().getApplicationContext(), "Change favourite success", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(v.getContext().getApplicationContext(), "Change status post failure", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext().getApplicationContext(), "Change favourite post failure", Toast.LENGTH_SHORT).show();
                         }
                     });
         });
     }
     @Override
     public void initData() {
-        dataBinding.setHostel(hostel);
+        dataBinding.setHostel(post.getHostel());
         dataBinding.executePendingBindings();
         setAdapter();
-        postDetailAdminViewModel.checkFavourite(mainActivity.account.getAccountName(),hostel.getPost().getId())
+        postDetailAdminViewModel.checkFavourite(mainActivity.account.getAccountName(),post.getId())
                 .observe(getViewLifecycleOwner(), check->{
-                    if(check == true){
+                    if(check){
                         dataBinding.btnFavorite.setImageResource(R.drawable.ic_favourite_red);
                         checkFavourite = true;
                     }else {
@@ -158,7 +177,7 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
                 postDetailAdminViewModel,
                 getViewLifecycleOwner());
         dataBinding.rvComment.setAdapter(adapter);
-        postDetailAdminViewModel.setCommentData(hostel.getPost().getId());
+        postDetailAdminViewModel.setCommentData(post.getId());
         postDetailAdminViewModel.loadComment().observe(getViewLifecycleOwner(),commentList ->{
             comments.addAll(commentList);
             adapter.notifyDataSetChanged();

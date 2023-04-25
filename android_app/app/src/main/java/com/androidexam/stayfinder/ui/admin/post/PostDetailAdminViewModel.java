@@ -39,7 +39,7 @@ public class PostDetailAdminViewModel extends BaseViewModel {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
     }
-    public void setHostelData(String id) {
+    public void setHostelData(int id) {
         compositeDisposable.add(hostelRepository.getHostelById(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,6 +70,7 @@ public class PostDetailAdminViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> {
                     comment.postValue(data);
+                    Log.d("check send file","Success1");
                 },throwable -> {
                     Log.d("Add comment failure",throwable.getMessage());
                 }));

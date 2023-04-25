@@ -1,5 +1,7 @@
 package com.androidexam.stayfinder.data.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 

@@ -13,15 +13,16 @@ import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface HostelAPI {
     @GET("hostel")
     Observable<Content> getAllHostel();
 
-    @GET("hostel")
+    @GET("hostel/{hostelId}")
     Observable<Hostel> getHostelById(
-            @Field("id") String id
+            @Path("hostelId") int id
     );
     @GET("favourites/hostels")
     Observable<List<Hostel>> getFavouriteHostels(
@@ -39,5 +40,43 @@ public interface HostelAPI {
     Observable<Boolean> checkFavourite(
       @Query("username") String username,
       @Query("postId") int postId
+    );
+    @GET("hostel/search")
+    Observable<Content> searchHostel(
+            @Query("address") String address,
+            @Query("areaMin") int areaMin,
+            @Query("areaMax") int areaMax,
+            @Query("minRent") int minRent,
+            @Query("maxRent") int maxRent,
+            @Query("capacity") int capacity,
+            @Query("idRoomType") int idRoomType
+    );
+    @GET("hostel/search")
+    Observable<Content> searchHostel(
+            @Query("address") String address,
+            @Query("areaMin") int areaMin,
+            @Query("areaMax") int areaMax,
+            @Query("minRent") int minRent,
+            @Query("maxRent") int maxRent,
+            @Query("capacity") int capacity
+    );
+    @GET("hostel/search-admin")
+    Observable<Content> searchHostelAdmin(
+            @Query("address") String address,
+            @Query("areaMin") int areaMin,
+            @Query("areaMax") int areaMax,
+            @Query("minRent") int minRent,
+            @Query("maxRent") int maxRent,
+            @Query("capacity") int capacity,
+            @Query("idRoomType") int idRoomType
+    );
+    @GET("hostel/search-admin")
+    Observable<Content> searchHostelAdmin(
+            @Query("address") String address,
+            @Query("areaMin") int areaMin,
+            @Query("areaMax") int areaMax,
+            @Query("minRent") int minRent,
+            @Query("maxRent") int maxRent,
+            @Query("capacity") int capacity
     );
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/adminHomeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -46,7 +46,11 @@
         android:id="@+id/clientHomeFragment"
         android:name="com.androidexam.stayfinder.ui.client.ClientHomeFragment"
         android:label="ClientHomeFragment"
-        tools:layout="@layout/fragment_home_client" />
+        tools:layout="@layout/fragment_home_client" >
+        <action
+            android:id="@+id/action_clientHomeFragment_to_postDetailAdminFragment"
+            app:destination="@id/postDetailAdminFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailClientHomeFragment"
         android:name="com.androidexam.stayfinder.ui.client.DetailClientHomeFragment"
@@ -85,5 +89,28 @@
         android:name="com.androidexam.stayfinder.ui.favourite.FavouriteFragment"
         android:label="FavouriteFragment"
         tools:layout="@layout/fragment_favourite" />
+    <fragment android:id="@+id/searchDistrictFragment"
+        android:name="com.androidexam.stayfinder.ui.search.SearchDistrictFragment"
+        android:label="SearchDistrictFragment"
+        tools:layout="@layout/fragment_search_district">
+        <action
+            android:id="@+id/action_placeholder_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+        <action
+            android:id="@+id/action_placeholder_to_clientHomeFragment"
+            app:destination="@id/clientHomeFragment" />
+    </fragment>
+    <fragment android:id="@+id/searchMoneyFragment"
+        android:name="com.androidexam.stayfinder.ui.search.SearchMoneyFragment"
+        tools:layout="@layout/fragment_search_money"
+        android:label="SearchMoneyFragment"
+        >
+        <action
+            android:id="@+id/action_searchMoneyFragment_to_adminHomeFragment"
+            app:destination="@id/adminHomeFragment" />
+        <action
+            android:id="@+id/action_searchMoneyFragment_to_clientHomeFragment"
+            app:destination="@id/clientHomeFragment" />
+    </fragment>
 
 </navigation>

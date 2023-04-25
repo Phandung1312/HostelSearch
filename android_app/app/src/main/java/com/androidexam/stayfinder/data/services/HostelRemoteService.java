@@ -26,7 +26,7 @@ public class HostelRemoteService {
     public Observable<Content> getAllHostel() {
         return hostelAPI.getAllHostel();
     }
-    public Observable<Hostel> getHostelById(String id) {return hostelAPI.getHostelById(id);}
+    public Observable<Hostel> getHostelById(int id) {return hostelAPI.getHostelById(id);}
     public Observable<List<Hostel>> getFavouriteHostels(String username){
         return hostelAPI.getFavouriteHostels(username);
     }
@@ -38,5 +38,19 @@ public class HostelRemoteService {
     }
     public Observable<Boolean> checkFavourite(String username, int postId){
         return hostelAPI.checkFavourite(username, postId);
+    }
+    public Observable<Content> searchHostel(String address , int areaMin, int areaMax, int minRent, int maxRent, int capacity, int idRoomType){
+        if(idRoomType != -1){
+            return hostelAPI.searchHostel(address, areaMin, areaMax, minRent, maxRent, capacity, idRoomType);
+        }else{
+            return hostelAPI.searchHostel(address, areaMin, areaMax, minRent, maxRent, capacity);
+        }
+    }
+    public Observable<Content> searchHostelAdmin(String address , int areaMin, int areaMax, int minRent, int maxRent, int capacity, int idRoomType){
+        if(idRoomType != -1){
+            return hostelAPI.searchHostelAdmin(address, areaMin, areaMax, minRent, maxRent, capacity, idRoomType);
+        }else{
+            return hostelAPI.searchHostelAdmin(address, areaMin, areaMax, minRent, maxRent, capacity);
+        }
     }
 }

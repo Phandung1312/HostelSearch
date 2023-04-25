@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data class="HomeClient">
+    <data class="HomeClientClass">
 
     </data>
     <RelativeLayout
@@ -12,67 +12,39 @@
             android:src="@drawable/eclipsehome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <RelativeLayout
-            android:id="@+id/button_notice"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="350dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/shape_eclipse_24dp"
-            >
-
-            <Button
-                android:id="@+id/btn_notice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/baseline_notifications_none_24" />
-            <View
-                android:id="@+id/group"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="30dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/shape_vector"
-                >
-            </View>
-        </RelativeLayout>
 
         <TextView
             android:id="@+id/title"
             style="@style/title"
             android:layout_width="232dp"
-            android:layout_height="80dp"
+            android:layout_height="50dp"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="27dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="30dp"
             android:gravity="top"
             android:lineSpacingExtra="11sp"
-            android:text="Hello, Hieu Tran! Tìm kiếm trọ nào!"
+            android:text="Xin Chào Bạn!"
             android:translationY="-5.33sp" />
 
         <EditText
-            android:id="@+id/form_search"
+            android:id="@+id/et_search"
             style="@style/text"
             android:drawableStart="@drawable/baseline_search_24"
             android:layout_width="327dp"
-            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
             android:hint="Tìm kiếm khu vực, trọ bạn muốn"
             android:drawablePadding="10dp"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="185dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="44dp"
             android:background="@drawable/shape_search">
         </EditText>
@@ -82,39 +54,83 @@
             android:layout_width="wrap_content"
             style="@style/title_cat"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/form_search"
+            android:layout_below="@+id/title_search_district"
             android:layout_alignParentStart="true"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:text="Xu Hướng Tìm Kiếm" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_rental"
-            android:layout_width="wrap_content"
-            android:layout_height="120dp"
-            android:layout_below="@+id/title_cat"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
-            />
+            android:layout_marginTop="5dp"
+            android:text="Đề xuất" />
+        <ScrollView
+            android:id="@+id/sc_post_not_approval"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title_cat">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_post"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                />
+        </ScrollView>
+
+        <Button
+            android:paddingStart="15dp"
+            android:drawableStart="@drawable/img_search_district"
+            android:background="@drawable/frame_solid_search_district"
+            android:id="@+id/btn_search_district"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/et_search"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="10dp" />
 
         <TextView
-            android:id="@+id/title_rental"
-            android:layout_width="wrap_content"
-            style="@style/title_cat"
+            android:id="@+id/title_search_district"
+            android:layout_width="100dp"
+            style="@style/title_search"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/rcv_rental"
+            android:layout_below="@+id/btn_search_district"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:text="Đề Xuất Cho Bạn" />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcv_home"
-            android:layout_width="wrap_content"
-            android:layout_height="180dp"
-            android:layout_below="@+id/title_rental"
-            android:layout_marginLeft="40dp"
+            android:layout_marginStart="78dp"
+            android:layout_marginTop="5dp"
+            android:text="Tìm kiếm theo nhiều khu vực"
+            android:gravity="center" />
+
+        <Button
+            android:paddingStart="15dp"
+            android:drawableStart="@drawable/img_search_money"
+            android:background="@drawable/frame_solid_search_money"
+            android:id="@+id/btn_search_money"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/et_search"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="40dp"
-            />
+            android:layout_marginStart="200dp" />
+
+        <TextView
+            android:id="@+id/title_search_money"
+            style="@style/title_search"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_search_money"
+            android:layout_marginStart="180dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Tìm kiếm theo giá thành" />
+
+        <ImageButton
+            android:elevation="100dp"
+            android:id="@+id/btn_add_post"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/background_image"
+            android:backgroundTint="@color/light_blue"
+            android:src="@drawable/ic_baseline_add_gray" />
     </RelativeLayout>
 </layout>

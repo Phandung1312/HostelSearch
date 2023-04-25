@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data class="SearchDistrictClass">
+
+    </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
@@ -46,38 +49,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <RadioGroup
-                    android:id="@+id/RoomRadioGroup"
+                    android:id="@+id/rg_room"
                     android:layout_width="match_parent"
-                    android:checkedButton="@id/PhongChoThueRadioButton"
+                    android:checkedButton="@id/rb_tro"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp">
                         <RadioButton
-                            android:id="@+id/KiTucXaRadioButton"
+                            android:id="@+id/rb_ktx"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Kí túc xá" />
 
                         <RadioButton
-                            android:id="@+id/PhongChoThueRadioButton"
+                            android:id="@+id/rb_tro"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Phòng cho thuê" />
-                        <RadioButton
-                            android:id="@+id/NhaNguyenCanRadioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Nhà Nguyên Căn" />
+                            android:text="Trọ" />
 
                         <RadioButton
-                            android:id="@+id/CanHoRadioButton"
+                            android:id="@+id/rb_chung_cu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Căn hộ" />
+                            android:text="Chung cư" />
 
                 </RadioGroup>
             </LinearLayout>
@@ -124,21 +121,21 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/cbCamLe"
+                        android:id="@+id/cb_cam_le"
                         android:layout_width="90dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Cẩm Lệ" />
 
                     <CheckBox
-                        android:id="@+id/cbHaiChau"
+                        android:id="@+id/cb_hai_chau"
                         android:layout_width="90dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Hải Châu" />
 
                     <CheckBox
-                        android:id="@+id/cbLienChieu"
+                        android:id="@+id/cb_lieu_chieu"
                         android:layout_width="95dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -152,21 +149,21 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/cbHoaVang"
+                        android:id="@+id/cb_hoa_vang"
                         android:layout_width="90dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Hòa Vang" />
 
                     <CheckBox
-                        android:id="@+id/cbSonTra"
+                        android:id="@+id/cb_son_tra"
                         android:layout_width="90dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:text="Sơn Trà" />
 
                     <CheckBox
-                        android:id="@+id/cbThanhKhe"
+                        android:id="@+id/cb_thanh_khe"
                         android:layout_width="95dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -183,21 +180,25 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical">
+
             <Button
+                android:id="@+id/btn_tim_phong"
                 style="@style/btn_rental"
                 android:layout_width="match_parent"
                 android:layout_height="63dp"
                 android:background="@drawable/rental_btn"
                 android:text="TÌM PHÒNG"
-                android:textColor="#FFFFFF"></Button>
+                android:textColor="#FFFFFF" />
+
             <Button
+                android:id="@+id/btn_huy"
                 style="@style/btn_rental"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
                 android:layout_height="63dp"
                 android:background="@drawable/cancel_btn"
                 android:text="HỦY"
-                android:textColor="#FFFFFF"></Button>
+                android:textColor="#FFFFFF" />
         </LinearLayout>
     </LinearLayout>
 </layout>

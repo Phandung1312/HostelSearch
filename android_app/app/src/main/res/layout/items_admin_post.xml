@@ -2,8 +2,8 @@
 <layout >
     <data>
         <variable
-            name="hostel"
-            type="com.androidexam.stayfinder.data.models.Hostel" />
+            name="post"
+            type="com.androidexam.stayfinder.data.models.Post" />
     </data>
     <androidx.cardview.widget.CardView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -27,7 +27,7 @@
                 <ImageView
                     android:id="@+id/img_home"
                     android:layout_width="match_parent"
-                    imageUrl="@{hostel.images.size() > 0 ? hostel.images.get(0).source : null}"
+                    imageUrl="@{post.hostel.images.size() > 0 ? post.hostel.images.get(0).source : null}"
                     android:layout_margin="10dp"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
@@ -44,7 +44,7 @@
                     tools:text="phòng 1"
                     android:drawablePadding="3dp"
                     android:layout_marginStart="5dp"
-                    android:text="@{hostel.post.title}"
+                    android:text="@{post.title}"
                     app:drawableStartCompat="@drawable/home_16"
                     android:layout_marginBottom="5dp"/>
 
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:drawablePadding="3dp"
-                    android:text="@{String.valueOf(hostel.rentPrice) + ` VND/phòng`}"
+                    android:text="@{String.valueOf(post.hostel.rentPrice) + ` VND/phòng`}"
                     tools:text="1.5 triệu VND/phòng"
                     app:drawableStartCompat="@drawable/money_home"
                     android:textColor="@color/red"/>
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     style="@style/address_home"
                     android:layout_marginStart="5dp"
-                    android:text="@{hostel.address}" />
+                    android:text="@{post.hostel.address}" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
