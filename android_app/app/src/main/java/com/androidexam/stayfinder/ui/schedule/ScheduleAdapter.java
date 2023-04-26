@@ -2,15 +2,18 @@ package com.androidexam.stayfinder.ui.schedule;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidexam.stayfinder.R;
+import com.androidexam.stayfinder.data.models.Hostel;
 import com.androidexam.stayfinder.data.models.request.ScheduleRequest;
 import com.androidexam.stayfinder.databinding.ItemDetailScheduleBinding;
 import com.androidexam.stayfinder.databinding.ItemDetailScheduleRenterBinding;
@@ -167,6 +170,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(renterBinding.getRoot());
             this.binding = renterBinding;
 
+            binding.cvSchedule.setOnClickListener(view ->{
+                Hostel hostel = schedules.get(getBindingAdapterPosition()).getPost().getHostel();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("hostel", hostel);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
+            });
+            binding.executePendingBindings();
+
         }
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -176,6 +187,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(binding.getRoot());
             this.binding = binding;
 
+            binding.cvSchedule.setOnClickListener(view ->{
+                Hostel hostel = schedules.get(getBindingAdapterPosition()).getPost().getHostel();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("hostel", hostel);
+                Navigation.findNavController(binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
+            });
+            binding.executePendingBindings();
         }
     }
 
