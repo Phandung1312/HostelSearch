@@ -212,21 +212,21 @@ public class SettingFragment extends BaseFragment<SettingClass> {
 //            Toast.makeText(getContext(), "Số điện thoại không thể để trống!", Toast.LENGTH_SHORT).show();
 //            return false;
 //        }
-        if(phone.trim() == ""){
+        if(phone.trim().length() == 0){
             phone = "";
             return true;
         }
+
         if(phone.length() != 10){
             Toast.makeText(getContext(), "Số điện thoại phải có 10 chữ số!", Toast.LENGTH_SHORT).show();
             return false;
         }
-        else {
-            try{
-                Long.parseLong(phone);
-            }catch (NumberFormatException e){
-                Toast.makeText(getContext(), "Số điện thoại phải là một số!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
+
+        try{
+            Long.parseLong(phone);
+        }catch (NumberFormatException e){
+            Toast.makeText(getContext(), "Số điện thoại phải là một số!", Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
     }
