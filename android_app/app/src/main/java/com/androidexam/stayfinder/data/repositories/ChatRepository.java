@@ -52,6 +52,29 @@ public class ChatRepository {
         reference.addValueEventListener(listener);
         return userLiveData;
     }
+    public MutableLiveData<UserFirebase> getUserByEmail(String email){
+        MutableLiveData<UserFirebase> userLiveData = new MutableLiveData<>();
+        DatabaseReference reference = firebaseDatabase.getReference().child("User");
+        Query query = reference.orderByChild("email").equalTo(email);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserFirebase user = dataSnapshot.getValue(UserFirebase.class);
+                if(user != null){
+                    userLiveData.postValue(user);
+                }
+                else{
+                    Log.d("Error","User not found by email");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("Error","DatabaseError");
+            }
+        });
+        return userLiveData;
+    }
     public MutableLiveData<UserFirebase> getCurrentUser(){
         String id = mAuth.getCurrentUser().getUid();
         return getUserById(id);
