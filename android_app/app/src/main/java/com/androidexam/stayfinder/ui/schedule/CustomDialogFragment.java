@@ -1,5 +1,6 @@
 package com.androidexam.stayfinder.ui.schedule;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.DialogFragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +27,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class CustomDialogFragment extends DialogFragment {
+public class CustomDialogFragment extends DialogFragment implements ItemScheduleListener {
+    private NavController view;
     private FragmentDetailScheduleBinding binding;
     private ScheduleAdapter scheduleAdapter;
     private String accountName;
@@ -32,7 +36,8 @@ public class CustomDialogFragment extends DialogFragment {
     private ArrayList<ScheduleRequest> ownerSchedules;
     private ArrayList<ScheduleRequest> renterSchedules;
 
-    public CustomDialogFragment(String accountName){
+    public CustomDialogFragment(NavController view, String accountName){
+        this.view = view;
         this.accountName = accountName;
     }
 
@@ -61,7 +66,7 @@ public class CustomDialogFragment extends DialogFragment {
             }
         });
 
-        scheduleAdapter = new ScheduleAdapter(this.getActivity(), schedules, accountName);
+        scheduleAdapter = new ScheduleAdapter(view, schedules, accountName,this);
         binding.rvSchedule.setAdapter(scheduleAdapter);
 
         binding.tvTitle.setOnTouchListener(new View.OnTouchListener() {
@@ -129,5 +134,10 @@ public class CustomDialogFragment extends DialogFragment {
         });
         ownerSchedules = new ArrayList<>(ownerLst);
         renterSchedules = new ArrayList<>(renterLst);
+    }
+
+    @Override
+    public void onClick() {
+        this.dismiss();
     }
 }

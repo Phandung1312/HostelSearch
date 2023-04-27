@@ -2,15 +2,21 @@ package com.androidexam.stayfinder.ui.schedule;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidexam.stayfinder.R;
+import com.androidexam.stayfinder.data.models.Hostel;
+import com.androidexam.stayfinder.data.models.request.PostRequest;
 import com.androidexam.stayfinder.data.models.request.ScheduleRequest;
 import com.androidexam.stayfinder.databinding.ItemDetailScheduleBinding;
 import com.androidexam.stayfinder.databinding.ItemDetailScheduleRenterBinding;
@@ -23,8 +29,9 @@ import java.util.Locale;
 import java.util.Random;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Context context;
+    private NavController view;
     private ArrayList<ScheduleRequest> schedules;
+    private ItemScheduleListener itemClick;
     private String accountName;
 
     // Creating date format
@@ -33,10 +40,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final DateFormat timeFormat = new SimpleDateFormat(
             "'Lúc' HH:mm Z", Locale.getDefault());
 
-    public ScheduleAdapter(Context context, ArrayList<ScheduleRequest> schedules, String accountName){
-        this.context = context;
+    public ScheduleAdapter(NavController view, ArrayList<ScheduleRequest> schedules, String accountName,ItemScheduleListener itemClick){
+        this.view = view;
         this.schedules = schedules;
         this.accountName = accountName;
+        this.itemClick = itemClick;
     }
 
     @Override
@@ -167,6 +175,17 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(renterBinding.getRoot());
             this.binding = renterBinding;
 
+            binding.cvSchedule.setOnClickListener(v ->{
+                PostRequest post = schedules.get(getBindingAdapterPosition()).getPost();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("hostelId", post.getHostel().getId());
+                bundle.putSerializable("postId",post.getId());
+                System.out.println(post.getHostel().getId() + ", " + post.getId());
+                view.navigate(R.id.postDetailAdminFragment,bundle);
+                itemClick.onClick();
+            });
+            binding.executePendingBindings();
+
         }
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -176,6 +195,15 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(binding.getRoot());
             this.binding = binding;
 
+            binding.cvSchedule.setOnClickListener(v ->{
+                PostRequest post = schedules.get(getBindingAdapterPosition()).getPost();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("hostelId", post.getHostel().getId());
+                bundle.putSerializable("postId",post.getId());
+                view.navigate(R.id.postDetailAdminFragment,bundle);
+                itemClick.onClick();
+            });
+            binding.executePendingBindings();
         }
     }
 
