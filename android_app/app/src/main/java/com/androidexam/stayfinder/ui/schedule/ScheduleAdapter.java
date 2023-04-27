@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidexam.stayfinder.R;
 import com.androidexam.stayfinder.data.models.Hostel;
+import com.androidexam.stayfinder.data.models.request.PostRequest;
 import com.androidexam.stayfinder.data.models.request.ScheduleRequest;
 import com.androidexam.stayfinder.databinding.ItemDetailScheduleBinding;
 import com.androidexam.stayfinder.databinding.ItemDetailScheduleRenterBinding;
@@ -171,9 +172,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.binding = renterBinding;
 
             binding.cvSchedule.setOnClickListener(view ->{
-                Hostel hostel = schedules.get(getBindingAdapterPosition()).getPost().getHostel();
+                PostRequest post = schedules.get(getBindingAdapterPosition()).getPost();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("hostel", hostel);
+                bundle.putSerializable("hostelId", post.getHostel().getId());
+                bundle.putSerializable("postId",post.getId());
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
             });
             binding.executePendingBindings();
@@ -188,9 +190,10 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.binding = binding;
 
             binding.cvSchedule.setOnClickListener(view ->{
-                Hostel hostel = schedules.get(getBindingAdapterPosition()).getPost().getHostel();
+                PostRequest post = schedules.get(getBindingAdapterPosition()).getPost();
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("hostel", hostel);
+                bundle.putSerializable("hostelId", post.getHostel().getId());
+                bundle.putSerializable("postId",post.getId());
                 Navigation.findNavController(binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
             });
             binding.executePendingBindings();

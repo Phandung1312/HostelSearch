@@ -163,6 +163,7 @@
                         android:layout_margin="10dp"
                         android:layout_height="100dp"
                         android:scaleType="centerCrop"
+                        imageUrl="@{hostel.images.size() > 0 ? hostel.images.get(0).source : null}"
                         android:src="@drawable/img_home">
                     </ImageView>
                     <TextView
