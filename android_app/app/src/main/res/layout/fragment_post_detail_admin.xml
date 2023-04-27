@@ -150,7 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_name_post"
-                android:text="@{hostel.post.title}"
+                android:text="@{hostel.name}"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/card_view_image_post_main"
@@ -202,6 +202,27 @@
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@id/iv_money"
                 app:layout_constraintTop_toBottomOf="@+id/tv_location" />
+            <ImageView
+                android:id="@+id/iv_deposit_price"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="26dp"
+                android:background="@drawable/money_24"
+                android:backgroundTint="@color/text_name_post"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_money" />
+
+            <TextView
+                android:id="@+id/tv_deposit_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                tools:text="10000.0"
+                android:text="@{String.valueOf(hostel.depositPrice)}"
+                android:textColor="@color/text_name_post"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/iv_deposit_price"
+                app:layout_constraintTop_toBottomOf="@+id/tv_money" />
 
             <TextView
                 android:id="@+id/tv_period"
@@ -213,6 +234,15 @@
                 android:layout_marginStart="10dp"
                 app:layout_constraintStart_toEndOf="@+id/tv_money"
                 app:layout_constraintTop_toTopOf="@+id/tv_money" />
+            <TextView
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VND"
+                android:textColor="@color/text_location_post"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@+id/tv_deposit_price"
+                app:layout_constraintTop_toBottomOf="@+id/tv_money" />
 
             <ImageView
                 android:id="@+id/iv_water_cost"
@@ -222,7 +252,7 @@
                 android:background="@drawable/water_cost"
                 android:backgroundTint="@color/text_name_post"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_money" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_deposit_price" />
 
             <TextView
                 android:layout_marginStart="20dp"
@@ -233,7 +263,7 @@
                 android:textColor="@color/text_name_post"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/iv_water_cost"
-                app:layout_constraintTop_toBottomOf="@+id/tv_money"
+                app:layout_constraintTop_toBottomOf="@+id/tv_deposit_price"
                 tools:text="100000.0" />
 
             <TextView
@@ -244,7 +274,7 @@
                 android:textColor="@color/text_location_post"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/tv_water_cost"
-                app:layout_constraintTop_toBottomOf="@+id/tv_money" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_deposit_price" />
             <ImageView
                 android:id="@+id/iv_electric_cost"
                 android:layout_width="13dp"
@@ -297,18 +327,39 @@
                 app:layout_constraintStart_toStartOf="@id/iv_capacity"
                 app:layout_constraintTop_toBottomOf="@+id/tv_electric_cost"
                 tools:text="3" />
+            <ImageView
+                android:id="@+id/iv_description"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="26dp"
+                android:background="@drawable/ic_baseline_text_snippet_24"
+                android:backgroundTint="@color/text_name_post"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_capacity" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="@{hostel.description}"
+                android:textColor="@color/text_location_post"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@id/iv_description"
+                app:layout_constraintTop_toBottomOf="@+id/tv_capacity"
+                tools:text="Nha dep oi doi oi" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view_info"
                 android:layout_width="match_parent"
-                android:layout_height="85dp"
+                android:layout_height="60dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginHorizontal="24dp"
                 app:cardCornerRadius="10dp"
                 android:layout_gravity="center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_capacity">
+                app:layout_constraintTop_toBottomOf="@id/iv_description">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

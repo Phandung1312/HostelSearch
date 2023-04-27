@@ -3,6 +3,7 @@ package com.androidexam.stayfinder.data.models.request;
 import com.androidexam.stayfinder.data.models.Account;
 import com.androidexam.stayfinder.data.models.Hostel;
 import com.androidexam.stayfinder.data.models.Image;
+import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -12,11 +13,19 @@ public class PostRequest {
     private Account account;
     private String title;
     private String content;
+    @SerializedName("numberOfFavourites")
     private int numOfFav;
     private int status;
     private Timestamp postTime;
     private List<Image> images;
     private Hostel hostel;
+    private int accountId;
+
+    public PostRequest(String title, String content, int accountId) {
+        this.title = title;
+        this.content = content;
+        this.accountId = accountId;
+    }
 
     public int getId() {
         return id;
@@ -91,4 +100,11 @@ public class PostRequest {
         this.hostel = hostel;
     }
 
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
 }

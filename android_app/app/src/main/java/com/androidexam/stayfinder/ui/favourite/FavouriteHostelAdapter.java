@@ -2,6 +2,7 @@ package com.androidexam.stayfinder.ui.favourite;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidexam.stayfinder.R;
@@ -60,6 +62,12 @@ public class FavouriteHostelAdapter extends RecyclerView.Adapter<FavouriteHostel
                         }
                         setFavouriteImage(img, !response);
                     });
+        });
+        holder.binding.getRoot().setOnClickListener(view ->{
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("hostelId", hostel.getId());
+            bundle.putSerializable("postId",hostel.getPost().getId());
+            Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment, bundle);
         });
         holder.binding.executePendingBindings();
     }

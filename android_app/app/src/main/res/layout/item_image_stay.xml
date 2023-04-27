@@ -4,17 +4,31 @@
     android:layout_height="160dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="15dp">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/img_home"
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
             android:layout_height="100dp"
+            android:layout_margin="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_home">
-        </ImageView>
-    </LinearLayout>
+            android:src="@drawable/img_home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/btn_remove"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/ic_baseline_remove_gray"
+            android:backgroundTint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="10dp"
+            android:visibility="gone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

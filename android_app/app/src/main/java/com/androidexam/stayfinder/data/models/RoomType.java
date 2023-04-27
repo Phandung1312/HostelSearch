@@ -1,7 +1,12 @@
 package com.androidexam.stayfinder.data.models;
 
-public class RoomType {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class RoomType implements Serializable {
     private int id;
+    @SerializedName("roomTypeName")
     private String name;
 
     public int getId() {

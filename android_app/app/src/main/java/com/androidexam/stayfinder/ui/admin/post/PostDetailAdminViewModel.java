@@ -9,8 +9,10 @@ import com.androidexam.stayfinder.base.viewmodel.BaseViewModel;
 import com.androidexam.stayfinder.data.models.Comment;
 import com.androidexam.stayfinder.data.models.Hostel;
 import com.androidexam.stayfinder.data.models.Schedule;
+import com.androidexam.stayfinder.data.models.firebase.UserFirebase;
 import com.androidexam.stayfinder.data.models.request.CommentRequest;
 import com.androidexam.stayfinder.data.models.request.FavouriteRequest;
+import com.androidexam.stayfinder.data.repositories.ChatRepository;
 import com.androidexam.stayfinder.data.repositories.CommentRepository;
 import com.androidexam.stayfinder.data.repositories.HostelRepository;
 import com.androidexam.stayfinder.data.repositories.PostRepository;
@@ -30,27 +32,22 @@ public class PostDetailAdminViewModel extends BaseViewModel {
     HostelRepository hostelRepository;
     CommentRepository commentRepository;
     PostRepository postRepository;
+    ChatRepository chatRepository;
     private MutableLiveData<Hostel> hostel =  new MutableLiveData<>();
     private MutableLiveData<List<Comment>> comments = new MutableLiveData<>();
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     @Inject
-    public PostDetailAdminViewModel(HostelRepository hostelRepository, CommentRepository commentRepository,PostRepository postRepository){
+    public PostDetailAdminViewModel(HostelRepository hostelRepository,
+                                    CommentRepository commentRepository,
+                                    PostRepository postRepository,
+                                    ChatRepository chatRepository){
         this.hostelRepository = hostelRepository;
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
+        this.chatRepository = chatRepository;
     }
-    public void setHostelData(String id) {
-        compositeDisposable.add(hostelRepository.getHostelById(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(hostelData -> {
-                    hostel.setValue(hostelData);
-                },throwable -> {
-                    Log.d("KiemTra 1",throwable.getMessage());
-                }));
-    }
-    public MutableLiveData<Hostel> loadHostel(){
-        return hostel;
+    public LiveData<UserFirebase> getUserByEmail(String email){
+        return chatRepository.getUserByEmail(email);
     }
     public void setCommentData(int postId){
         compositeDisposable.add(commentRepository.getCommentByPostId(postId)
@@ -59,7 +56,7 @@ public class PostDetailAdminViewModel extends BaseViewModel {
                 .subscribe(commentsData -> {
                     comments.setValue(commentsData);
                 },throwable -> {
-                    Log.d("KiemTra 1",throwable.getMessage());
+                    Log.d("Set comment data failure",throwable.getMessage());
                 }));
     }
     public MutableLiveData<List<Comment>> loadComment(){return comments;}
@@ -70,6 +67,7 @@ public class PostDetailAdminViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(data -> {
                     comment.postValue(data);
+                    Log.d("check send file","Success1");
                 },throwable -> {
                     Log.d("Add comment failure",throwable.getMessage());
                 }));
@@ -133,5 +131,17 @@ public class PostDetailAdminViewModel extends BaseViewModel {
                     }));
         }
         return isCorrect;
+    }
+    public LiveData<Hostel> getHostelById(int hostelId){
+        MutableLiveData<Hostel> hostel = new MutableLiveData<>();
+        compositeDisposable.add(hostelRepository.getHostelById(hostelId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response->{
+                    hostel.setValue(response);
+                },throwable -> {
+                    Log.d("Check error getHostelId",throwable.getMessage());
+                }));
+        return hostel;
     }
  }

@@ -1,4 +1,4 @@
-package com.androidexam.stayfinder.ui.admin.home;
+package com.androidexam.stayfinder.ui.client;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -21,21 +20,22 @@ import com.androidexam.stayfinder.common.BindingAdapters;
 import com.androidexam.stayfinder.data.models.Hostel;
 import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.databinding.ItemsAdminPostBinding;
+import com.androidexam.stayfinder.ui.admin.home.PostAdminAdapter;
 
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.ViewHolder> {
+public class PostClientAdapter extends RecyclerView.Adapter<PostClientAdapter.ViewHolder> {
     private ArrayList<Post> postList;
-    private AdminHomeViewModel adminHomeViewModel;
+    private ClientHomeViewModel clientHomeViewModel;
     private LifecycleOwner lifecycleOwner;
 
-    public PostAdminAdapter(ArrayList<Post> postList, AdminHomeViewModel adminHomeViewModel, LifecycleOwner lifecycleOwner) {
+    public PostClientAdapter(ArrayList<Post> postList, ClientHomeViewModel clientHomeViewModel, LifecycleOwner lifecycleOwner) {
         this.postList = postList;
+        this.clientHomeViewModel = clientHomeViewModel;
         this.lifecycleOwner = lifecycleOwner;
-        this.adminHomeViewModel = adminHomeViewModel;
     }
 
     @NonNull
@@ -48,51 +48,27 @@ public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostAdminAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostClientAdapter.ViewHolder holder, int position) {
         Post post = postList.get(position);
         holder.binding.setPost(post);
         holder.binding.cardViewPostAdmin.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("hostelId", post.getHostel().getId());
-            bundle.putSerializable("postId",post.getId());
+            bundle.putSerializable("postId", post.getId());
             Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment, bundle);
         });
         holder.binding.executePendingBindings();
-
-        int postId = postList.get(position).getId();
-        holder.binding.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adminHomeViewModel.changeStatusPost(postId, 0)
-                        .observe(lifecycleOwner, check -> {
-                            if (check == true) {
-                                Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(v.getContext().getApplicationContext(), "Change status post failure", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-        });
-        holder.binding.accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adminHomeViewModel.changeStatusPost(postId, 1)
-                        .observe(lifecycleOwner, check -> {
-                            if (check == true) {
-                                Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(v.getContext().getApplicationContext(), "Change status post failure", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-        });
-
+        holder.binding.executePendingBindings();
+        holder.binding.accept.setVisibility(View.GONE);
+        holder.binding.chat.setVisibility(View.GONE);
+        holder.binding.delete.setVisibility(View.GONE);
     }
 
     @Override
     public int getItemCount() {
         return postList.size();
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ItemsAdminPostBinding binding;

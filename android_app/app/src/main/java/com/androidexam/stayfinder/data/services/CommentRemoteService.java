@@ -1,5 +1,9 @@
 package com.androidexam.stayfinder.data.services;
 
+import static okhttp3.MultipartBody.*;
+
+import android.util.Log;
+
 import com.androidexam.stayfinder.data.apis.CommentAPI;
 import com.androidexam.stayfinder.data.models.Comment;
 import com.androidexam.stayfinder.data.models.request.CommentRequest;
@@ -21,18 +25,16 @@ public class CommentRemoteService {
     public Observable<Boolean> deleteCommentById(int id){return  commentAPI.deleteCommentById(id);}
     public Observable<Comment> addComment(CommentRequest commentRequest){
         if(commentRequest.getFile() != null){
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/png"),commentRequest.getFile());
-            MultipartBody.Part body = MultipartBody.Part.createFormData("file", commentRequest.getFile().getName(),
-                    requestFile);
-            RequestBody usernameBody = RequestBody.create(MediaType.parse("text/plain"), commentRequest.getUsername());
-            RequestBody contentBody = RequestBody.create(MediaType.parse("text/plain"), commentRequest.getContent());
-            String convertPostId = Integer.toString(commentRequest.getPostId());
-            RequestBody postIdBody = RequestBody.create(MediaType.parse("text/plain"), convertPostId);
+            MultipartBody multipartBody = new Builder()
+                    .setType(FORM)
+                    .addFormDataPart("username", commentRequest.getUsername())
+                    .addFormDataPart("content", commentRequest.getContent())
+                    .addFormDataPart("postId", String.valueOf(commentRequest.getPostId()))
+                    .addFormDataPart("file", commentRequest.getFile().getName(), RequestBody.create(MediaType.parse("image/*"),commentRequest.getFile()))
+                    .build();
+
             return commentAPI.addComment(
-                    usernameBody,
-                    contentBody,
-                    postIdBody,
-                    body
+                   multipartBody
             );
         }else{
             return commentAPI.addComment(

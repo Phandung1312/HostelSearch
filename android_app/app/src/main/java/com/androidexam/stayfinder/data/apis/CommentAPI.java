@@ -30,12 +30,8 @@ public interface CommentAPI {
             @Path("id") int id
     );
     @POST("comment")
-    @Multipart
     Observable<Comment> addComment(
-            @Part("username") RequestBody username,
-            @Part("content") RequestBody content,
-            @Part("postId") RequestBody postId,
-            @Part MultipartBody.Part file
+            @Body MultipartBody body
             );
     @POST("comment")
     @FormUrlEncoded
