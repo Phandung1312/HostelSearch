@@ -54,19 +54,22 @@ public class ListChatFragment extends BaseFragment<ListChatClass> implements Ite
     private void setAdapter(List<String> ids,String myId){
         Query query = database.getReference().child("User");
         if(ids.size() != 0){
-             query = database.getReference().child("User").orderByChild("id").startAt(ids.get(0)).endAt(ids.get(ids.size() - 1));
+            dataBinding.layoutEmpty.setVisibility(View.GONE);
+            query = database.getReference().child("User").orderByChild("id").startAt(ids.get(0)).endAt(ids.get(ids.size() - 1));
+            FirebaseRecyclerOptions<UserFirebase> options = new FirebaseRecyclerOptions.Builder<UserFirebase>()
+                    .setQuery(query, UserFirebase.class)
+                    .setLifecycleOwner(this)
+                    .build();
+            UserAdapter adapter = new UserAdapter(options,
+                    this ,
+                    viewModel,
+                    getViewLifecycleOwner(),
+                    myId);
+            dataBinding.rvChat.setAdapter(adapter);
+            adapter.startListening();
+        }else{
+            dataBinding.layoutEmpty.setVisibility(View.VISIBLE);
         }
-        FirebaseRecyclerOptions<UserFirebase> options = new FirebaseRecyclerOptions.Builder<UserFirebase>()
-                .setQuery(query, UserFirebase.class)
-                .setLifecycleOwner(this)
-                .build();
-        UserAdapter adapter = new UserAdapter(options,
-                this ,
-                viewModel,
-                getViewLifecycleOwner(),
-                myId);
-        dataBinding.rvChat.setAdapter(adapter);
-        adapter.startListening();
     }
 
     @Override

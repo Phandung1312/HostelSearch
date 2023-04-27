@@ -41,7 +41,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         PostRequest postRequest = posts.get(position);
         postRequest.getHostel().setPost(new Post(postRequest));
         holder.binding.setPost(new Post(postRequest));
-
         holder.binding.cardViewPostAdmin.setOnClickListener(view ->{
             Hostel hostel = posts.get(position).getHostel();
             Bundle bundle = new Bundle();

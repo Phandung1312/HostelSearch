@@ -141,11 +141,12 @@ public class LoginFragment extends BaseFragment<LoginClass> {
         System.out.println("debug account " + account.getAccountName() + "!");
         try {
             if(mainActivity.account.getPosition().getId() == Utils.CLIENT_ROLE){
+                mainActivity.binding.bottomNavigationView.getMenu().findItem(R.id.favourite).setVisible(true);
                 mainActivity.binding.bottomNavigationView.setSelectedItemId(R.id.home);
                 Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
             }
             else{
-                mainActivity.binding.bottomNavigationView.getMenu().removeItem(R.id.favourite);
+                mainActivity.binding.bottomNavigationView.getMenu().findItem(R.id.favourite).setVisible(false);
                 mainActivity.binding.bottomNavigationView.setSelectedItemId(R.id.home);
                 Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
             }
@@ -153,9 +154,11 @@ public class LoginFragment extends BaseFragment<LoginClass> {
         catch (Exception e){
             new Handler().postDelayed(() ->{
                         if(mainActivity.account.getPosition().getId() == 1){
+                            mainActivity.binding.bottomNavigationView.getMenu().findItem(R.id.favourite).setVisible(true);
                             Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.clientHomeFragment);
                         }
                         else{
+                            mainActivity.binding.bottomNavigationView.getMenu().findItem(R.id.favourite).setVisible(false);
                             Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.adminHomeFragment);
                         }
                     }
