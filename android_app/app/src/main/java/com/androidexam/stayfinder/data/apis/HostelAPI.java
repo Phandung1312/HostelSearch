@@ -1,13 +1,20 @@
 package com.androidexam.stayfinder.data.apis;
 
+import androidx.annotation.RawRes;
+
 import com.androidexam.stayfinder.data.models.Content;
 import com.androidexam.stayfinder.data.models.Hostel;
 import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.request.FavouriteRequest;
+import com.androidexam.stayfinder.data.models.request.HostelRequest;
+import com.androidexam.stayfinder.data.models.request.ImageRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
@@ -78,5 +85,13 @@ public interface HostelAPI {
             @Query("minRent") int minRent,
             @Query("maxRent") int maxRent,
             @Query("capacity") int capacity
+    );
+    @POST("hostel")
+    Observable<Hostel> addHostelAndPost(
+            @Body RequestBody hostelRequest
+            );
+    @POST("Hostel/uploadMultipleFiles")
+    Observable<ArrayList<ImageRequest>> addImages(
+            @Body MultipartBody body
     );
 }

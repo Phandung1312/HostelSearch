@@ -39,19 +39,6 @@ public class PostDetailAdminViewModel extends BaseViewModel {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
     }
-    public void setHostelData(int id) {
-        compositeDisposable.add(hostelRepository.getHostelById(id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(hostelData -> {
-                    hostel.setValue(hostelData);
-                },throwable -> {
-                    Log.d("KiemTra 1",throwable.getMessage());
-                }));
-    }
-    public MutableLiveData<Hostel> loadHostel(){
-        return hostel;
-    }
     public void setCommentData(int postId){
         compositeDisposable.add(commentRepository.getCommentByPostId(postId)
                 .subscribeOn(Schedulers.io())
@@ -59,7 +46,7 @@ public class PostDetailAdminViewModel extends BaseViewModel {
                 .subscribe(commentsData -> {
                     comments.setValue(commentsData);
                 },throwable -> {
-                    Log.d("KiemTra 1",throwable.getMessage());
+                    Log.d("Set comment data failure",throwable.getMessage());
                 }));
     }
     public MutableLiveData<List<Comment>> loadComment(){return comments;}
@@ -134,5 +121,17 @@ public class PostDetailAdminViewModel extends BaseViewModel {
                     }));
         }
         return isCorrect;
+    }
+    public LiveData<Hostel> getHostelById(int hostelId){
+        MutableLiveData<Hostel> hostel = new MutableLiveData<>();
+        compositeDisposable.add(hostelRepository.getHostelById(hostelId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response->{
+                    hostel.setValue(response);
+                },throwable -> {
+                    Log.d("Check error getHostelId",throwable.getMessage());
+                }));
+        return hostel;
     }
  }

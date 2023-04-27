@@ -25,13 +25,12 @@ public class CommentRemoteService {
     public Observable<Boolean> deleteCommentById(int id){return  commentAPI.deleteCommentById(id);}
     public Observable<Comment> addComment(CommentRequest commentRequest){
         if(commentRequest.getFile() != null){
-            Log.d("check send file", "success");
             MultipartBody multipartBody = new Builder()
                     .setType(FORM)
                     .addFormDataPart("username", commentRequest.getUsername())
                     .addFormDataPart("content", commentRequest.getContent())
                     .addFormDataPart("postId", String.valueOf(commentRequest.getPostId()))
-                    .addFormDataPart("avatarUrl", commentRequest.getFile().getName(), RequestBody.create(MediaType.parse("image/*"),commentRequest.getFile()))
+                    .addFormDataPart("file", commentRequest.getFile().getName(), RequestBody.create(MediaType.parse("image/*"),commentRequest.getFile()))
                     .build();
 
             return commentAPI.addComment(

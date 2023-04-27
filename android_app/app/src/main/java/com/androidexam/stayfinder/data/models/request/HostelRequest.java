@@ -1,12 +1,8 @@
-package com.androidexam.stayfinder.data.models;
+package com.androidexam.stayfinder.data.models.request;
 
-import com.google.gson.annotations.SerializedName;
+import com.androidexam.stayfinder.data.models.Post;
 
-import java.io.Serializable;
-import java.util.List;
-
-public class Hostel implements Serializable {
-    private int id;
+public class HostelRequest {
     private String name;
     private int capacity;
     private double area;
@@ -15,47 +11,28 @@ public class Hostel implements Serializable {
     private double depositPrice;
     private int status;
     private String description;
-    private RoomType roomType;
+    private int roomTypeId;
     private double electricPrice;
     private double waterPrice;
-    private List<Image> images;
-    private Post post;
+    private PostRequest post;
 
-    public Hostel(Hostel hostel) {
-        this.id = hostel.id;
-        this.name = hostel.name;
-        this.capacity = hostel.capacity;
-        this.area = hostel.area;
-        this.address = hostel.address;
-        this.rentPrice = hostel.rentPrice;
-        this.depositPrice = hostel.depositPrice;
-        this.status = hostel.status;
-        this.description = hostel.description;
-        this.roomType = hostel.roomType;
-        this.electricPrice = hostel.electricPrice;
-        this.waterPrice = hostel.waterPrice;
-        this.images = hostel.images;
-        this.post = hostel.post;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public HostelRequest(String name, int capacity, double area, String address, double rentPrice, double depositPrice, int status, String description, int roomTypeId, double electricPrice, double waterPrice, PostRequest post) {
+        this.name = name;
+        this.capacity = capacity;
+        this.area = area;
+        this.address = address;
+        this.rentPrice = rentPrice;
+        this.depositPrice = depositPrice;
+        this.status = status;
+        this.description = description;
+        this.roomTypeId = roomTypeId;
+        this.electricPrice = electricPrice;
+        this.waterPrice = waterPrice;
+        this.post = post;
     }
 
     public String getName() {
         return name;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
     }
 
     public void setName(String name) {
@@ -118,12 +95,12 @@ public class Hostel implements Serializable {
         this.description = description;
     }
 
-    public RoomType getRoomType() {
-        return roomType;
+    public int getRoomType() {
+        return roomTypeId;
     }
 
-    public void setRoomType(RoomType roomType) {
-        this.roomType = roomType;
+    public void setRoomType(int roomTypeId) {
+        this.roomTypeId = roomTypeId;
     }
 
     public double getElectricPrice() {
@@ -142,12 +119,11 @@ public class Hostel implements Serializable {
         this.waterPrice = waterPrice;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public PostRequest getPost() {
+        return post;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setPost(PostRequest post) {
+        this.post = post;
     }
-
 }

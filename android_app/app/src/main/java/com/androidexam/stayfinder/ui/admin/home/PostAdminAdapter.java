@@ -27,12 +27,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.ViewHolder>  {
+public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.ViewHolder> {
     private ArrayList<Post> postList;
     private AdminHomeViewModel adminHomeViewModel;
     private LifecycleOwner lifecycleOwner;
 
-    public PostAdminAdapter( ArrayList<Post> postList, AdminHomeViewModel adminHomeViewModel, LifecycleOwner lifecycleOwner){
+    public PostAdminAdapter(ArrayList<Post> postList, AdminHomeViewModel adminHomeViewModel, LifecycleOwner lifecycleOwner) {
         this.postList = postList;
         this.lifecycleOwner = lifecycleOwner;
         this.adminHomeViewModel = adminHomeViewModel;
@@ -43,49 +43,31 @@ public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.View
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemsAdminPostBinding binding =
                 ItemsAdminPostBinding.inflate(LayoutInflater.from(parent.getContext()),
-                        parent,false);
+                        parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PostAdminAdapter.ViewHolder holder, int position) {
         Post post = postList.get(position);
-
-        if(post.getHostel() == null){
-            MutableLiveData<Hostel> hostelLiveData = new MutableLiveData<>();
-            adminHomeViewModel.getHostelById(post.getHostelId())
-                    .observe(lifecycleOwner,hostel -> {
-                        hostelLiveData.setValue(hostel);
-                    });
-            hostelLiveData.observe(lifecycleOwner, hostel -> {
-                post.setHostel(hostel);
-                holder.binding.setPost(post);
-                holder.binding.cardViewPostAdmin.setOnClickListener(view ->{
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("post",post);
-                    Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
-                });
-                holder.binding.executePendingBindings();
-            });
-        }else{
-            holder.binding.setPost(post);
-            holder.binding.cardViewPostAdmin.setOnClickListener(view ->{
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("post",post);
-                Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
-            });
-            holder.binding.executePendingBindings();
-        }
+        holder.binding.setPost(post);
+        holder.binding.cardViewPostAdmin.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("hostelId", post.getHostel().getId());
+            bundle.putSerializable("postId",post.getId());
+            Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment, bundle);
+        });
+        holder.binding.executePendingBindings();
 
         int postId = postList.get(position).getId();
         holder.binding.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adminHomeViewModel.changeStatusPost(postId,0)
-                        .observe(lifecycleOwner, check ->{
-                            if(check == true){
+                adminHomeViewModel.changeStatusPost(postId, 0)
+                        .observe(lifecycleOwner, check -> {
+                            if (check == true) {
                                 Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
-                            }else{
+                            } else {
                                 Toast.makeText(v.getContext().getApplicationContext(), "Change status post failure", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -94,11 +76,11 @@ public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.View
         holder.binding.accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adminHomeViewModel.changeStatusPost(postId,1)
-                        .observe(lifecycleOwner, check ->{
-                            if(check == true){
+                adminHomeViewModel.changeStatusPost(postId, 1)
+                        .observe(lifecycleOwner, check -> {
+                            if (check == true) {
                                 Toast.makeText(v.getContext().getApplicationContext(), "Change status post success", Toast.LENGTH_SHORT).show();
-                            }else{
+                            } else {
                                 Toast.makeText(v.getContext().getApplicationContext(), "Change status post failure", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -112,10 +94,10 @@ public class PostAdminAdapter extends RecyclerView.Adapter<PostAdminAdapter.View
         return postList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private  ItemsAdminPostBinding binding;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private ItemsAdminPostBinding binding;
 
-        public ViewHolder( ItemsAdminPostBinding itemBinding) {
+        public ViewHolder(ItemsAdminPostBinding itemBinding) {
             super(itemBinding.getRoot());
             this.binding = itemBinding;
         }
