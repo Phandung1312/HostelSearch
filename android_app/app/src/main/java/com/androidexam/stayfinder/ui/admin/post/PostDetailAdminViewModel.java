@@ -9,8 +9,10 @@ import com.androidexam.stayfinder.base.viewmodel.BaseViewModel;
 import com.androidexam.stayfinder.data.models.Comment;
 import com.androidexam.stayfinder.data.models.Hostel;
 import com.androidexam.stayfinder.data.models.Schedule;
+import com.androidexam.stayfinder.data.models.firebase.UserFirebase;
 import com.androidexam.stayfinder.data.models.request.CommentRequest;
 import com.androidexam.stayfinder.data.models.request.FavouriteRequest;
+import com.androidexam.stayfinder.data.repositories.ChatRepository;
 import com.androidexam.stayfinder.data.repositories.CommentRepository;
 import com.androidexam.stayfinder.data.repositories.HostelRepository;
 import com.androidexam.stayfinder.data.repositories.PostRepository;
@@ -30,14 +32,22 @@ public class PostDetailAdminViewModel extends BaseViewModel {
     HostelRepository hostelRepository;
     CommentRepository commentRepository;
     PostRepository postRepository;
+    ChatRepository chatRepository;
     private MutableLiveData<Hostel> hostel =  new MutableLiveData<>();
     private MutableLiveData<List<Comment>> comments = new MutableLiveData<>();
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     @Inject
-    public PostDetailAdminViewModel(HostelRepository hostelRepository, CommentRepository commentRepository,PostRepository postRepository){
+    public PostDetailAdminViewModel(HostelRepository hostelRepository,
+                                    CommentRepository commentRepository,
+                                    PostRepository postRepository,
+                                    ChatRepository chatRepository){
         this.hostelRepository = hostelRepository;
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
+        this.chatRepository = chatRepository;
+    }
+    public LiveData<UserFirebase> getUserByEmail(String email){
+        return chatRepository.getUserByEmail(email);
     }
     public void setCommentData(int postId){
         compositeDisposable.add(commentRepository.getCommentByPostId(postId)

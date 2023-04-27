@@ -3,6 +3,7 @@ package com.androidexam.stayfinder.ui.favourite;
 import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.androidexam.stayfinder.activities.MainActivity;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
@@ -46,9 +47,8 @@ public class FavouriteFragment extends BaseFragment<FavoriteClass> {
         });
     }
     private void setAdapter(List<Hostel> hostels){
-//        this.hostels = hostels;
         FavouriteHostelAdapter adapter = new FavouriteHostelAdapter(
-                mainActivity.getApplicationContext(),
+                requireContext(),
                 hostels,
                 favouriteViewModel,
                 getViewLifecycleOwner(),

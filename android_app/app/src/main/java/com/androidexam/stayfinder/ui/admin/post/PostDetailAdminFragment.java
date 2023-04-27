@@ -30,6 +30,7 @@ import com.androidexam.stayfinder.data.models.Hostel;
 import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.request.CommentRequest;
 import com.androidexam.stayfinder.databinding.PostDetailAdminClass;
+import com.androidexam.stayfinder.ui.chat.listchat.ListChatFragmentDirections;
 import com.github.drjacky.imagepicker.ImagePicker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -77,6 +78,13 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
     }
     @Override
     public void initListeners() {
+        dataBinding.btnChat.setOnClickListener(view ->{
+            String email = hostel.getPost().getAccount().getAccountName();
+            postDetailAdminViewModel.getUserByEmail(email).observe(getViewLifecycleOwner(),userFirebase -> {
+                Navigation.findNavController(dataBinding.getRoot()).navigate(PostDetailAdminFragmentDirections
+                        .actionPostDetailAdminFragmentToChatDetailFragment(userFirebase.getId()));
+            });
+        });
         dataBinding.btnBack.setOnClickListener(view ->{
             BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_navigation_view);
             bottomNavigationView.setVisibility(View.VISIBLE);

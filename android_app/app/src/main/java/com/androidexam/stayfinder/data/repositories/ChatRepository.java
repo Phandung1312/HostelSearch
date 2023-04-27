@@ -59,13 +59,16 @@ public class ChatRepository {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserFirebase user = dataSnapshot.getValue(UserFirebase.class);
-                if(user != null){
-                    userLiveData.postValue(user);
+                if(dataSnapshot.exists()){
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        UserFirebase user = snapshot.getValue(UserFirebase.class);
+                        if(user != null){
+                            userLiveData.postValue(user);
+                            return;
+                        }
+                    }
                 }
-                else{
-                    Log.d("Error","User not found by email");
-                }
+                Log.d("Error","User not found by email");
             }
 
             @Override

@@ -39,7 +39,11 @@
         android:id="@+id/postDetailAdminFragment"
         android:name="com.androidexam.stayfinder.ui.admin.post.PostDetailAdminFragment"
         android:label="fragment_post_detail_admin"
-        tools:layout="@layout/fragment_post_detail_admin" />
+        tools:layout="@layout/fragment_post_detail_admin" >
+        <action
+            android:id="@+id/action_postDetailAdminFragment_to_chatDetailFragment"
+            app:destination="@id/chatDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/listChatFragment"
         android:name="com.androidexam.stayfinder.ui.chat.listchat.ListChatFragment"
