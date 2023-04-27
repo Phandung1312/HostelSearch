@@ -32,7 +32,7 @@ public class PostClientAdapter extends RecyclerView.Adapter<PostClientAdapter.Vi
     private ClientHomeViewModel clientHomeViewModel;
     private LifecycleOwner lifecycleOwner;
 
-    public PostClientAdapter( ArrayList<Post> postList,ClientHomeViewModel clientHomeViewModel , LifecycleOwner lifecycleOwner ){
+    public PostClientAdapter(ArrayList<Post> postList, ClientHomeViewModel clientHomeViewModel, LifecycleOwner lifecycleOwner) {
         this.postList = postList;
         this.clientHomeViewModel = clientHomeViewModel;
         this.lifecycleOwner = lifecycleOwner;
@@ -43,38 +43,21 @@ public class PostClientAdapter extends RecyclerView.Adapter<PostClientAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemsAdminPostBinding binding =
                 ItemsAdminPostBinding.inflate(LayoutInflater.from(parent.getContext()),
-                        parent,false);
+                        parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PostClientAdapter.ViewHolder holder, int position) {
         Post post = postList.get(position);
-        if(post.getHostel() == null){
-            MutableLiveData<Hostel> hostelLiveData = new MutableLiveData<>();
-            clientHomeViewModel.getHostelById(post.getHostelId())
-                    .observe(lifecycleOwner,hostel -> {
-                        hostelLiveData.setValue(hostel);
-                    });
-            hostelLiveData.observe(lifecycleOwner, hostel -> {
-                post.setHostel(hostel);
-                holder.binding.setPost(post);
-                holder.binding.cardViewPostAdmin.setOnClickListener(view ->{
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("post",post);
-                    Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
-                });
-                holder.binding.executePendingBindings();
-            });
-        }else{
-            holder.binding.setPost(post);
-            holder.binding.cardViewPostAdmin.setOnClickListener(view ->{
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("post",post);
-                Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
-            });
-            holder.binding.executePendingBindings();
-        }
+        holder.binding.setPost(post);
+        holder.binding.cardViewPostAdmin.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("hostelId", post.getHostel().getId());
+            bundle.putSerializable("postId", post.getId());
+            Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment, bundle);
+        });
+        holder.binding.executePendingBindings();
         holder.binding.executePendingBindings();
         holder.binding.accept.setVisibility(View.GONE);
         holder.binding.chat.setVisibility(View.GONE);
@@ -87,10 +70,10 @@ public class PostClientAdapter extends RecyclerView.Adapter<PostClientAdapter.Vi
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
-        private  ItemsAdminPostBinding binding;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private ItemsAdminPostBinding binding;
 
-        public ViewHolder( ItemsAdminPostBinding itemBinding) {
+        public ViewHolder(ItemsAdminPostBinding itemBinding) {
             super(itemBinding.getRoot());
             this.binding = itemBinding;
         }

@@ -1,6 +1,9 @@
 package com.androidexam.stayfinder.ui.client;
 
 import android.app.AlertDialog;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -151,7 +155,9 @@ public class ClientHomeFragment extends BaseFragment<HomeClientClass> {
                                 posts.clear();
                                 for(Hostel hostel : hostels){
                                     if(hostel.getPost().getStatus() == 1){
-                                        posts.add(hostel.getPost());
+                                        Post post = hostel.getPost();
+                                        post.setHostel(hostel);
+                                        posts.add(post);
                                     }
                                 }
                                 adapter.notifyDataSetChanged();
@@ -200,13 +206,48 @@ public class ClientHomeFragment extends BaseFragment<HomeClientClass> {
                                 posts.clear();
                                 for(Hostel hostel : hostels){
                                     if(hostel.getPost().getStatus() == 1){
-                                        posts.add(hostel.getPost());
+                                        Post post = hostel.getPost();
+                                        post.setHostel(hostel);
+                                        posts.add(post);
                                     }
                                 }
                                 adapter.notifyDataSetChanged();
                             });
                     dialog.dismiss();
                 });
+            }
+        });
+        dataBinding.btnAddPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(dataBinding.getRoot()).navigate(R.id.addPostClientFragment);
+            }
+        });
+        dataBinding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                address = s.toString();
+                clientHomeViewModel.searchData(address,areaMin,areaMax,minRent,maxRent,capacity,idRoomType)
+                        .observe(getViewLifecycleOwner(),hostels -> {
+                            posts.clear();
+                            for(Hostel hostel : hostels){
+                                if(hostel.getPost().getStatus() == 1){
+                                    Post post = hostel.getPost();
+                                    post.setHostel(hostel);
+                                    posts.add(post);
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                        });
             }
         });
     }

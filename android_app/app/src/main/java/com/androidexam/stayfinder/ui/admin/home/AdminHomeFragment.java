@@ -154,9 +154,13 @@ public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
                                 postNotApprovals.clear();
                                 for(Hostel hostel : hostels){
                                     if(hostel.getPost().getStatus() == 1){
-                                        postApprovals.add(hostel.getPost());
+                                        Post post = hostel.getPost();
+                                        post.setHostel(hostel);
+                                        postApprovals.add(post);
                                     }else if(hostel.getPost().getStatus() == 2){
-                                        postNotApprovals.add(hostel.getPost());
+                                        Post post = hostel.getPost();
+                                        post.setHostel(hostel);
+                                        postNotApprovals.add(post);
                                     }
                                 }
                                 adapterApproval.notifyDataSetChanged();
@@ -205,9 +209,13 @@ public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
                             postNotApprovals.clear();
                             for(Hostel hostel : hostels){
                                 if(hostel.getPost().getStatus() == 1){
-                                    postApprovals.add(hostel.getPost());
+                                    Post post = hostel.getPost();
+                                    post.setHostel(hostel);
+                                    postApprovals.add(post);
                                 }else if(hostel.getPost().getStatus() == 2){
-                                    postNotApprovals.add(hostel.getPost());
+                                    Post post = hostel.getPost();
+                                    post.setHostel(hostel);
+                                    postNotApprovals.add(post);
                                 }
                             }
                             adapterApproval.notifyDataSetChanged();
@@ -235,9 +243,13 @@ public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
                             postNotApprovals.clear();
                             for(Hostel hostel : hostels){
                                 if(hostel.getPost().getStatus() == 1){
-                                    postApprovals.add(hostel.getPost());
+                                    Post post = hostel.getPost();
+                                    post.setHostel(hostel);
+                                    postApprovals.add(post);
                                 }else if(hostel.getPost().getStatus() == 2){
-                                    postNotApprovals.add(hostel.getPost());
+                                    Post post = hostel.getPost();
+                                    post.setHostel(hostel);
+                                    postNotApprovals.add(post);
                                 }
                             }
                             adapterApproval.notifyDataSetChanged();
