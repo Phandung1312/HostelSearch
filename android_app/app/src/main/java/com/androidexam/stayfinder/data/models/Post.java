@@ -30,6 +30,7 @@ public class Post implements Serializable {
         this.status = postRequest.getStatus();
         this.postTime = postRequest.getPostTime();
         this.images = postRequest.getImages();
+        this.hostel = postRequest.getHostel();
     }
 
     public int getId() {

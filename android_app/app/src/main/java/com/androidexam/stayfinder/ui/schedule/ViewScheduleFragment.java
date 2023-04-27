@@ -61,8 +61,6 @@ public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
     public void initView() {
         viewScheduleViewModel = new ViewModelProvider(this).get(ViewScheduleViewModel.class);
         dataBinding.calendarView.setEventIndicatorStyle(FILL_LARGE_INDICATOR);
-
-        customDialogFragment = new CustomDialogFragment(mainActivity.account.getAccountName());
     }
 
     @Override
@@ -167,6 +165,7 @@ public class ViewScheduleFragment extends BaseFragment<ScheduleClass> {
 
     @Override
     public void initData() {
+        customDialogFragment = new CustomDialogFragment(Navigation.findNavController(dataBinding.getRoot()), mainActivity.account.getAccountName());
         dataBinding.tvMonthYear.setText(format.format(System.currentTimeMillis()));
     }
 }
