@@ -39,6 +39,12 @@ public class AccountRepository {
     public Observable<Account> updateUsername(String accountName, String newUserName){
         return accountRemoteService.updateUsername(accountName, newUserName);
     }
+    public Observable<Account> updateGender(String accountName, boolean newGender){
+        return accountRemoteService.updateGender(accountName, newGender);
+    }
+    public Observable<Account> updatePhoneNumber(String accountName, String newPhoneNumber){
+        return accountRemoteService.updatePhoneNumber(accountName, newPhoneNumber);
+    }
     public MutableLiveData<Boolean> firebaseSignInWithGoogle(GoogleSignInAccount googleSignInAccount){
         MutableLiveData<Boolean> isNew = new MutableLiveData<>();
         firebaseAuth.signInWithEmailAndPassword(googleSignInAccount.getEmail(),

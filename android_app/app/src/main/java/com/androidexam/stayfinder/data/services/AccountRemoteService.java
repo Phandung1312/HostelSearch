@@ -50,4 +50,10 @@ public class AccountRemoteService {
     public Observable<Account> updateUsername(String accountName, String newUserName){
         return accountAPI.updateUsername(accountName, newUserName);
     }
+    public Observable<Account> updateGender(String accountName, boolean newGender){
+        return accountAPI.updateGender(accountName, newGender);
+    }
+    public Observable<Account> updatePhoneNumber(String accountName, String newPhoneNumber){
+        return accountAPI.updatePhoneNumber(accountName, newPhoneNumber);
+    }
 }

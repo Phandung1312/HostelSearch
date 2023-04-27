@@ -21,13 +21,13 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class SettingViewModel extends BaseViewModel {
     AccountRepository accountRepository;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
-    MutableLiveData<Account> account = new MutableLiveData<Account>();
 
     @Inject
     public SettingViewModel(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
-    public void UpdateUsername(String accountName, String newUsername){
+    public LiveData<Account> UpdateUsername(String accountName, String newUsername){
+        MutableLiveData<Account> account = new MutableLiveData<>();
         compositeDisposable.add(accountRepository.updateUsername(accountName, newUsername)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -38,9 +38,35 @@ public class SettingViewModel extends BaseViewModel {
                             Log.d("ERROR update username of user (SettingViewModel class)",throwable.getMessage());
                         }
                 ));
+        return account;
     }
-    public LiveData<Account> loadAccount(){
-        return this.account;
+    public LiveData<Account> UpdateGender(String accountName, boolean newGender){
+        MutableLiveData<Account> account = new MutableLiveData<>();
+        compositeDisposable.add(accountRepository.updateGender(accountName, newGender)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(acc -> {
+                            account.postValue(acc);
+                        },
+                        throwable ->{
+                            Log.d("ERROR update gender of user (SettingViewModel class)",throwable.getMessage());
+                        }
+                ));
+        return account;
+    }
+    public LiveData<Account> UpdatePhoneNumber(String accountName, String newPhoneNumber){
+        MutableLiveData<Account> account = new MutableLiveData<>();
+        compositeDisposable.add(accountRepository.updatePhoneNumber(accountName, newPhoneNumber)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(acc -> {
+                            account.postValue(acc);
+                        },
+                        throwable ->{
+                            Log.d("ERROR update phone number of user (SettingViewModel class)",throwable.getMessage());
+                        }
+                ));
+        return account;
     }
     @Override
     protected void onCleared() {

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -131,7 +132,6 @@ public class LoginFragment extends BaseFragment<LoginClass> {
                 Paper.book().write("password", googleSignInAccount.getId());
                 Paper.book().write("isLogin",true);
                 showHome(resAccount);
-
             });
         });
     }

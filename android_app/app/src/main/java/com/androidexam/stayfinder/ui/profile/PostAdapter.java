@@ -2,12 +2,9 @@ package com.androidexam.stayfinder.ui.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.BindingAdapter;
-import androidx.databinding.DataBindingUtil;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +13,6 @@ import com.androidexam.stayfinder.data.models.Hostel;
 import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.request.PostRequest;
 import com.androidexam.stayfinder.databinding.ItemsAdminPostBinding;
-import com.androidexam.stayfinder.databinding.ItemsHomesBinding;
 
 import java.util.ArrayList;
 
@@ -42,9 +38,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         postRequest.getHostel().setPost(new Post(postRequest));
         holder.binding.setPost(new Post(postRequest));
         holder.binding.cardViewPostAdmin.setOnClickListener(view ->{
-            Hostel hostel = posts.get(position).getHostel();
+            PostRequest post = posts.get(position);
             Bundle bundle = new Bundle();
-            bundle.putSerializable("hostel", hostel);
+            bundle.putSerializable("hostelId", post.getHostel().getId());
+            bundle.putSerializable("postId",post.getId());
             Navigation.findNavController(holder.binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
         });
         holder.binding.executePendingBindings();

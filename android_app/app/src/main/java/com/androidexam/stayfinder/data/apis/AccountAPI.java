@@ -36,8 +36,19 @@ public interface AccountAPI {
                         @Field("password") String password,
                         @Field("name") String name);
 
-        @PUT("account/{accountName}")
+        @PUT("account")
+        @FormUrlEncoded
         Observable<Account> updateUsername(
-                        @Path("accountName") String accountName,
-                        @Body String newUserName);
+                        @Field("username") String accountName,
+                        @Field("name") String newUserName);
+        @PUT("account")
+        @FormUrlEncoded
+        Observable<Account> updateGender(
+                        @Field("username") String accountName,
+                        @Field("gender") boolean newGender);
+        @PUT("account")
+        @FormUrlEncoded
+        Observable<Account> updatePhoneNumber(
+                        @Field("username") String accountName,
+                        @Field("phonenumber") String newPhoneNumber);
 }

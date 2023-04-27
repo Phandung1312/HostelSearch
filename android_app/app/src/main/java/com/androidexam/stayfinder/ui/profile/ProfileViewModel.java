@@ -6,10 +6,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.androidexam.stayfinder.base.viewmodel.BaseViewModel;
+import com.androidexam.stayfinder.data.models.Account;
 import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.Schedule;
 import com.androidexam.stayfinder.data.models.request.PostRequest;
 import com.androidexam.stayfinder.data.models.request.ScheduleRequest;
+import com.androidexam.stayfinder.data.repositories.AccountRepository;
 import com.androidexam.stayfinder.data.repositories.PostReposity;
 import com.androidexam.stayfinder.data.repositories.ScheduleReposity;
 
@@ -24,6 +26,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class ProfileViewModel extends BaseViewModel {
+    AccountRepository accountRepository;
     PostReposity postReposity;
     ScheduleReposity scheduleReposity;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -37,7 +40,8 @@ public class ProfileViewModel extends BaseViewModel {
     MutableLiveData<List<ScheduleRequest>> listRenterSchedule = new MutableLiveData<>();
 
     @Inject
-    public ProfileViewModel(PostReposity postReposity, ScheduleReposity scheduleReposity) {
+    public ProfileViewModel(AccountRepository accountRepository, PostReposity postReposity, ScheduleReposity scheduleReposity) {
+        this.accountRepository = accountRepository;
         this.postReposity = postReposity;
         this.scheduleReposity = scheduleReposity;
     }
@@ -130,6 +134,20 @@ public class ProfileViewModel extends BaseViewModel {
     protected void onCleared() {
         super.onCleared();
         compositeDisposable.clear();
+    }
+    public LiveData<Account> GetAccountByLogin(String accountName, String password){
+        MutableLiveData<Account> account = new MutableLiveData<>();
+        compositeDisposable.add(accountRepository.getAccountByLogin(accountName, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(acc -> {
+                            account.postValue(acc);
+                        },
+                        throwable ->{
+                            Log.d("ERROR get account of user (ProfileViewModel class)",throwable.getMessage());
+                        }
+                ));
+        return account;
     }
 
 }
