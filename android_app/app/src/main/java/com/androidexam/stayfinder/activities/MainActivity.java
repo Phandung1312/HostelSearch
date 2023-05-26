@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     navController.navigate(R.id.favouriteFragment);
                     break;
                 case R.id.profile:
-                    if(account.getPosition().getPosName() == "ROLE_ADMIN"){
+                    if(account.getPosition().getId() != 1){
                         navController.navigate(R.id.settingFragment);
                     }
                     else{

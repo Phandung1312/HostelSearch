@@ -48,17 +48,22 @@ public class SettingFragment extends BaseFragment<SettingClass> {
 
     @Override
     public void initListeners() {
-        dataBinding.imageBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.profileFragment, ProfileFragment.class, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack(null).commit();
+        if(mainActivity.account.getPosition().getId() == 1){
+            dataBinding.imageBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.profileFragment, ProfileFragment.class, null)
+                            .setReorderingAllowed(true)
+                            .addToBackStack(null).commit();
 
-                Navigation.findNavController(dataBinding.getRoot()).popBackStack();
-            }
-        });
+                    Navigation.findNavController(dataBinding.getRoot()).popBackStack();
+                }
+            });
+        }
+        else{
+            dataBinding.imageBack.setVisibility(View.INVISIBLE);
+        }
         dataBinding.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

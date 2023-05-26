@@ -27,6 +27,7 @@ import com.androidexam.stayfinder.R;
 import com.androidexam.stayfinder.base.fragment.BaseFragment;
 import com.androidexam.stayfinder.data.models.Comment;
 import com.androidexam.stayfinder.data.models.Hostel;
+import com.androidexam.stayfinder.data.models.Image;
 import com.androidexam.stayfinder.data.models.Post;
 import com.androidexam.stayfinder.data.models.request.CommentRequest;
 import com.androidexam.stayfinder.databinding.PostDetailAdminClass;
@@ -56,7 +57,8 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
     private Bitmap bitmapAvatar;
     private AlertDialog.Builder window;
     private boolean checkFavourite;
-    private String url;
+    ImageAdapter imageAdapter;
+    private ArrayList<String> imageURLList;
 
     public PostDetailAdminFragment() {
         super(PostDetailAdminClass::inflate);
@@ -75,6 +77,7 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
             dataBinding.btnAccept.setVisibility(View.GONE);
             dataBinding.btnRemove.setVisibility(View.GONE);
         }
+        dataBinding.rvImage.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
     }
     @Override
     public void initListeners() {
@@ -181,29 +184,23 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
                         }
                     });
         });
-        dataBinding.ivPost1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        dataBinding.ivPost2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
     @Override
     public void initData() {
+        setAdapter();
         dataBinding.executePendingBindings();
         postDetailAdminViewModel.getHostelById(hostelId)
                 .observe(getViewLifecycleOwner(),data->{
                     hostel = new Hostel(data);
                     dataBinding.setHostel(hostel);
+                    for(Image url : hostel.getImages()){
+                        imageURLList.add(url.getSource());
+                    }
+                    imageAdapter.notifyDataSetChanged();
+                    Log.d("Check adapter image", String.valueOf(imageAdapter.getItemCount()));
                 });
 
-        setAdapter();
+
         postDetailAdminViewModel.checkFavourite(mainActivity.account.getAccountName(),postId)
                 .observe(getViewLifecycleOwner(), check->{
                     if(check){
@@ -226,6 +223,10 @@ public class PostDetailAdminFragment extends BaseFragment<PostDetailAdminClass> 
             comments.addAll(commentList);
             adapter.notifyDataSetChanged();
         });
+        imageURLList = new ArrayList<>();
+        imageAdapter = new ImageAdapter(imageURLList);
+        dataBinding.rvImage.setAdapter(imageAdapter);
+        Log.d("Check adapter image", "adapter");
     }
 
     ActivityResultLauncher<Intent> launcher =

@@ -35,8 +35,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
         PostRequest postRequest = posts.get(position);
-        postRequest.getHostel().setPost(new Post(postRequest));
         holder.binding.setPost(new Post(postRequest));
+
+        System.out.println(postRequest.getHostel().getImages().size());
+
         holder.binding.cardViewPostAdmin.setOnClickListener(view ->{
             PostRequest post = posts.get(position);
             Bundle bundle = new Bundle();

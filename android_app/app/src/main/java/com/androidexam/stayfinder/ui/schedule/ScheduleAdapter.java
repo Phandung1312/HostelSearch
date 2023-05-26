@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,8 +29,9 @@ import java.util.Locale;
 import java.util.Random;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private Context context;
+    private NavController view;
     private ArrayList<ScheduleRequest> schedules;
+    private ItemScheduleListener itemClick;
     private String accountName;
 
     // Creating date format
@@ -37,10 +40,11 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final DateFormat timeFormat = new SimpleDateFormat(
             "'Lúc' HH:mm Z", Locale.getDefault());
 
-    public ScheduleAdapter(Context context, ArrayList<ScheduleRequest> schedules, String accountName){
-        this.context = context;
+    public ScheduleAdapter(NavController view, ArrayList<ScheduleRequest> schedules, String accountName,ItemScheduleListener itemClick){
+        this.view = view;
         this.schedules = schedules;
         this.accountName = accountName;
+        this.itemClick = itemClick;
     }
 
     @Override
@@ -171,12 +175,14 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(renterBinding.getRoot());
             this.binding = renterBinding;
 
-            binding.cvSchedule.setOnClickListener(view ->{
+            binding.cvSchedule.setOnClickListener(v ->{
                 PostRequest post = schedules.get(getBindingAdapterPosition()).getPost();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("hostelId", post.getHostel().getId());
                 bundle.putSerializable("postId",post.getId());
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
+                System.out.println(post.getHostel().getId() + ", " + post.getId());
+                view.navigate(R.id.postDetailAdminFragment,bundle);
+                itemClick.onClick();
             });
             binding.executePendingBindings();
 
@@ -189,12 +195,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             super(binding.getRoot());
             this.binding = binding;
 
-            binding.cvSchedule.setOnClickListener(view ->{
+            binding.cvSchedule.setOnClickListener(v ->{
                 PostRequest post = schedules.get(getBindingAdapterPosition()).getPost();
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("hostelId", post.getHostel().getId());
                 bundle.putSerializable("postId",post.getId());
-                Navigation.findNavController(binding.getRoot()).navigate(R.id.postDetailAdminFragment,bundle);
+                view.navigate(R.id.postDetailAdminFragment,bundle);
+                itemClick.onClick();
             });
             binding.executePendingBindings();
         }
