@@ -47,7 +47,7 @@
                         tools:text="Content"
                         android:textColor="@color/white"
                         android:background="@drawable/background_message_right"
-                        android:textSize="20sp" />
+                        android:textSize="14sp" />
                     <TextView
                         seen_text="@{seen}"
                         tools:text="Đã gửi"

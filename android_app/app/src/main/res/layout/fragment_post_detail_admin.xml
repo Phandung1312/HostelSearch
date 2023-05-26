@@ -26,14 +26,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="10dp">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:elevation="18dp"
+                    android:id="@+id/rv_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="250dp"
+                    />
             </androidx.cardview.widget.CardView>
-            <androidx.recyclerview.widget.RecyclerView
-                android:elevation="18dp"
-                android:id="@+id/rv_image"
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
-                app:layout_constraintStart_toStartOf="@id/card_view_image_post_main"
-                app:layout_constraintTop_toTopOf="@id/card_view_image_post_main" />
             <ImageButton
                 android:id="@+id/btn_back"
                 android:layout_width="35dp"

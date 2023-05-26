@@ -46,7 +46,7 @@
                     android:textColor="@color/white"
                     tools:text="Content"
                     android:background="@drawable/background_message_left"
-                    android:textSize="20sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
