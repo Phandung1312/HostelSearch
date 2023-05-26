@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
+public class AdminHomeFragment extends BaseFragment<AdminHomeClass> implements OnClickItemListPost{
     private ArrayList<Post> postApprovals;
     private ArrayList<Post> postNotApprovals;
     AdminHomeViewModel adminHomeViewModel;
@@ -267,7 +267,9 @@ public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
         postApprovals = new ArrayList<>();
         postNotApprovals = new ArrayList<>();
         adapterApproval = new PostAdminAdapter(postApprovals,adminHomeViewModel,getViewLifecycleOwner());
+        adapterApproval.setOnClickItemListPost(this);
         adapterNotApproval = new PostAdminAdapter(postNotApprovals,adminHomeViewModel,getViewLifecycleOwner());
+        adapterNotApproval.setOnClickItemListPost(this);
         dataBinding.rvPostApproval.setAdapter(adapterApproval);
         dataBinding.rvPostNotApproval.setAdapter(adapterNotApproval);
         adminHomeViewModel.setPostData();
@@ -283,5 +285,24 @@ public class AdminHomeFragment extends BaseFragment<AdminHomeClass> {
             adapterNotApproval.notifyDataSetChanged();
         });
     }
+    @Override
+    public void onItemClick(int position) {
+        Log.d("CheckOnClick", "true");
+        adminHomeViewModel.setPostData();
+        adminHomeViewModel.loadData().observe(getViewLifecycleOwner(),postList -> {
+            postApprovals.clear();
+            postNotApprovals.clear();
+            for(Post post : postList){
+                if(post.getStatus() == 1){
+                    postApprovals.add(post);
+                }else if(post.getStatus() == 2){
+                    postNotApprovals.add(post);
+                }
 
+            }
+            adapterApproval.notifyDataSetChanged();
+            adapterNotApproval.notifyDataSetChanged();
+            Log.d("CheckOnClick", "true2");
+        });
+    }
 }

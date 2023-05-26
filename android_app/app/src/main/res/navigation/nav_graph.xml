@@ -9,7 +9,7 @@
         android:id="@+id/loginFragment"
         android:name="com.androidexam.stayfinder.ui.login.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_clientHomeFragment"
             app:destination="@id/clientHomeFragment" />
@@ -39,7 +39,7 @@
         android:id="@+id/postDetailAdminFragment"
         android:name="com.androidexam.stayfinder.ui.admin.post.PostDetailAdminFragment"
         android:label="fragment_post_detail_admin"
-        tools:layout="@layout/fragment_post_detail_admin" >
+        tools:layout="@layout/fragment_post_detail_admin">
         <action
             android:id="@+id/action_postDetailAdminFragment_to_chatDetailFragment"
             app:destination="@id/chatDetailFragment" />
@@ -57,7 +57,7 @@
         android:id="@+id/clientHomeFragment"
         android:name="com.androidexam.stayfinder.ui.client.ClientHomeFragment"
         android:label="ClientHomeFragment"
-        tools:layout="@layout/fragment_home_client" >
+        tools:layout="@layout/fragment_home_client">
         <action
             android:id="@+id/action_clientHomeFragment_to_postDetailAdminFragment"
             app:destination="@id/postDetailAdminFragment" />
