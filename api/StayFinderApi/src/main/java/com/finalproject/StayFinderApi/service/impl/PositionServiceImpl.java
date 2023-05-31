@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.StayFinderApi.entity.Position;
+import com.finalproject.StayFinderApi.exception.NotFoundException;
 import com.finalproject.StayFinderApi.repository.PositionRepository;
 import com.finalproject.StayFinderApi.service.IPositionService;
 
@@ -45,7 +46,7 @@ public class PositionServiceImpl implements IPositionService {
 		if( optional.isPresent())
 			return optional.get();
 		else 
-			return null;
+			throw new NotFoundException("Position Id : " + id + " Khong ton tai");
 	}
 	
 }

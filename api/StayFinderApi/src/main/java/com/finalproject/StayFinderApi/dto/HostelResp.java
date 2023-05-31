@@ -4,10 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.finalproject.StayFinderApi.entity.Image;
-import com.finalproject.StayFinderApi.entity.Post;
-import com.finalproject.StayFinderApi.entity.RoomType;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,19 +32,19 @@ private static final long serialVersionUID = 1L;
 
 	private double depositPrice;
 	
-	private String status;
+	private int status;
 	
 	private String description;
 	
 //	@JsonIgnore
-	private RoomType roomtype;
+	private RoomtypeResponse roomtype;
 
 	private double electricPrice;
 
 	private double waterPrice;
 	
 //	@JsonIgnore
-	private Post post;
+	private PostResp post;
 
 	private List<Image> images;
 	
