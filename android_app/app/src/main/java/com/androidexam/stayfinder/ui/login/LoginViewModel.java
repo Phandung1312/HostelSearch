@@ -14,11 +14,13 @@ import com.androidexam.stayfinder.base.viewmodel.BaseViewModel;
 import com.androidexam.stayfinder.common.ImageConvertResult;
 import com.androidexam.stayfinder.data.apis.AccountAPI;
 import com.androidexam.stayfinder.data.models.Account;
+import com.androidexam.stayfinder.data.models.request.SignUpRequest;
 import com.androidexam.stayfinder.data.repositories.AccountRepository;
 import com.androidexam.stayfinder.databinding.LoginClass;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import java.io.ByteArrayOutputStream;
 
@@ -39,53 +41,40 @@ public class LoginViewModel extends BaseViewModel {
     public LoginViewModel(AccountRepository accountRepository){
         this.accountRepository = accountRepository;
     }
-    public void setData(Account account){
-        if(isNew.getValue()){
-            compositeDisposable.add(accountRepository.getAccountBySignUp(account)
+    public void login(String email, String password){
+        compositeDisposable.add(accountRepository.getAccountByLogin(email,password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(acc -> {
+                            Log.d("Success","Login");
+                            data.postValue(acc);
+                        },
+                    throwable ->{
+                    Log.d("ERROR login",throwable.getMessage());
+                    }
+                ));
+    }
+    public void signUp(SignUpRequest signUpRequest){
+            compositeDisposable.add(accountRepository.getAccountBySignUp(signUpRequest)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(acc -> {
-                                data.postValue(account);
+                                Log.d("Success","Sign up");
+                                data.postValue(acc);
+                            },
+                            throwable ->{
+                                Log.d("ERROR signup",throwable.getMessage());
                             }
                     ));
-        }
-        else{
-            compositeDisposable.add(accountRepository.getAccountByLogin(account.getAccountName(), account.getPassword())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(acc -> {
-                                data.postValue(account);
-                            }
-                    ));
-        }
     }
     public LiveData<Account> loadData(){
         return this.data;
     }
-    public void firebaseSignInWithGoogle(String email, String password){
-        isNew = accountRepository.firebaseSignInWithGoogle(email, password);
+    public void firebaseSignInWithGoogle(GoogleSignInAccount googleSignInAccount){
+        isNew = accountRepository.firebaseSignInWithGoogle(googleSignInAccount);
     }
     public LiveData<Boolean> isNewAccount(){
         return isNew;
-    }
-    public void convertUrlToByteArr(Context context, String url, ImageConvertResult<byte[]> imageConvertResult){
-           Glide.with(context)
-                   .asBitmap()
-                   .load(url)
-                   .into(new CustomTarget<Bitmap>() {
-                       @Override
-                       public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                           ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                           resource.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                           byte[] byteArray = stream.toByteArray();
-                           imageConvertResult.onSuccess(byteArray);
-                       }
-
-                       @Override
-                       public void onLoadCleared(@Nullable Drawable placeholder) {
-                           imageConvertResult.onError();
-                       }
-                   });
     }
     @Override
     protected void onCleared() {

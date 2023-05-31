@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data class="SearchMoneyClass">
+        
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/menu_search_money"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:text="Tìm kiếm theo giá thành"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <View
+                android:background="@color/gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/menu_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/menu_search_room_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/title_choice_room"
+                    android:text="Giá Phòng"
+                    style="@style/title_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/et_money_room_min"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_image"
+                    android:hint="Nhập số tiền thấp nhất bạn mong muốn!"
+                    android:inputType="number"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/text_name_post"
+                    android:textColorHint="@color/text_name_post"
+                    android:textCursorDrawable="@drawable/white_cursor" />
+                <EditText
+                    android:id="@+id/et_money_room_max"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_image"
+                    android:hint="Nhập số tiền cao nhất bạn mong muốn!"
+                    android:inputType="number"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/text_name_post"
+                    android:textColorHint="@color/text_name_post"
+                    android:textCursorDrawable="@drawable/white_cursor" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/menu_search_money_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/title_choice_area"
+                    android:text="Diện tích"
+                    style="@style/title_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:id="@+id/et_money_area_min"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_image"
+                    android:hint="Nhập diện tích thấp nhất bạn mong muốn!"
+                    android:inputType="number"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/text_name_post"
+                    android:textColorHint="@color/text_name_post"
+                    android:textCursorDrawable="@drawable/white_cursor" />
+                <EditText
+                    android:id="@+id/et_money_area_max"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/background_image"
+                    android:hint="Nhập diện tích cao nhất bạn mong muốn!"
+                    android:inputType="number"
+                    android:paddingStart="16dp"
+                    android:textColor="@color/text_name_post"
+                    android:textColorHint="@color/text_name_post"
+                    android:textCursorDrawable="@drawable/white_cursor" />
+            </LinearLayout>
+
+
+
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/btn_tim_phong"
+                style="@style/btn_rental"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                android:background="@drawable/rental_btn"
+                android:text="TÌM PHÒNG"
+                android:textColor="#FFFFFF"></Button>
+            <Button
+                android:id="@+id/btn_huy"
+                style="@style/btn_rental"
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="63dp"
+                android:background="@drawable/cancel_btn"
+                android:text="HỦY"
+                android:textColor="#FFFFFF"></Button>
+        </LinearLayout>
+        </LinearLayout>
+</layout>

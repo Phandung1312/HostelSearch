@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout >
+    <data>
+        <variable
+            name="post"
+            type="com.androidexam.stayfinder.data.models.Post" />
+    </data>
+    <androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="15dp"
+        android:id="@+id/card_view_post_admin"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp">
+                <ImageView
+                    android:id="@+id/img_home"
+                    android:layout_width="match_parent"
+                    imageUrl="@{post.hostel.images.size() > 0 ? post.hostel.images.get(0).source : null}"
+                    android:layout_margin="10dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_home"
+                    android:layout_marginBottom="5dp">
+                </ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/name_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/name_region"
+                    tools:text="phòng 1"
+                    android:drawablePadding="3dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@{post.title}"
+                    app:drawableStartCompat="@drawable/home_16"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/cost_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:drawablePadding="3dp"
+                    android:text="@{String.valueOf(post.hostel.rentPrice) + ` VND/phòng`}"
+                    tools:text="1.5 triệu VND/phòng"
+                    app:drawableStartCompat="@drawable/money_home"
+                    android:textColor="@color/red"/>
+
+                <TextView
+                    android:id="@+id/address_home"
+                    android:textStyle="bold"
+                    tools:text="139 âu cơ"
+                    android:drawableStart="@drawable/address_home"
+                    android:drawablePadding="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/address_home"
+                    android:layout_marginStart="5dp"
+                    android:text="@{post.hostel.address}" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_baseline_chat_gray"
+                    android:id="@+id/chat" />
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_baseline_check_gray"
+                    android:id="@+id/accept"
+                    android:layout_marginStart="25dp"/>
+                <ImageButton
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_baseline_delete_gray"
+                    android:id="@+id/delete"
+                    android:layout_marginStart="25dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,19 +1,42 @@
 package com.androidexam.stayfinder.data.models;
 
-public class Hostel {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class Hostel implements Serializable {
     private int id;
     private String name;
-    private String capacity;
-    private String area;
+    private int capacity;
+    private double area;
     private String address;
     private double rentPrice;
     private double depositPrice;
-    private String status;
+    private int status;
     private String description;
     private RoomType roomType;
     private double electricPrice;
     private double waterPrice;
-    private int postId;
+    private List<Image> images;
+    private Post post;
+
+    public Hostel(Hostel hostel) {
+        this.id = hostel.id;
+        this.name = hostel.name;
+        this.capacity = hostel.capacity;
+        this.area = hostel.area;
+        this.address = hostel.address;
+        this.rentPrice = hostel.rentPrice;
+        this.depositPrice = hostel.depositPrice;
+        this.status = hostel.status;
+        this.description = hostel.description;
+        this.roomType = hostel.roomType;
+        this.electricPrice = hostel.electricPrice;
+        this.waterPrice = hostel.waterPrice;
+        this.images = hostel.images;
+        this.post = hostel.post;
+    }
 
     public int getId() {
         return id;
@@ -27,23 +50,31 @@ public class Hostel {
         return name;
     }
 
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(String capacity) {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
-    public String getArea() {
+    public double getArea() {
         return area;
     }
 
-    public void setArea(String area) {
+    public void setArea(double area) {
         this.area = area;
     }
 
@@ -71,11 +102,11 @@ public class Hostel {
         this.depositPrice = depositPrice;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -111,11 +142,12 @@ public class Hostel {
         this.waterPrice = waterPrice;
     }
 
-    public int getPostId() {
-        return postId;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
+
 }

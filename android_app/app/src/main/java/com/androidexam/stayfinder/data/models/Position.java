@@ -1,7 +1,11 @@
 package com.androidexam.stayfinder.data.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Position {
+    @SerializedName("id")
     private int id;
+    @SerializedName("positionName")
     private String posName;
 
     public int getId() {

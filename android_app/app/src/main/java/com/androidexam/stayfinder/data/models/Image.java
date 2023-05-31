@@ -1,8 +1,14 @@
 package com.androidexam.stayfinder.data.models;
 
-public class Image {
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
+public class Image implements Serializable {
     private int id;
-    private byte[] source;
+    @SerializedName("url")
+    private String source;
+    @SerializedName("name")
     private String imgName;
     private int hostelId;
 
@@ -14,11 +20,11 @@ public class Image {
         this.id = id;
     }
 
-    public byte[] getSource() {
+    public String getSource() {
         return source;
     }
 
-    public void setSource(byte[] source) {
+    public void setSource(String source) {
         this.source = source;
     }
 

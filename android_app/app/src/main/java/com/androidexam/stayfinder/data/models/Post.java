@@ -1,18 +1,37 @@
 package com.androidexam.stayfinder.data.models;
 
+import com.androidexam.stayfinder.data.models.request.PostRequest;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
-public class Post {
+public class Post implements Serializable {
     private int id;
     private Account account;
     private String title;
     private String content;
+    @SerializedName("numberOfFavourites")
     private int numOfFav;
-    private boolean status;
+    private int status;
     private Timestamp postTime;
     private List<Image> images;
+
+    private int hostelId;
     private Hostel hostel;
+
+    public Post(PostRequest postRequest){
+        this.id = postRequest.getId();
+        this.account = postRequest.getAccount();
+        this.title = postRequest.getTitle();
+        this.content = postRequest.getContent();
+        this.numOfFav = postRequest.getNumOfFav();
+        this.status = postRequest.getStatus();
+        this.postTime = postRequest.getPostTime();
+        this.images = postRequest.getImages();
+        this.hostel = postRequest.getHostel();
+    }
 
     public int getId() {
         return id;
@@ -54,11 +73,11 @@ public class Post {
         this.numOfFav = numOfFav;
     }
 
-    public boolean getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -70,12 +89,12 @@ public class Post {
         this.postTime = postTime;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public int getHostelId() {
+        return hostelId;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public void setHostelId(int hostelId) {
+        this.hostelId = hostelId;
     }
 
     public Hostel getHostel() {
@@ -84,5 +103,18 @@ public class Post {
 
     public void setHostel(Hostel hostel) {
         this.hostel = hostel;
+    }
+
+    public Post(Post post) {
+        this.id = post.id;
+        this.account = post.account;
+        this.title = post.title;
+        this.content = post.content;
+        this.numOfFav = post.numOfFav;
+        this.status = post.status;
+        this.postTime = post.postTime;
+        this.images = post.images;
+        this.hostelId = post.hostelId;
+        this.hostel = post.hostel;
     }
 }
