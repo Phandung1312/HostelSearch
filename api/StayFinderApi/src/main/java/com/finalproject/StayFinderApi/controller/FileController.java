@@ -11,16 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.finalproject.StayFinderApi.dto.ImageResponse;
-import com.finalproject.StayFinderApi.entity.Account;
-import com.finalproject.StayFinderApi.service.IAccountService;
-import com.finalproject.StayFinderApi.service.ICommentService;
-import com.finalproject.StayFinderApi.service.IHostelService;
 import com.finalproject.StayFinderApi.service.IImageService;
 import com.finalproject.StayFinderApi.service.impl.FileStorageService;
-import com.finalproject.StayFinderApi.service.impl.HostelServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -40,23 +34,15 @@ public class FileController {
     @Autowired
     private IImageService imageService;
     
-    @Autowired
-    private IAccountService accountService;
-    
-    @Autowired
-    private ICommentService commentService;
 
     @PostMapping("/Hostel/uploadFile")
     public ImageResponse uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("hostelId") long hostelId) {
     	String fileName = fileStorageService.storeFile(file);
-        String imgUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-        		.path("api")
-                .path("/downloadFile/")
-                .path(fileName)
-                .toUriString();
+    	String imgUrl = imageService.createImgUrl(file);
         return imageService.addImage(imgUrl, fileName, hostelId);
     }
     
+
     @PostMapping("/Hostel/uploadMultipleFiles")
     public List<ImageResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files, @RequestParam("hostelId") long hostelId) {
         return Arrays.asList(files)

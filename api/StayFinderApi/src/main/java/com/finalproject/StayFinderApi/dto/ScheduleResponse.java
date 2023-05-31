@@ -3,7 +3,6 @@ package com.finalproject.StayFinderApi.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.finalproject.StayFinderApi.entity.Post;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +19,7 @@ public class ScheduleResponse implements Serializable {
 	
 	private long id;
 	
-	private String username;
+	private String renteUsername;
 
 	private String renterName;
 
@@ -30,6 +29,7 @@ public class ScheduleResponse implements Serializable {
 	
 	private Date meetingTime;
 	
-	private long postId;
+	private PostResponse post;
+	
 		
 }

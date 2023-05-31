@@ -1,11 +1,12 @@
 package com.finalproject.StayFinderApi.service.impl;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.finalproject.StayFinderApi.dto.ImageResponse;
 import com.finalproject.StayFinderApi.entity.Hostel;
@@ -22,6 +23,8 @@ public class ImageServiceImpl implements IImageService {
 	private ImageRepository imageRepository;
 	@Autowired
 	private HostelRepository hostelRepository;
+	@Autowired
+	private FileStorageService fileStorageService;
 
 	@Override
 	public List<Image> getImagesByHostelId(Long id) {
@@ -58,6 +61,17 @@ public class ImageServiceImpl implements IImageService {
 	
 		return new ImageResponse(image.getId(), image.getUrl(), image.getHostel().getId());
 
+	}
+
+	@Override
+	public String createImgUrl(MultipartFile file) {
+		String fileName = fileStorageService.storeFile(file);
+        String imgUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+        		.path("api")
+                .path("/downloadFile/")
+                .path(fileName)
+                .toUriString();
+        return imgUrl;
 	}
 
 }

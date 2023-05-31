@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.finalproject.StayFinderApi.dto.AccountRespone;
 import com.finalproject.StayFinderApi.dto.HostelResp;
-import com.finalproject.StayFinderApi.dto.PagedResponse;
-import com.finalproject.StayFinderApi.entity.Post;
 
 public interface IFavouritesAccountPostService {
 	public boolean addFavourites (String username, long postId);
@@ -16,6 +14,6 @@ public interface IFavouritesAccountPostService {
 	
 	public List<AccountRespone> accountsFavouriesPost(long postId);
 	
-	public PagedResponse<HostelResp> getListHostelFavoritesByUsername(String username);
+	public List<HostelResp> getListHostelFavoritesByUsername(String username);
 	
 }
