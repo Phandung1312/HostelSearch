@@ -13,8 +13,8 @@ public class AccountReq {
 	private String username;
 	
 	private String password;
-
+	
 	private String name;
 	
-	private byte[] avatar;
+	private String avatarUrl;
 }

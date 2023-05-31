@@ -14,13 +14,15 @@ import jakarta.persistence.ManyToOne;
 
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 
 @Entity
 @Table(name = "Comment")
@@ -44,8 +46,8 @@ public class Comment implements Serializable {
 	@Column(name="CommentTime",columnDefinition = "datetime")
 	private Date commentTime;
 	
-	@Column(columnDefinition = "varchar(50)")
-	private String image;
+	@Column
+	private String imageUrl;
 
 	
 }

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
@@ -18,18 +16,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 
 @Entity
 @Table(name = "Hostel")
@@ -37,7 +36,7 @@ import lombok.NoArgsConstructor;
 public class Hostel implements Serializable {
 	
 	public Hostel(String name, int capacity, double area, String address, double rentPrice, double depositPrice,
-			String status, String description, double electricPrice, double waterPrice) {
+			int status, String description, double electricPrice, double waterPrice) {
 		this.name = name;
 		this.capacity = capacity;
 		this.area = area;
@@ -74,8 +73,8 @@ public class Hostel implements Serializable {
 	@Column(name="DepositPrice")
 	private double depositPrice;
 	
-	@Column(nullable = false,columnDefinition = "text")
-	private String status;
+	@Column(nullable = false)
+	private int status;
 	
 	@Column(columnDefinition = "longtext")
 	private String description;
@@ -83,7 +82,7 @@ public class Hostel implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="RoomTypeId", nullable=false)
-//	@JsonIgnore
+
 	private RoomType roomtype;
 	
 	
@@ -100,6 +99,16 @@ public class Hostel implements Serializable {
 	
 	@OneToMany(mappedBy="hostel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Image> images;
+	
+//	@JsonIgnore
+	public RoomType getRoomtype() {
+		return this.roomtype;
+	}
+	
+//	@JsonIgnore
+	public Post getPost() {
+		return this.post;
+	}
 
 	public void setImages(List<Image> images) {
 		if (images == null)

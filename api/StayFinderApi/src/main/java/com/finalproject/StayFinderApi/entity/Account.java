@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,12 +22,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 
 @Entity
 @Table(name = "Account")
@@ -45,6 +46,7 @@ public class Account implements Serializable {
 	@Column(nullable = false,columnDefinition = "varchar(50)")
 	private String username;
 	
+	@JsonIgnore
 	@Column(nullable = false,columnDefinition = "varchar(50)")
 	private String password;
 	
@@ -55,7 +57,7 @@ public class Account implements Serializable {
 	private int status;
 	
 	@Column
-	private byte[] avatar;
+	private String avatarUrl;
 	
 	@Column(columnDefinition = "char(10)")
 	private String phonenumber;
@@ -80,6 +82,10 @@ public class Account implements Serializable {
 	  inverseJoinColumns = @JoinColumn(name = "PostId"))
 	List<Post> listFavouritePosts;
 
+//	@JsonIgnore
+	public Position getPosition() {
+		return this.position;
+	}
 	
 	public List<Post> getPosts(){
 		return this.posts == null ? null : new ArrayList<Post>(this.posts);
@@ -114,7 +120,7 @@ public class Account implements Serializable {
 		if (comments == null) {
 			this.listFavouritePosts = null;
 		} else {
-			this.listFavouritePosts = Collections.unmodifiableList(listFavouritePosts);
+			this.listFavouritePosts =listFavouritePosts;
 		}
 	}
 }

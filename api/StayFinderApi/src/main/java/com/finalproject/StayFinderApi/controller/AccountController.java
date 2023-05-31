@@ -10,12 +10,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import com.finalproject.StayFinderApi.dto.AccountLogin;
+import com.finalproject.StayFinderApi.dto.AccountProfile;
 import com.finalproject.StayFinderApi.dto.AccountReq;
 import com.finalproject.StayFinderApi.entity.Account;
 import com.finalproject.StayFinderApi.service.IAccountService;
+import com.finalproject.StayFinderApi.service.IImageService;
+
 
 @RestController
 @RequestMapping("/api/account")
@@ -23,6 +29,9 @@ public class AccountController {
 
 	@Autowired
 	private IAccountService accountService;
+    
+    @Autowired
+    private IImageService imageService;
 	
 	@GetMapping
 	public List<Account> getAll(){
@@ -45,13 +54,22 @@ public class AccountController {
 	}
 	
 	@PostMapping
-	public Account addAccount(@RequestBody AccountReq account) {
-		return accountService.addAccount(account);
+	public Account addAccount(@RequestParam(required = true) String username, @RequestParam(required = false) String password,@RequestParam(required = false) String name, @RequestParam(name = "file", required = false) MultipartFile file) {
+		  if(file != null) {
+				String imgUrl = imageService.createImgUrl(file);
+		        return accountService.addAccount(new AccountReq(username, password, name, imgUrl));
+		    }
+		  return accountService.addAccount(new AccountReq(username, password, name, null));
 	}
 	
 	@PutMapping
-	public Account updateAccount(@RequestBody Account account) {
-		return accountService.updateAccount(account);
+	public Account updateAccountProfile(@RequestParam(required = true) String username,@RequestParam(required = false) String name,@RequestParam(required = false) boolean gender,@RequestParam(required = false) String phonenumber, @RequestParam(name = "file", required = false) MultipartFile file) {
+	    if(file != null) {
+	    	String imgUrl = imageService.createImgUrl(file);
+	        return accountService.updateAccountProfile(new AccountProfile(name, username, gender, phonenumber, imgUrl));
+	    }
+	    return accountService.updateAccountProfile(new AccountProfile(name, username, gender, phonenumber, null));
+		
 	}
 	
 	@DeleteMapping("/{username}")
@@ -73,5 +91,8 @@ public class AccountController {
 		return accountService.enableAccount(username);
 	}
 	
-	
+	@PutMapping("/admin/{username}")
+	public Account giveAdmin(@PathVariable String username) {
+		return accountService.giveAdmin(username);
+	}
 }

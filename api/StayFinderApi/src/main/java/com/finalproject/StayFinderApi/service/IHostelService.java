@@ -1,31 +1,34 @@
 package com.finalproject.StayFinderApi.service;
 
-import java.util.List;
 
 import com.finalproject.StayFinderApi.dto.HostelRequest;
 import com.finalproject.StayFinderApi.dto.HostelResp;
-import com.finalproject.StayFinderApi.entity.Hostel;
+import com.finalproject.StayFinderApi.dto.PagedResponse;
+
 
 public interface IHostelService {
 	
-	public HostelResp saveHostel(HostelRequest hostel);
+	HostelResp saveHostel(HostelRequest hostel);
 	
-	public HostelResp updateHostel(HostelRequest hostel);
+	HostelResp updateHostel(HostelRequest hostel);
 	
-	public void deleteHostel(Long id);
+	void deleteHostel(Long id);
 	
-	public List<HostelResp> getAllHostel();
+	PagedResponse<HostelResp> getAllHostel(int page, int size);
 	
-	public List<Hostel> getAll();
-	
-	public List<Hostel> findByRentPriceBetween(double minRent, double maxRent);
-	
-	List<Hostel> findByManyOption(String address, double areaMin, double areMax, double minRent, double maxRent, int capacity, long idRoomType);
+	PagedResponse<HostelResp> findByManyOption(int page, int size,String address, double areaMin, double areMax, double minRent, double maxRent, int capacity, long idRoomType);
+	PagedResponse<HostelResp> findByManyOptionAdmin(int page, int size,String address, double areaMin, double areMax, double minRent, double maxRent, int capacity, long idRoomType);
 	
 	public HostelResp getHostelRespById(Long id);
 	
-	Hostel getHostelByPostId(long id);
+	HostelResp getHostelByPostId(long id);
 	
-	HostelResp updateStatusHostel(long id, String status);
+	HostelResp updateStatusHostel(long id, int status);
+	
+	PagedResponse<HostelResp> getHostelByStatus(int page, int size, int status);
+	
+	PagedResponse<HostelResp> getHostelByHostelStatusAndPostStatus(int page, int size, int status, int postStatus);
+		
+	
 	
 }
